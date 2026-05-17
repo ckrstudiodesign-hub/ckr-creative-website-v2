@@ -1,0 +1,48 @@
+# CKR Creatives
+
+> Dubai-based creative digital agency designing future-ready brands, cinematic websites, AI automation systems, and SEO-optimized digital experiences for modern businesses worldwide.
+
+CKR Creatives is a boutique studio based in Dubai, United Arab Emirates, working with founders, luxury brands, and modern operators across the GCC, Europe, and North America. Engagements run six disciplines: brand identity, web design & development, AI automation, SEO/GEO/AEO, social media marketing, and cybersecurity.
+
+## Core facts
+
+- **Legal/operating name:** CKR Creatives
+- **Type:** Creative digital agency · Independent studio
+- **Headquarters:** Dubai, United Arab Emirates (AE-DU)
+- **Areas served:** UAE, GCC, Europe, North America, Worldwide
+- **Languages:** English (primary), Arabic (regional)
+- **Contact:** ckrstudiodesign@gmail.com · WhatsApp +971 52 104 6611
+- **Booking:** https://calendly.com/ckrstudiodesign/30min
+- **Instagram:** https://www.instagram.com/ckrcreatives/
+- **Website:** https://www.ckrcreatives.com
+
+## Services
+
+- [Brand Identity & Visual Systems](https://www.ckrcreatives.com/studio): Logo systems, type foundries, color architecture, motion identity, tone of voice.
+- [Web Design & Development](https://www.ckrcreatives.com/studio): Cinematic sites, SEO-optimized landing pages, custom builds in Framer, Next.js, headless CMS.
+- [AI Automation & Smart Systems](https://www.ckrcreatives.com/studio): Workflow automation, lead-gen pipelines, chatbots, AI-augmented content engines.
+- [SEO, GEO & AEO Optimization](https://www.ckrcreatives.com/studio): Technical SEO, schema architecture, GEO targeting, Answer Engine Optimization that earns AI citations.
+- [Social Media & Content Marketing](https://www.ckrcreatives.com/studio): Reels, campaigns, storytelling systems, short-form content engines.
+- [Cybersecurity & Digital Protection](https://www.ckrcreatives.com/studio): Hardening, penetration testing, infrastructure audits, protection layers.
+
+## Pages
+
+- [Home](https://www.ckrcreatives.com/): Overview, services, featured work, testimonials, FAQ.
+- [Studio](https://www.ckrcreatives.com/studio): About CKR Creatives, capabilities, principles, story.
+- [Work](https://www.ckrcreatives.com/work): Selected case studies across branding, web, AI, motion, commerce.
+- [Field Notes (Blog)](https://www.ckrcreatives.com/blog): Articles on branding, web, AI, SEO/AEO/GEO.
+
+## Featured writing
+
+- [AEO is the new SEO — designing for Answer Engines](https://www.ckrcreatives.com/blog/aeo-the-new-seo)
+- [GEO targeting for Dubai brands — beyond Google My Business](https://www.ckrcreatives.com/blog/geo-targeting-dubai)
+- [AI automation for small studios — what actually pays back](https://www.ckrcreatives.com/blog/ai-automation-for-agencies)
+- [Cinematic web design — building scroll experiences that convert](https://www.ckrcreatives.com/blog/cinematic-web-design)
+- [Stop selling logos. Sell brand systems.](https://www.ckrcreatives.com/blog/brand-systems-vs-logos)
+- [Our 2025 studio stack — tools, AI, and the boring infrastructure](https://www.ckrcreatives.com/blog/studio-stack-2025)
+
+## Machine-readable
+
+- [Sitemap](https://www.ckrcreatives.com/sitemap.xml)
+- [Structured agency profile (ai.json)](https://www.ckrcreatives.com/ai.json)
+- [Full context for RAG (llms-full.txt)](https://www.ckrcreatives.com/llms-full.txt)

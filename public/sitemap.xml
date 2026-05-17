@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+>
+  <url>
+    <loc>https://www.ckrcreatives.com/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.00</priority>
+    <image:image>
+      <image:loc>https://www.ckrcreatives.com/images/hero%20back.png</image:loc>
+      <image:title>CKR Creatives — Dubai Creative Agency</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.ckrcreatives.com/studio</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://www.ckrcreatives.com/images/2fdsjkfa.png</image:loc>
+      <image:title>Inside the CKR Creatives Studio</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.ckrcreatives.com/work</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://www.ckrcreatives.com/images/fsahkf.png</image:loc>
+      <image:title>Selected Work — CKR Creatives Portfolio</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.ckrcreatives.com/blog</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.70</priority>
+    <image:image>
+      <image:loc>https://www.ckrcreatives.com/images/download-24.jpeg</image:loc>
+      <image:title>Field Notes — CKR Creatives Journal</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.ckrcreatives.com/blog/aeo-the-new-seo</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <url>
+    <loc>https://www.ckrcreatives.com/blog/geo-targeting-dubai</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <url>
+    <loc>https://www.ckrcreatives.com/blog/ai-automation-for-agencies</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <url>
+    <loc>https://www.ckrcreatives.com/blog/cinematic-web-design</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <url>
+    <loc>https://www.ckrcreatives.com/blog/brand-systems-vs-logos</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <url>
+    <loc>https://www.ckrcreatives.com/blog/studio-stack-2025</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+</urlset>

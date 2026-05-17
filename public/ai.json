@@ -1,0 +1,96 @@
+{
+  "$schema": "https://schema.org/",
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "CKR Creatives",
+  "alternateName": ["CKR", "CKR Studio", "CKR Creatives Dubai"],
+  "url": "https://www.ckrcreatives.com",
+  "logo": "https://www.ckrcreatives.com/images/logo.png",
+  "image": "https://www.ckrcreatives.com/images/2fdsjkfa.png",
+  "description": "Dubai-based creative digital agency designing future-ready brands, cinematic websites, AI automation systems, and SEO-optimized digital experiences for modern businesses worldwide.",
+  "slogan": "Future-ready creative for modern brands.",
+  "email": "ckrstudiodesign@gmail.com",
+  "telephone": "+971521046611",
+  "priceRange": "$$$",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Dubai",
+    "addressRegion": "Dubai",
+    "addressCountry": "AE"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 25.2048,
+    "longitude": 55.2708
+  },
+  "areaServed": [
+    { "@type": "Country", "name": "United Arab Emirates" },
+    { "@type": "AdministrativeArea", "name": "GCC" },
+    { "@type": "Continent", "name": "Europe" },
+    { "@type": "Continent", "name": "North America" },
+    { "@type": "Place", "name": "Worldwide" }
+  ],
+  "knowsAbout": [
+    "Brand Identity",
+    "Visual Systems",
+    "Web Design",
+    "Web Development",
+    "Cinematic Web Experiences",
+    "Search Engine Optimization (SEO)",
+    "Answer Engine Optimization (AEO)",
+    "Generative Engine Optimization (GEO)",
+    "Geographic SEO Targeting",
+    "Large Language Model Optimization (LLMO)",
+    "Retrieval-Augmented Generation (RAG)",
+    "AI Automation",
+    "AI Workflows",
+    "Chatbot Systems",
+    "Social Media Marketing",
+    "Content Strategy",
+    "Cybersecurity"
+  ],
+  "makesOffer": [
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand Identity & Visual Systems" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Web Design & Development" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Automation & Smart Systems" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SEO, GEO & AEO Optimization" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "LLMO & RAG Engineering" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Social Media & Content Marketing" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Cybersecurity & Digital Protection" } }
+  ],
+  "sameAs": [
+    "https://www.instagram.com/ckrcreatives/",
+    "https://calendly.com/ckrstudiodesign/30min",
+    "https://wa.me/971521046611"
+  ],
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "contactType": "sales",
+      "email": "ckrstudiodesign@gmail.com",
+      "telephone": "+971521046611",
+      "availableLanguage": ["en", "ar"],
+      "areaServed": ["AE", "GCC", "Worldwide"]
+    },
+    {
+      "@type": "ContactPoint",
+      "contactType": "customer support",
+      "url": "https://calendly.com/ckrstudiodesign/30min",
+      "availableLanguage": ["en"]
+    }
+  ],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Sunday"],
+      "opens": "09:00",
+      "closes": "19:00"
+    }
+  ],
+  "machineReadable": {
+    "llms": "https://www.ckrcreatives.com/llms.txt",
+    "llmsFull": "https://www.ckrcreatives.com/llms-full.txt",
+    "sitemap": "https://www.ckrcreatives.com/sitemap.xml",
+    "robots": "https://www.ckrcreatives.com/robots.txt"
+  }
+}

@@ -1,0 +1,278 @@
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Zalando+Sans+Expanded:wght@500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    /* Designed at 80% — bake that scale in so 100% browser zoom matches the spec. */
+    zoom: 0.8;
+  }
+  html, body {
+    @apply bg-brand-white text-brand-black antialiased;
+    font-family: 'DM Sans', system-ui, sans-serif;
+  }
+  body {
+    margin: 0;
+  }
+  * {
+    box-sizing: border-box;
+  }
+}
+
+/* Framer text styles — direct port from project TextStyles */
+@layer components {
+  .futuristic-section-card .text-brand-black,
+  .futuristic-section-card .text-brand-light-black,
+  .futuristic-section-card .text-brand-off-black,
+  .futuristic-section-card .text-brand-pale-black {
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .futuristic-section-card .bg-brand-off-white,
+  .futuristic-section-card .bg-brand-light-white,
+  .futuristic-section-card .bg-brand-dim-white {
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.045)),
+      rgba(255, 255, 255, 0.04);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 24px 70px rgba(0, 0, 0, 0.16);
+    backdrop-filter: blur(18px);
+  }
+
+  .futuristic-section-card .group:hover.bg-brand-orange,
+  .futuristic-section-card .hover\:bg-brand-orange:hover {
+    background:
+      linear-gradient(135deg, rgba(255, 122, 26, 0.92), rgba(255, 122, 26, 0.56)),
+      rgba(255, 122, 26, 0.6);
+  }
+
+  .futuristic-section-card :is(h3, blockquote, .zalando-h3-44) {
+    color: #ffffff;
+  }
+
+  .futuristic-section-card .border-brand-off-gray,
+  .futuristic-section-card .divide-brand-off-gray > :not([hidden]) ~ :not([hidden]) {
+    border-color: rgba(255, 255, 255, 0.16);
+  }
+
+  .futuristic-section-card input,
+  .futuristic-section-card textarea {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+  }
+
+  .futuristic-section-card input::placeholder,
+  .futuristic-section-card textarea::placeholder {
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  .agency-globe {
+    position: relative;
+    display: inline-flex;
+    width: 26px;
+    height: 26px;
+    flex: 0 0 auto;
+    border-radius: 999px;
+    overflow: hidden;
+    box-shadow: 0 0 18px rgba(255, 122, 26, 0.35);
+  }
+
+  .agency-globe img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    animation: earth-rotate 12s linear infinite;
+    transform-origin: center;
+  }
+
+  .nav-orbit {
+    animation: nav-float 5s ease-in-out infinite;
+  }
+
+  .why-video-float-one,
+  .why-video-float-two {
+    display: block;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    will-change: transform;
+  }
+
+  .why-video-float-one {
+    animation: why-video-rotate-one 7.5s ease-in-out infinite;
+  }
+
+  .why-video-float-two {
+    animation: why-video-rotate-two 8.5s ease-in-out infinite;
+  }
+
+  .clash-h1-190 {
+    font-family: 'Clash Display', sans-serif;
+    font-weight: 600;
+    font-size: 190px;
+    line-height: 150px;
+    letter-spacing: -5.7px;
+    text-transform: none;
+  }
+  .clash-h1-88 {
+    font-family: 'Clash Display', sans-serif;
+    font-weight: 700;
+    font-size: 88px;
+    line-height: 82px;
+    letter-spacing: -0.3px;
+    text-transform: uppercase;
+  }
+  .clash-h4-20 {
+    font-family: 'Clash Display', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -1px;
+  }
+  .zalando-h1-88 {
+    font-family: 'Zalando Sans Expanded', sans-serif;
+    font-weight: 700;
+    font-size: 88px;
+    line-height: 82px;
+    letter-spacing: -4.4px;
+  }
+  .zalando-h2-lh69 {
+    font-family: 'Zalando Sans Expanded', sans-serif;
+    font-weight: 600;
+    font-size: 72px;
+    line-height: 69px;
+    letter-spacing: -3.6px;
+  }
+  .zalando-h2-100 {
+    font-family: 'Zalando Sans Expanded', sans-serif;
+    font-weight: 500;
+    font-size: 100px;
+    line-height: 69px;
+    letter-spacing: -5px;
+  }
+  .zalando-h3-44 {
+    font-family: 'Zalando Sans Expanded', sans-serif;
+    font-weight: 600;
+    font-size: 44px;
+    line-height: 46px;
+    letter-spacing: -2.2px;
+  }
+  .zalando-h4-20 {
+    font-family: 'Zalando Sans Expanded', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -1px;
+  }
+  .zalando-h5-18 {
+    font-family: 'Zalando Sans Expanded', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 20px;
+    letter-spacing: 0;
+  }
+  .zalando-p14-bold {
+    font-family: 'Zalando Sans Expanded', sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: -0.7px;
+  }
+  .zalando-p14-semi {
+    font-family: 'Zalando Sans Expanded', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: -0.7px;
+  }
+  .dm-p14-medium {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -0.28px;
+  }
+  .dm-p14-semi {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 12px;
+    letter-spacing: -0.42px;
+  }
+  .dm-p16-medium {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: -0.48px;
+  }
+  .dm-p18-semi {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: -0.36px;
+  }
+  .dm-p20-medium {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -1px;
+  }
+  .dm-h2-72 {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 72px;
+    line-height: 69px;
+    letter-spacing: -2.16px;
+  }
+  .dm-h3-32 {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 32px;
+    letter-spacing: -1.6px;
+  }
+}
+
+@keyframes earth-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes nav-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes why-video-rotate-one {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotateY(12deg) rotateZ(-3deg);
+  }
+  50% {
+    transform: translate3d(0, -16px, 0) rotateY(-8deg) rotateZ(3deg);
+  }
+}
+
+@keyframes why-video-rotate-two {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotateY(-12deg) rotateZ(4deg);
+  }
+  50% {
+    transform: translate3d(0, 18px, 0) rotateY(8deg) rotateZ(-4deg);
+  }
+}

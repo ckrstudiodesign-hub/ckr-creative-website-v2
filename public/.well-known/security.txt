@@ -1,0 +1,4 @@
+Contact: mailto:ckrstudiodesign@gmail.com
+Preferred-Languages: en
+Canonical: https://www.ckrcreatives.com/.well-known/security.txt
+Policy: https://www.ckrcreatives.com/privacy-policy

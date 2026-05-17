@@ -1,0 +1,24 @@
+# Ignore from Vercel uploads — keeps deploys lean & fast.
+
+# Dev/test artifacts
+scripts/
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+
+# Local env (Vercel uses dashboard env vars in production)
+.env
+.env.local
+.env.*.local
+
+# Editor / OS noise
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Docs that don't need to ship
+LEAD_CAPTURE_SETUP.md
+DEPLOY.md
+README.md
