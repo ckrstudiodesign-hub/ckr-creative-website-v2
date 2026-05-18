@@ -5,19 +5,16 @@ export default function SiteLoader() {
   const [isVisible, setIsVisible] = useState(true)
   const videoRef = useRef<HTMLVideoElement>(null)
 
+  const dismiss = () => setIsVisible(false)
+
   useEffect(() => {
-    const timer = window.setTimeout(() => setIsVisible(false), 5000)
-    return () => window.clearTimeout(timer)
-  }, [])
-
-  function handleTimeUpdate() {
     const video = videoRef.current
-    if (!video?.duration) return
-
-    if (video.currentTime >= video.duration * 0.8) {
-      video.pause()
+    if (video) {
+      video.play().catch(() => {})
     }
-  }
+    const fallback = window.setTimeout(dismiss, 8500)
+    return () => window.clearTimeout(fallback)
+  }, [])
 
   return (
     <AnimatePresence>
@@ -44,7 +41,7 @@ export default function SiteLoader() {
               muted
               playsInline
               preload="auto"
-              onTimeUpdate={handleTimeUpdate}
+              onEnded={dismiss}
             />
           </motion.div>
           <span className="sr-only">Loading CKR Creatives</span>
