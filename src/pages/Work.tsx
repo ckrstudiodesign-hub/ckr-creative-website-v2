@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+﻿import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { useState, useMemo } from 'react'
 import { SEO } from '../components/SEO'
@@ -29,7 +29,7 @@ const cases: CaseStudy[] = [
     scope: ['AI workflows', 'Platform design', 'Brand system'],
     excerpt:
       'A next-generation AI infrastructure brand and product experience — identity, dashboards, and a launch site engineered for scale.',
-    cover: '/project image/NovaGrid System.png',
+    cover: '/project%20image/NovaGrid%20System.png',
     tags: ['AI', 'Web', 'Branding'],
   },
   {
@@ -41,7 +41,7 @@ const cases: CaseStudy[] = [
     scope: ['Brand identity', 'Editorial site', 'Motion grammar'],
     excerpt:
       'An editorial identity and cinematic site for a luxury mobility marque — bespoke wordmark, motion language, GCC-ready storytelling.',
-    cover: '/project image/Veloré Dynamics.png',
+    cover: '/project%20image/Velor%C3%A9%20Dynamics.png',
     tags: ['Branding', 'Motion', 'Web'],
   },
   {
@@ -53,7 +53,7 @@ const cases: CaseStudy[] = [
     scope: ['Brand system', 'Investor narrative', 'Launch site'],
     excerpt:
       'A future-facing aerospace identity and launch experience — investor narrative, mission storytelling, and a press-ready digital home.',
-    cover: '/project image/AetherX.png',
+    cover: '/project%20image/AetherX.png',
     tags: ['Branding', 'Web'],
   },
   {
@@ -65,7 +65,7 @@ const cases: CaseStudy[] = [
     scope: ['Product design', 'Brand identity', 'Marketing site'],
     excerpt:
       'A serious-yet-modern fintech identity for a quant-driven platform — UI system, marketing site, and conversion-tuned funnels.',
-    cover: '/project image/Blackstone.png',
+    cover: '/project%20image/Blackstone.png',
     tags: ['Branding', 'Web'],
   },
   {
@@ -77,7 +77,7 @@ const cases: CaseStudy[] = [
     scope: ['Product UI', 'Brand system', 'SEO architecture'],
     excerpt:
       'A clinical-grade AI healthcare brand — accessible product UI, trust-first content, and an SEO architecture built for visibility.',
-    cover: '/project image/Neurovia.png',
+    cover: '/project%20image/Neurovia.png',
     tags: ['AI', 'Web', 'Branding'],
   },
   {
@@ -89,7 +89,7 @@ const cases: CaseStudy[] = [
     scope: ['Brand identity', 'Product site', 'Content system'],
     excerpt:
       'A confident cybersecurity identity and site reset — clear messaging, technical depth, and a content engine tuned for enterprise buyers.',
-    cover: '/project image/SentinelCore.png',
+    cover: '/project%20image/SentinelCore.png',
     tags: ['Branding', 'Web'],
   },
   {
@@ -101,7 +101,7 @@ const cases: CaseStudy[] = [
     scope: ['Brand identity', 'Editorial site', 'Booking flow'],
     excerpt:
       'A refined hospitality identity and editorial booking experience — quiet luxury, considered typography, and a global guest journey.',
-    cover: '/project image/Élevare.png',
+    cover: '/project%20image/%C3%89levare.png',
     tags: ['Branding', 'Web'],
   },
   {
@@ -113,7 +113,7 @@ const cases: CaseStudy[] = [
     scope: ['Brand system', 'Launch site', 'Investor deck'],
     excerpt:
       'A precision identity and cinematic launch experience for an autonomous robotics platform — built for press, investors, and partners.',
-    cover: '/project image/Kairo.png',
+    cover: '/project%20image/Kairo.png',
     tags: ['Branding', 'Motion', 'AI'],
   },
   {
@@ -125,7 +125,7 @@ const cases: CaseStudy[] = [
     scope: ['Brand identity', 'Marketing site', 'CRM integration'],
     excerpt:
       'A modern proptech identity and marketing site — pipeline-ready lead capture, CRM integration, and a sales-aligned content system.',
-    cover: '/project image/AxisOne.png',
+    cover: '/project%20image/AxisOne.png',
     tags: ['Branding', 'Web'],
   },
   {
@@ -137,7 +137,7 @@ const cases: CaseStudy[] = [
     scope: ['Storefront design', 'AI personalization', 'Brand system'],
     excerpt:
       'An AI-native commerce platform — personalized storefronts, brand-grade UI, and a content engine tuned for organic growth.',
-    cover: '/project image/omniflux.png',
+    cover: '/project%20image/omniflux.png',
     tags: ['Commerce', 'AI', 'Web'],
   },
   {
@@ -149,7 +149,7 @@ const cases: CaseStudy[] = [
     scope: ['Identity', 'Website', 'SEO architecture'],
     excerpt:
       'A complete digital ecosystem for a Dubai-based wealth platform — identity system, cinematic site, AI-driven SEO architecture.',
-    cover: '/project image/Aurora Finance.png',
+    cover: '/project%20image/Aurora%20Finance.png',
     tags: ['Branding', 'Web', 'AI'],
   },
   {
@@ -161,7 +161,7 @@ const cases: CaseStudy[] = [
     scope: ['Brand identity', 'Motion language', 'Editorial site'],
     excerpt:
       'Re-imagined identity for a production studio. Editorial wordmark, motion grammar, and a portfolio site that performs in search.',
-    cover: '/project image/Nova Studio.png',
+    cover: '/project%20image/Nova%20Studio.png',
     tags: ['Branding', 'Motion', 'Web'],
   },
   {
@@ -173,7 +173,7 @@ const cases: CaseStudy[] = [
     scope: ['Product design', 'AI workflows', 'Design system'],
     excerpt:
       'A unified design system and AI workflow layer for an enterprise SaaS — from foundations to launch-ready interfaces.',
-    cover: '/project image/Monolith OS.png',
+    cover: '/project%20image/Monolith%20OS.png',
     tags: ['AI', 'Web'],
   },
   {
@@ -185,7 +185,7 @@ const cases: CaseStudy[] = [
     scope: ['Mobile UI', 'Brand refresh', 'Marketing site'],
     excerpt:
       'A health-tech rebrand and mobile redesign that doubled retention and tripled organic search visibility.',
-    cover: '/project image/Pulse.png',
+    cover: '/project%20image/Pulse.png',
     tags: ['Branding', 'Web'],
   },
   {
@@ -197,7 +197,7 @@ const cases: CaseStudy[] = [
     scope: ['Shopify Plus', 'Brand system', 'Editorial campaigns'],
     excerpt:
       'A premium DTC reset — bespoke editorial site, conversion-tuned commerce, and a global SEO push for the GCC region.',
-    cover: '/project image/Helix Atelier.png',
+    cover: '/project%20image/Helix%20Atelier.png',
     tags: ['Commerce', 'Branding', 'Web'],
   },
   {
@@ -209,7 +209,7 @@ const cases: CaseStudy[] = [
     scope: ['Web design', 'Copywriting', 'Investor deck'],
     excerpt:
       'A cinematic launch experience and investor narrative for a robotics platform raising their Series A.',
-    cover: '/project image/Vertex Robotics.png',
+    cover: '/project%20image/Vertex%20Robotics.png',
     tags: ['Web', 'Branding', 'Motion'],
   },
 ]
@@ -296,8 +296,8 @@ export default function Work() {
       />
 
       {/* Filter strip */}
-      <section className="w-full bg-brand-white px-5 pt-10 pb-4 md:px-10 xl:px-[72px]">
-        <div className="mx-auto w-full max-w-[1920px] flex flex-wrap items-center gap-3 dm-p14-semi text-brand-light-black">
+      <section className="w-full bg-brand-white px-5 pt-8 pb-4 md:px-10 xl:px-[72px]">
+        <div className="mx-auto w-full max-w-[1480px] flex flex-wrap items-center gap-3 dm-p14-semi text-brand-light-black">
           <span className="opacity-50 mr-2">Filter —</span>
           {FILTER_TAGS.map((tag) => {
             const isActive = activeTag === tag
@@ -324,18 +324,18 @@ export default function Work() {
       </section>
 
       {/* Case study grid */}
-      <section className="w-full bg-brand-white px-5 py-12 md:px-10 md:py-16 xl:px-[72px]">
-        <div className="mx-auto w-full max-w-[1920px]">
+      <section className="w-full bg-brand-white px-5 py-9 md:px-10 md:py-12 xl:px-[72px]">
+        <div className="mx-auto w-full max-w-[1480px]">
           {visibleCases.length === 0 ? (
-            <p className="dm-p18-semi text-brand-light-black text-center py-16">
+            <p className="dm-p18-semi text-brand-light-black text-center py-12">
               No projects match this filter yet — try another category.
             </p>
           ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-10">
             {visibleCases.map((c, i) => (
               <motion.article
                 key={c.slug}
-                initial={{ opacity: 0, y: 28 }}
+                initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-100px' }}
                 transition={{ duration: 0.55, delay: (i % 2) * 0.08, ease: [0.22, 1, 0.36, 1] }}
@@ -364,14 +364,14 @@ export default function Work() {
                       <span className="dm-p14-semi text-brand-white/80">{c.year}</span>
                     </div>
                   </div>
-                  <header className="mt-5 flex items-baseline justify-between gap-4">
+                  <header className="mt-4 flex items-baseline justify-between gap-4">
                     <h2 className="zalando-h3-44 leading-tight">{c.title}</h2>
                     <span className="dm-p14-semi text-brand-light-black shrink-0">{c.client}</span>
                   </header>
-                  <p className="mt-3 dm-p18-semi text-brand-light-black max-w-[60ch]">
+                  <p className="mt-2.5 dm-p18-semi text-brand-light-black max-w-[60ch]">
                     {c.excerpt}
                   </p>
-                  <ul className="mt-4 flex flex-wrap gap-2">
+                  <ul className="mt-3 flex flex-wrap gap-2">
                     {c.scope.map((s) => (
                       <li
                         key={s}
@@ -390,7 +390,7 @@ export default function Work() {
       </section>
 
       {/* Closing CTA */}
-      <section className="w-full bg-brand-black text-brand-white px-5 py-20 md:px-10 md:py-28 xl:px-[72px] relative overflow-hidden">
+      <section className="w-full bg-brand-black text-brand-white px-5 py-12 md:px-10 md:py-16 xl:px-[72px] relative overflow-hidden">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-35"
@@ -404,11 +404,11 @@ export default function Work() {
               'linear-gradient(135deg, rgba(255,122,26,0.35) 0%, rgba(36,16,6,0.55) 50%, rgba(0,0,0,0.92) 100%)',
           }}
         />
-        <div className="relative z-10 mx-auto w-full max-w-[1920px] flex flex-col gap-8 items-start">
+        <div className="relative z-10 mx-auto w-full max-w-[1480px] flex flex-col gap-6 items-start">
           <span className="dm-p14-semi uppercase tracking-[0.25em] text-brand-orange">
             (Next Project)
           </span>
-          <h2 className="font-zalando font-semibold text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.98] max-w-[1000px]">
+          <h2 className="font-zalando font-semibold text-[clamp(2rem,4vw,3.6rem)] leading-[1] max-w-[1000px]">
             Yours could be the next one in this collection.
           </h2>
           <p className="dm-p18-semi text-brand-white/75 max-w-[640px]">

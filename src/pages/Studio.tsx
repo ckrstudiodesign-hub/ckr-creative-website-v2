@@ -137,10 +137,10 @@ export default function Studio() {
       />
 
       {/* Story block */}
-      <section className="w-full bg-brand-white px-5 py-16 md:px-10 md:py-24 xl:px-[72px]">
-        <div className="mx-auto w-full max-w-[1920px] grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <section className="w-full bg-brand-white px-5 py-10 md:px-10 md:py-14 xl:px-[72px]">
+        <div className="mx-auto w-full max-w-[1480px] grid grid-cols-1 lg:grid-cols-12 gap-8">
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
@@ -149,16 +149,16 @@ export default function Studio() {
             <span className="dm-p14-semi uppercase tracking-[0.25em] text-brand-orange">
               (Our Story)
             </span>
-            <h2 className="font-zalando font-semibold text-[clamp(2rem,4vw,3.25rem)] leading-[1.02] mt-6">
+            <h2 className="font-zalando font-semibold text-[clamp(1.7rem,3.3vw,2.7rem)] leading-[1.02] mt-5">
               We design brand ecosystems, not deliverables.
             </h2>
           </motion.div>
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
-            className="lg:col-span-7 lg:col-start-6 flex flex-col gap-6 dm-p18-semi text-brand-light-black"
+            className="lg:col-span-7 lg:col-start-6 flex flex-col gap-5 dm-p18-semi text-brand-light-black"
           >
             <p>
               CKR Creatives was founded on a simple belief: modern brands deserve more than a logo
@@ -182,25 +182,25 @@ export default function Studio() {
       </section>
 
       {/* Capabilities */}
-      <section className="w-full bg-brand-off-white px-5 py-16 md:px-10 md:py-24 xl:px-[72px]">
-        <div className="mx-auto w-full max-w-[1920px]">
-          <div className="flex flex-col gap-6 max-w-[820px] mb-12">
+      <section className="w-full bg-brand-off-white px-5 py-10 md:px-10 md:py-14 xl:px-[72px]">
+        <div className="mx-auto w-full max-w-[1480px]">
+          <div className="flex flex-col gap-4 max-w-[820px] mb-8">
             <span className="dm-p14-semi uppercase tracking-[0.25em] text-brand-orange">
               (Capabilities)
             </span>
-            <h2 className="font-zalando font-semibold text-[clamp(2rem,4vw,3.5rem)] leading-[1.02]">
+            <h2 className="font-zalando font-semibold text-[clamp(1.7rem,3.3vw,2.9rem)] leading-[1.02]">
               Six disciplines, one studio.
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {capabilities.map((c, i) => (
               <motion.article
                 key={c.n}
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-80px' }}
                 transition={{ duration: 0.5, delay: i * 0.05 }}
-                className="rounded-[24px] bg-brand-white border border-brand-off-gray p-8 flex flex-col gap-4 min-h-[260px] transition-colors hover:bg-brand-black hover:text-brand-white"
+                className="rounded-[24px] bg-brand-white border border-brand-off-gray p-6 flex flex-col gap-3.5 min-h-[200px] transition-colors hover:bg-brand-black hover:text-brand-white"
               >
                 <span className="dm-p14-semi opacity-50">{c.n}</span>
                 <h3 className="zalando-h3-44 leading-tight">{c.title}</h3>
@@ -212,13 +212,13 @@ export default function Studio() {
       </section>
 
       {/* Principles */}
-      <section className="w-full bg-brand-white px-5 py-16 md:px-10 md:py-24 xl:px-[72px]">
-        <div className="mx-auto w-full max-w-[1920px]">
-          <div className="flex flex-col gap-6 max-w-[820px] mb-12">
+      <section className="w-full bg-brand-white px-5 py-10 md:px-10 md:py-14 xl:px-[72px]">
+        <div className="mx-auto w-full max-w-[1480px]">
+          <div className="flex flex-col gap-4 max-w-[820px] mb-8">
             <span className="dm-p14-semi uppercase tracking-[0.25em] text-brand-orange">
               (How We Work)
             </span>
-            <h2 className="font-zalando font-semibold text-[clamp(2rem,4vw,3.5rem)] leading-[1.02]">
+            <h2 className="font-zalando font-semibold text-[clamp(1.7rem,3.3vw,2.9rem)] leading-[1.02]">
               Four principles, no exceptions.
             </h2>
           </div>
@@ -226,11 +226,11 @@ export default function Studio() {
             {principles.map((p, i) => (
               <motion.li
                 key={p.title}
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-80px' }}
                 transition={{ duration: 0.5, delay: i * 0.06 }}
-                className="grid grid-cols-12 gap-6 items-baseline border-t border-brand-off-gray py-8"
+                className="grid grid-cols-12 gap-5 items-baseline border-t border-brand-off-gray py-6"
               >
                 <span className="col-span-2 md:col-span-1 dm-p18-semi text-brand-light-black">
                   {String(i + 1).padStart(2, '0')}
@@ -249,7 +249,7 @@ export default function Studio() {
       </section>
 
       {/* Closing CTA */}
-      <section className="w-full bg-brand-black text-brand-white px-5 py-20 md:px-10 md:py-28 xl:px-[72px] relative overflow-hidden">
+      <section className="w-full bg-brand-black text-brand-white px-5 py-12 md:px-10 md:py-16 xl:px-[72px] relative overflow-hidden">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-30"
@@ -263,14 +263,14 @@ export default function Studio() {
               'linear-gradient(135deg, rgba(255,122,26,0.32) 0%, rgba(36,16,6,0.5) 50%, rgba(0,0,0,0.9) 100%)',
           }}
         />
-        <div className="relative z-10 mx-auto w-full max-w-[1920px] flex flex-col gap-8 items-start">
+        <div className="relative z-10 mx-auto w-full max-w-[1480px] flex flex-col gap-6 items-start">
           <span className="dm-p14-semi uppercase tracking-[0.25em] text-brand-orange">
             (Get In Touch)
           </span>
-          <h2 className="font-zalando font-semibold text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.98] max-w-[900px]">
+          <h2 className="font-zalando font-semibold text-[clamp(2rem,4vw,3.6rem)] leading-[1] max-w-[900px]">
             Have a project in mind? Let&apos;s build something that lasts.
           </h2>
-          <div className="flex flex-wrap gap-4 mt-4">
+          <div className="flex flex-wrap gap-3 mt-3">
             <Link
               to="/#contact"
               className="inline-flex items-center justify-center rounded-full bg-brand-white px-8 py-4 dm-p14-semi text-brand-orange uppercase tracking-[0.5px]"

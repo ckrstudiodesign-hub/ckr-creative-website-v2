@@ -7,19 +7,19 @@ import { motion } from 'framer-motion'
  */
 export default function WhyChooseUsSection() {
   return (
-    <section className="w-full bg-brand-off-white text-brand-black px-5 py-20 md:px-10 md:py-[100px] xl:px-[72px]">
-      <div className="relative w-full max-w-[1920px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+    <section className="w-full bg-brand-off-white px-4 py-8 text-brand-black md:px-8 md:py-12 lg:px-10 xl:px-[56px]">
+      <div className="relative mx-auto grid w-full max-w-[1300px] grid-cols-1 items-center gap-6 lg:grid-cols-2 lg:gap-8">
         {/* Left — copy */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="flex flex-col gap-8 max-w-[820px]"
+          className="flex max-w-[820px] flex-col gap-4 md:gap-5"
         >
           <span className="dm-p18-semi opacity-70">(WHY CHOOSE US)</span>
           <h2 className="zalando-h2-lh69">A Future-Focused Creative Agency Built For Growth</h2>
-          <div className="flex flex-col gap-6 dm-p18-semi text-brand-light-black">
+          <div className="flex flex-col gap-4 dm-p18-semi text-brand-light-black">
             <p>
               CKR Creatives combines branding, web design, SEO, AI automation, digital marketing, and
               creative technology into one complete digital ecosystem.
@@ -38,12 +38,12 @@ export default function WhyChooseUsSection() {
 
         {/* Right — floating videos */}
         <div
-          className="relative w-full h-[360px] sm:h-[440px] lg:h-[560px] flex items-center justify-center"
+          className="relative flex h-[300px] w-full items-center justify-center sm:h-[350px] lg:h-[390px]"
           style={{ perspective: '1200px' }}
         >
           <motion.div
             className="absolute top-4 left-2 sm:left-8 lg:left-4 xl:left-10 w-[44%] sm:w-[42%] lg:w-[48%]"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-120px' }}
             transition={{ duration: 0.8, delay: 0.1, ease: 'easeOut' }}
@@ -60,7 +60,7 @@ export default function WhyChooseUsSection() {
           </motion.div>
           <motion.div
             className="absolute bottom-4 right-2 sm:right-8 lg:right-4 xl:right-10 w-[44%] sm:w-[42%] lg:w-[48%]"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-120px' }}
             transition={{ duration: 0.8, delay: 0.25, ease: 'easeOut' }}

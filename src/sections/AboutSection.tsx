@@ -26,23 +26,23 @@ const rotateWords = [
 
 export default function AboutSection() {
   return (
-    <section className="w-full bg-brand-white px-5 py-20 md:px-10 md:py-28 xl:px-[72px]">
-      <div className="mx-auto grid w-full max-w-[1920px] grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
+    <section className="w-full bg-brand-white px-4 py-8 md:px-8 md:py-12 lg:px-10 xl:px-[56px]">
+      <div className="mx-auto grid w-full max-w-[1300px] grid-cols-1 items-center gap-6 lg:grid-cols-12 lg:gap-8">
         <motion.div
-          initial={{ opacity: 0, x: -28 }}
+          initial={{ opacity: 0, x: -18 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: '-120px' }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="lg:col-span-7"
         >
-          <div className="flex max-w-[920px] flex-col gap-7">
+          <div className="flex max-w-[920px] flex-col gap-4">
             <span className="dm-p18-semi text-brand-light-black">(ABOUT)</span>
-            <h2 className="font-zalando text-[clamp(2.35rem,5vw,5.7rem)] font-semibold leading-[1.03] text-brand-black">
+            <h2 className="font-zalando text-[clamp(1.4rem,2.7vw,2.35rem)] font-semibold leading-[1.06] text-brand-black">
               Dubai Creative Agency Building The Future Of{' '}
               <RotatingText items={rotateWords} interval={2.2} className="text-brand-orange" />
             </h2>
 
-            <div className="grid gap-5 dm-p18-semi text-brand-light-black md:grid-cols-[1fr_0.9fr]">
+            <div className="grid gap-4 dm-p18-semi text-brand-light-black md:grid-cols-[1fr_0.9fr]">
               <p>
                 CKR Creatives is a modern creative agency in Dubai focused on helping businesses
                 build powerful digital identities through branding, web development, AI automation,
@@ -61,11 +61,11 @@ export default function AboutSection() {
               strategy, and technology.
             </p>
 
-            <div className="flex flex-wrap gap-2.5 pt-2">
+            <div className="flex flex-wrap gap-2 pt-1">
               {focusAreas.map((item, i) => (
                 <motion.span
                   key={item}
-                  initial={{ opacity: 0, y: 12 }}
+                  initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.45, delay: i * 0.05 }}
@@ -79,11 +79,11 @@ export default function AboutSection() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, x: 28, rotate: 1.5 }}
+          initial={{ opacity: 0, x: 18, rotate: 1.5 }}
           whileInView={{ opacity: 1, x: 0, rotate: 0 }}
           viewport={{ once: true, margin: '-120px' }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="relative mx-auto aspect-[9/16] w-full max-w-[420px] overflow-hidden rounded-[32px] bg-brand-black shadow-[0_34px_90px_rgba(36,16,6,0.18)] lg:col-span-5"
+          className="relative mx-auto aspect-[9/16] w-full max-w-[340px] overflow-hidden rounded-[32px] bg-brand-black shadow-[0_34px_90px_rgba(36,16,6,0.18)] lg:col-span-5"
         >
           <motion.video
             aria-hidden
@@ -113,18 +113,18 @@ export default function AboutSection() {
             transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
           />
 
-          <div className="absolute inset-x-5 bottom-5 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+          <div className="absolute inset-x-4 bottom-4 grid gap-2.5 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
             {stats.map((stat, i) => (
               <motion.div
                 key={stat.label}
-                initial={{ opacity: 0, y: 18 }}
+                initial={{ opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.25 + i * 0.08 }}
-                className="rounded-2xl border border-white/16 bg-white/[0.10] p-4 text-brand-white backdrop-blur-xl"
+                className="rounded-2xl border border-white/16 bg-white/[0.10] p-3.5 text-brand-white backdrop-blur-xl"
               >
-                <div className="font-zalando text-2xl font-semibold leading-none">{stat.value}</div>
-                <div className="mt-2 text-xs font-semibold uppercase tracking-[0.14em] text-brand-white/65">
+                <div className="font-zalando text-xl font-semibold leading-none">{stat.value}</div>
+                <div className="mt-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-brand-white/65">
                   {stat.label}
                 </div>
               </motion.div>

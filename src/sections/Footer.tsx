@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 const nav = [
   { label: 'Home', to: '/' },
@@ -45,78 +46,65 @@ export default function Footer() {
   }
 
   return (
-    <footer className="w-full bg-brand-white px-5 py-10 md:px-10 md:py-14 xl:px-[72px]">
+    <footer className="w-full bg-brand-white px-4 py-6 md:px-8 md:py-8 lg:px-10 xl:px-[56px]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
       />
-      <div className="relative w-full max-w-[1920px] mx-auto overflow-hidden rounded-[28px] md:rounded-40 bg-brand-black px-5 py-10 text-brand-white md:px-11 md:py-14 xl:px-14">
+      <div className="relative mx-auto w-full max-w-[1300px] overflow-hidden rounded-[28px] bg-brand-black px-5 py-7 text-brand-white md:rounded-40 md:px-10 md:py-8 xl:px-14">
+        {/* Clean solid surface — thin top sheen only, no decorative background */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-60"
-          style={{
-            backgroundImage: 'url(/images/footer.jpeg)',
-          }}
-        />
-        {/* Base dark wash — guarantees text contrast over any part of the photo */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-brand-black/55"
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute rounded-full bg-white/20 blur-[170px]"
-          style={{ top: 48, right: '50%', bottom: '42%', left: -340 }}
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute rounded-full bg-brand-orange/55 blur-[170px]"
-          style={{ top: 40, right: -420, bottom: '38%', left: '58%' }}
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              'linear-gradient(135deg, rgba(255,122,26,0.30) 0%, rgba(36,16,6,0.40) 42%, rgba(0,0,0,0.92) 100%)',
-          }}
+          className="pointer-events-none absolute inset-x-0 top-0 h-px"
+          style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent)' }}
         />
 
-        <div className="relative z-10 flex flex-col gap-14">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
-            <div className="md:col-span-5 flex flex-col gap-4">
-              <span className="zalando-h3-44">CKR Creatives</span>
-              <span className="dm-p18-semi text-brand-white/70">Dubai, United Arab Emirates</span>
-              <p className="dm-p16-medium text-brand-white/70 max-w-[420px] mt-3">
-                Future-focused creative agency specializing in:
+        <div className="relative z-10 flex flex-col gap-7">
+          {/* Top — brand · explore · connect */}
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.5fr_0.7fr_1fr]">
+            {/* Brand */}
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-3">
+                <img src="/images/logo.png" alt="CKR Creatives" className="h-11 w-11 shrink-0 object-contain" />
+                <div className="flex flex-col leading-tight">
+                  <span className="zalando-h4-20 text-brand-white">CKR Creatives</span>
+                  <span className="dm-p14-medium text-brand-white/55">Dubai, United Arab Emirates</span>
+                </div>
+              </div>
+              <p className="dm-p14-semi max-w-[380px] text-brand-white/70">
+                Future-ready creative studio — branding, web, AI automation, SEO &amp; digital
+                protection for modern brands.
               </p>
-              <ul className="flex flex-wrap gap-x-4 gap-y-2 mt-1">
+              <a
+                href="mailto:ckrstudiodesign@gmail.com"
+                className="group inline-flex w-fit items-center gap-2 zalando-h5-18 text-brand-white transition-colors hover:text-brand-orange"
+              >
+                ckrstudiodesign@gmail.com
+                <span aria-hidden className="text-brand-orange transition-transform duration-300 group-hover:translate-x-1">→</span>
+              </a>
+              <ul className="flex flex-wrap gap-2 pt-1">
                 {offerings.map((o) => (
                   <li
                     key={o}
-                    className="rounded-full border border-white/14 bg-white/[0.06] px-3 py-1 dm-p14-medium text-brand-white/72 backdrop-blur-xl"
+                    className="rounded-full border border-white/12 bg-white/[0.05] px-3 py-1 dm-p14-medium text-brand-white/65 backdrop-blur-xl"
                   >
                     {o}
                   </li>
                 ))}
               </ul>
-              <a
-                href="mailto:ckrstudiodesign@gmail.com"
-                className="zalando-h5-18 text-brand-white hover:underline mt-4"
-              >
-                ckrstudiodesign@gmail.com
-              </a>
             </div>
 
-            <div className="md:col-span-3 flex flex-col gap-6">
-              <span className="dm-p14-semi uppercase tracking-wider text-brand-white/60">Navigation</span>
-              <ul className="flex flex-col gap-4">
+            {/* Explore */}
+            <div className="flex flex-col gap-3.5">
+              <span className="dm-p14-semi uppercase tracking-[0.18em] text-brand-white/40">Explore</span>
+              <ul className="flex flex-col gap-2.5">
                 {nav.map((item) => (
                   <li key={item.to}>
                     <Link
                       to={item.to}
-                      className="dm-p18-semi text-brand-white hover:text-brand-white/70"
+                      className="group inline-flex items-center gap-2 dm-p16-medium text-brand-white/80 transition-colors hover:text-brand-white"
                     >
+                      <span aria-hidden className="h-px w-0 bg-brand-orange transition-all duration-300 group-hover:w-4" />
                       {item.label}
                     </Link>
                   </li>
@@ -124,44 +112,58 @@ export default function Footer() {
               </ul>
             </div>
 
-            <div className="md:col-span-4 flex flex-col gap-6">
-              <span className="dm-p14-semi uppercase tracking-wider text-brand-white/60">Social Platforms</span>
-              <ul className="flex flex-col gap-4">
+            {/* Connect */}
+            <div className="flex flex-col gap-3.5">
+              <span className="dm-p14-semi uppercase tracking-[0.18em] text-brand-white/40">Connect</span>
+              <div className="flex flex-col gap-2.5">
                 {social.map((item) => (
-                  <li key={item.label}>
-                    <a
-                      href={item.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="dm-p18-semi text-brand-white hover:text-brand-white/70 inline-flex items-center gap-2"
-                    >
-                      {item.label}
-                      <span aria-hidden>-&gt;</span>
-                    </a>
-                  </li>
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center justify-between gap-3 rounded-full border border-white/12 bg-white/[0.06] px-4 py-2.5 text-brand-white/85 backdrop-blur-xl transition-all hover:border-brand-orange/50 hover:bg-white/10"
+                  >
+                    <span className="dm-p14-semi">{item.label}</span>
+                    <span aria-hidden className="text-brand-orange transition-transform duration-300 group-hover:translate-x-1">→</span>
+                  </a>
                 ))}
-              </ul>
+              </div>
             </div>
           </div>
 
-          <div className="flex flex-row flex-wrap gap-6 justify-between items-start border-t border-white/14 pt-9">
-            <span className="dm-p14-medium text-brand-white/60">
-              (c) {new Date().getFullYear()} CKR Creatives. All Rights Reserved
+          {/* Creative animated gradient wordmark */}
+          <div className="relative -mb-1 overflow-hidden border-t border-white/12 pt-5">
+            <motion.span
+              className="block select-none whitespace-nowrap bg-gradient-to-r from-white via-brand-orange to-white/25 bg-clip-text font-clash text-[clamp(2.5rem,12vw,9rem)] font-bold uppercase leading-[0.82] tracking-tight text-transparent"
+              style={{ backgroundSize: '200% auto' }}
+              animate={{ backgroundPosition: ['0% 50%', '200% 50%'] }}
+              transition={{ duration: 14, repeat: Infinity, ease: 'linear' }}
+            >
+              CKR Creatives
+            </motion.span>
+          </div>
+
+          {/* Legal bar + back to top */}
+          <div className="flex flex-col gap-4 border-t border-white/12 pt-4 md:flex-row md:items-center md:justify-between">
+            <span className="dm-p14-medium text-brand-white/55">
+              © {new Date().getFullYear()} CKR Creatives. All rights reserved.
             </span>
-            <div className="flex flex-row gap-10">
-              <Link to="/terms-of-use" className="dm-p14-medium text-brand-white/60 hover:text-brand-white">
+            <div className="flex flex-wrap items-center gap-5 md:gap-7">
+              <Link to="/terms-of-use" className="dm-p14-medium text-brand-white/55 transition-colors hover:text-brand-white">
                 Terms of Use
               </Link>
-              <Link to="/privacy-policy" className="dm-p14-medium text-brand-white/60 hover:text-brand-white">
+              <Link to="/privacy-policy" className="dm-p14-medium text-brand-white/55 transition-colors hover:text-brand-white">
                 Privacy Policy
               </Link>
-            </div>
-          </div>
-
-          <div className="w-full h-[157px] flex items-end justify-center">
-            <div className="flex flex-row items-end gap-2">
-              <span className="clash-h1-88 text-brand-white leading-none">CKR</span>
-              <span className="clash-h4-20 text-brand-white/70 pb-3">CREATIVES</span>
+              <button
+                type="button"
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                className="group inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3.5 py-1.5 dm-p14-medium text-brand-white/70 transition-all hover:border-brand-orange/50 hover:text-brand-white"
+              >
+                Back to top
+                <span aria-hidden className="transition-transform duration-300 group-hover:-translate-y-0.5">↑</span>
+              </button>
             </div>
           </div>
         </div>

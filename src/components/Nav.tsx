@@ -1,6 +1,7 @@
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
+import Pulse from './Pulse'
 
 const links = [
   { label: 'Home', to: '/' },
@@ -25,8 +26,8 @@ export default function Nav() {
   }
 
   return (
-    <header className="w-full bg-brand-white/90 px-5 md:px-10 xl:px-[72px] py-3 md:py-5 sticky top-0 z-50 backdrop-blur-xl transition-all duration-300">
-      <div className="relative w-full max-w-[1920px] mx-auto flex flex-row items-center justify-between gap-4 md:gap-8">
+    <header className="sticky top-0 z-50 w-full border-b border-brand-off-gray/45 bg-brand-white/82 px-4 py-3 shadow-[0_12px_34px_rgba(36,16,6,0.04)] backdrop-blur-xl transition-all duration-300 md:px-8 lg:px-10 xl:px-[72px]">
+      <div className="relative mx-auto flex min-h-[48px] w-full max-w-[1480px] flex-row items-center justify-between gap-4 md:min-h-[58px] md:gap-8">
         {/* Desktop: logo block on the left. Mobile: hidden (we render a centered version below) */}
         <div className="hidden lg:flex items-center gap-3 md:gap-5">
           <motion.div whileHover={{ rotate: -10, scale: 1.08 }} whileTap={{ scale: 0.96 }}>
@@ -55,7 +56,7 @@ export default function Nav() {
         </div>
 
         {/* Mobile/tablet: mark stays left, signature sits centered */}
-        <div className="lg:hidden absolute left-0 top-0 flex items-center">
+        <div className="absolute left-0 top-1/2 flex -translate-y-1/2 items-center lg:hidden">
           <motion.div whileHover={{ rotate: -10, scale: 1.08 }} whileTap={{ scale: 0.96 }}>
             <Link to="/" onClick={goHome} className="block w-[42px] h-[42px] shrink-0" aria-label="CKR Creatives - home">
               <img
@@ -66,25 +67,25 @@ export default function Nav() {
             </Link>
           </motion.div>
         </div>
-        <div className="lg:hidden absolute left-1/2 top-0 -translate-x-1/2 flex items-center">
+        <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center lg:hidden">
           <Link to="/" onClick={goHome} aria-label="CKR Creatives - home" className="shrink-0">
             <img
               src="/images/logo name.png"
               alt="CKR Creatives Text"
-              className="h-[36px] w-auto object-contain drop-shadow-md"
+              className="h-[32px] w-auto max-w-[170px] object-contain drop-shadow-md sm:h-[36px]"
             />
           </Link>
         </div>
 
         {/* Desktop/Tablet Navigation */}
-        <nav className="nav-orbit hidden lg:flex flex-row items-center gap-8 rounded-full border border-brand-off-gray bg-brand-white/80 p-2.5 px-8 shadow-[0_18px_50px_rgba(0,0,0,0.06)]">
+        <nav className="nav-orbit hidden flex-row items-center gap-2 rounded-full border border-brand-off-gray bg-brand-white/80 p-2 shadow-[0_18px_50px_rgba(0,0,0,0.06)] lg:flex xl:gap-4 xl:px-4">
           {links.map((link) => (
             <NavLink
               key={link.to}
               to={link.to}
               onClick={link.to === '/' ? goHome : undefined}
               className={({ isActive }) =>
-                `relative overflow-hidden rounded-full px-5 py-2.5 dm-p16-medium transition-colors duration-300 ${
+                `relative overflow-hidden rounded-full px-4 py-2.5 dm-p16-medium transition-colors duration-300 xl:px-5 ${
                   isActive ? 'text-brand-black' : 'text-brand-black/60 hover:text-brand-black'
                 }`
               }
@@ -121,6 +122,11 @@ export default function Nav() {
         </nav>
 
         <div className="ml-auto lg:ml-0 flex items-center gap-3">
+          {/* Availability indicator — moved here from the hero card */}
+          <div className="hidden xl:flex items-center gap-2 rounded-full border border-brand-off-gray bg-white/70 px-3.5 py-2 backdrop-blur-sm">
+            <Pulse color="rgb(34, 197, 94)" />
+            <span className="dm-p14-semi text-brand-black/70">Available for new projects</span>
+          </div>
           <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.97 }} className="hidden lg:block">
             <Link
               to="/#contact"
@@ -132,9 +138,10 @@ export default function Nav() {
 
           {/* Mobile Menu Toggle */}
           <button
-            className="lg:hidden p-2 text-brand-black flex flex-col justify-center items-center gap-1.5 w-10 h-10 rounded-full border border-brand-off-gray bg-brand-white/80"
+            className="flex h-11 w-11 flex-col items-center justify-center gap-1.5 rounded-full border border-brand-off-gray bg-brand-white/90 p-2 text-brand-black shadow-[0_8px_24px_rgba(36,16,6,0.08)] lg:hidden"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle Navigation"
+            aria-expanded={isOpen}
           >
             <span className={`block w-5 h-0.5 bg-current transition-transform duration-300 ${isOpen ? 'rotate-45 translate-y-2' : ''}`} />
             <span className={`block w-5 h-0.5 bg-current transition-opacity duration-300 ${isOpen ? 'opacity-0' : ''}`} />

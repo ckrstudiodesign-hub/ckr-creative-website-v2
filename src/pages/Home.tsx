@@ -8,6 +8,7 @@ import WhyChooseUsSection from '../sections/WhyChooseUsSection'
 import TestimonialSection from '../sections/TestimonialSection'
 import FaqSection from '../sections/FaqSection'
 import FinalCtaSection from '../sections/FinalCtaSection'
+import InstagramSection from '../sections/InstagramSection'
 import { SEO } from '../components/SEO'
 import { SITE_ORIGIN, buildBreadcrumbs } from '../components/seo-utils'
 
@@ -229,9 +230,10 @@ export default function Home() {
       <div id="about"><AboutSection /></div>
       <div id="services"><ServiceSection /></div>
       <FeatureSection />
+      <WhyChooseUsSection />
       <ProcessSection />
       <WorkSection />
-      <WhyChooseUsSection />
+      <InstagramSection />
       <TestimonialSection />
       <FaqSection />
       <FinalCtaSection />

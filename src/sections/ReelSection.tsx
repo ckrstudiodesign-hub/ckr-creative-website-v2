@@ -6,7 +6,7 @@
 export default function ReelSection() {
   return (
     <section className="w-full bg-brand-white px-[72px] py-12">
-      <div className="w-full max-w-[1920px] mx-auto rounded-[40px] overflow-hidden">
+      <div className="w-full max-w-[1480px] mx-auto rounded-[40px] overflow-hidden">
         <div
           className="w-full aspect-[16/7] bg-cover bg-center relative"
           style={{

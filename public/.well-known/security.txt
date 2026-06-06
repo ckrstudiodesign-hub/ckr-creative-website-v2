@@ -1,4 +1,5 @@
 Contact: mailto:ckrstudiodesign@gmail.com
+Expires: 2027-06-06T00:00:00.000Z
 Preferred-Languages: en
 Canonical: https://www.ckrcreatives.com/.well-known/security.txt
 Policy: https://www.ckrcreatives.com/privacy-policy

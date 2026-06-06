@@ -160,14 +160,14 @@ export default function Blog() {
       />
 
       {/* Featured */}
-      <section className="w-full bg-brand-white px-5 pt-10 md:px-10 xl:px-[72px]">
-        <div className="mx-auto w-full max-w-[1920px]">
+      <section className="w-full bg-brand-white px-5 pt-8 md:px-10 xl:px-[72px]">
+        <div className="mx-auto w-full max-w-[1480px]">
           <motion.article
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="group grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch"
+            className="group grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch"
           >
             <Link
               to={`/blog/${featured.slug}`}
@@ -191,11 +191,11 @@ export default function Blog() {
                 <span className="dm-p14-semi text-brand-white">{featured.category}</span>
               </div>
             </Link>
-            <div className="lg:col-span-5 flex flex-col gap-5 justify-center">
+            <div className="lg:col-span-5 flex flex-col gap-4 justify-center">
               <span className="dm-p14-semi uppercase tracking-[0.25em] text-brand-orange">
                 ({featured.category} · Featured)
               </span>
-              <h2 className="font-zalando font-semibold text-[clamp(2rem,4vw,3.5rem)] leading-[1.02]">
+              <h2 className="font-zalando font-semibold text-[clamp(1.7rem,3.3vw,2.9rem)] leading-[1.02]">
                 <Link to={`/blog/${featured.slug}`} className="hover:opacity-80 transition-opacity">
                   {featured.title}
                 </Link>
@@ -216,9 +216,9 @@ export default function Blog() {
       </section>
 
       {/* Article grid */}
-      <section className="w-full bg-brand-white px-5 py-16 md:px-10 md:py-24 xl:px-[72px]">
-        <div className="mx-auto w-full max-w-[1920px]">
-          <div className="flex flex-col gap-6 max-w-[820px] mb-12">
+      <section className="w-full bg-brand-white px-5 py-10 md:px-10 md:py-14 xl:px-[72px]">
+        <div className="mx-auto w-full max-w-[1480px]">
+          <div className="flex flex-col gap-4 max-w-[820px] mb-8">
             <span className="dm-p14-semi uppercase tracking-[0.25em] text-brand-orange">
               (Latest)
             </span>
@@ -226,15 +226,15 @@ export default function Blog() {
               Recent writing from the studio.
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-14">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-5 gap-y-10">
             {rest.map((a, i) => (
               <motion.article
                 key={a.slug}
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-80px' }}
                 transition={{ duration: 0.5, delay: (i % 3) * 0.06 }}
-                className="group flex flex-col gap-5"
+                className="group flex flex-col gap-4"
               >
                 <Link
                   to={`/blog/${a.slug}`}
@@ -279,7 +279,7 @@ export default function Blog() {
       </section>
 
       {/* Newsletter / closing CTA */}
-      <section className="w-full bg-brand-black text-brand-white px-5 py-20 md:px-10 md:py-28 xl:px-[72px] relative overflow-hidden">
+      <section className="w-full bg-brand-black text-brand-white px-5 py-12 md:px-10 md:py-16 xl:px-[72px] relative overflow-hidden">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-35"
@@ -293,11 +293,11 @@ export default function Blog() {
               'linear-gradient(135deg, rgba(255,122,26,0.35) 0%, rgba(36,16,6,0.55) 50%, rgba(0,0,0,0.92) 100%)',
           }}
         />
-        <div className="relative z-10 mx-auto w-full max-w-[1920px] flex flex-col gap-8 items-start">
+        <div className="relative z-10 mx-auto w-full max-w-[1480px] flex flex-col gap-6 items-start">
           <span className="dm-p14-semi uppercase tracking-[0.25em] text-brand-orange">
             (Stay In Touch)
           </span>
-          <h2 className="font-zalando font-semibold text-[clamp(2.5rem,5vw,4rem)] leading-[0.98] max-w-[920px]">
+          <h2 className="font-zalando font-semibold text-[clamp(2rem,4vw,3.4rem)] leading-[1] max-w-[920px]">
             Want this in your inbox? We publish field notes monthly.
           </h2>
           <p className="dm-p18-semi text-brand-white/75 max-w-[640px]">

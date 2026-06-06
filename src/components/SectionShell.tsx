@@ -16,8 +16,6 @@ type SectionShellProps = {
 const sectionBackgrounds: Record<string, string> = {
   ABOUT: '/images/about.jpeg',
   SERVICES: '/images/2fdsjkfa.png',
-  'WHAT SETS US APART': '/images/dasufiua.png',
-  PROCESS: '/images/download-24.jpeg',
   PORTFOLIO: '/images/Abhimanyu%20in%20Chakravyuh.jpeg',
   TESTIMONIALS: '/images/download%20(24).jpeg',
 }
@@ -50,15 +48,15 @@ export default function SectionShell({
 
   if (frameless) {
     return (
-      <section className={`w-full ${background} ${textColor} px-5 py-20 md:px-10 md:py-[100px] xl:px-[72px]`}>
-        <div className="w-full max-w-[1920px] mx-auto flex flex-col gap-12">
+      <section className={`w-full ${background} ${textColor} px-4 py-8 md:px-8 md:py-12 lg:px-10 xl:px-[56px]`}>
+        <div className="w-full max-w-[1300px] mx-auto flex flex-col gap-5 md:gap-7">
           {(eyebrow || heading || description) && (
             <motion.div
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-100px' }}
               transition={{ duration: 0.6, ease: 'easeOut' }}
-              className="flex flex-col gap-6 max-w-[820px]"
+              className="flex max-w-[820px] flex-col gap-3 md:gap-4"
             >
               {eyebrow && (
                 <span className="dm-p18-semi opacity-70">({eyebrow.toUpperCase()})</span>
@@ -74,13 +72,13 @@ export default function SectionShell({
   }
 
   return (
-    <section className={`futuristic-section w-full ${background} ${textColor} px-5 py-10 md:px-10 md:py-14 xl:px-[72px]`}>
+    <section className={`futuristic-section w-full ${background} ${textColor} px-4 py-6 md:px-8 md:py-8 lg:px-10 xl:px-[56px]`}>
       <motion.div
-        initial={{ opacity: 0, y: 34, scale: 0.985 }}
+        initial={{ opacity: 0, y: 20, scale: 0.99 }}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true, margin: '-120px' }}
         transition={{ duration: 0.7, ease: 'easeOut' }}
-        className="futuristic-section-card relative w-full max-w-[1920px] mx-auto overflow-hidden rounded-[28px] md:rounded-40 bg-brand-black px-5 py-10 text-brand-white md:px-11 md:py-14 xl:px-14 xl:py-16"
+        className="futuristic-section-card relative w-full max-w-[1300px] mx-auto overflow-hidden rounded-[28px] md:rounded-40 bg-brand-black px-5 py-6 text-brand-white md:px-10 md:py-8 xl:px-14 xl:py-9"
       >
         {backgroundVideo ? (
           <video
@@ -126,14 +124,14 @@ export default function SectionShell({
           }}
         />
 
-        <div className="relative z-10 w-full flex flex-col gap-12">
+        <div className="relative z-10 w-full flex flex-col gap-5 md:gap-7">
           {(eyebrow || heading || description) && (
             <motion.div
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-100px' }}
               transition={{ duration: 0.6, ease: 'easeOut', delay: 0.08 }}
-              className="flex flex-col gap-6 max-w-[920px]"
+              className="flex max-w-[920px] flex-col gap-3 md:gap-4"
             >
               {eyebrow && (
                 <span className="dm-p18-semi text-brand-white/70">({eyebrow.toUpperCase()})</span>

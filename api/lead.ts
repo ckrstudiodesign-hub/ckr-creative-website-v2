@@ -75,6 +75,52 @@ function rateLimited(ip: string): boolean {
   return false
 }
 
+// Web3Forms access key — same one the website contact form uses, so the
+// notification email lands in the CKR inbox (ckrstudiodesign@gmail.com).
+// Overridable via env var if the key is ever rotated.
+const WEB3FORMS_ACCESS_KEY =
+  process.env.WEB3FORMS_ACCESS_KEY ?? '1e5585e5-f8f8-4d9b-9b0f-b7e1b27cd459'
+
+/**
+ * Fire an email notification to the CKR inbox after a brief is saved.
+ * Best-effort: failures are logged but never fail the request, because the
+ * lead is already safely stored in the spreadsheet by that point.
+ */
+async function sendEmailNotification(payload: {
+  name: string
+  email: string
+  phone: string
+  service: string
+  timestamp: string
+}): Promise<void> {
+  try {
+    await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_ACCESS_KEY,
+        subject: `New project brief — ${payload.service} — ${payload.name}`,
+        from_name: 'CKR Nova Chatbot',
+        replyto: payload.email,
+        name: payload.name,
+        email: payload.email,
+        phone: payload.phone,
+        service: payload.service,
+        message:
+          'New brief submitted via the Nova chatbot:\n\n' +
+          `Service: ${payload.service}\n` +
+          `Name:    ${payload.name}\n` +
+          `Email:   ${payload.email}\n` +
+          `Phone:   ${payload.phone}\n` +
+          `Time:    ${payload.timestamp}`,
+        botcheck: '',
+      }),
+    })
+  } catch (err) {
+    console.error('[/api/lead] email notification failed:', err)
+  }
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'Method not allowed. Use POST.' })
@@ -189,6 +235,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       })
       return
     }
+
+    // Lead is safely in the spreadsheet — now email a notification to the CKR
+    // inbox. Awaited (so it completes before the serverless function freezes)
+    // but non-fatal: an email hiccup must not break a successful submission.
+    await sendEmailNotification({ name, email, phone, service, timestamp: payload.timestamp })
 
     res.status(200).json({ success: true })
   } catch (err) {

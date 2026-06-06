@@ -41,20 +41,20 @@ export default function FaqSection() {
   }
 
   return (
-    <section className="w-full bg-brand-white text-brand-black px-5 py-20 md:px-10 md:py-[100px] xl:px-[72px]">
+    <section className="w-full bg-brand-white px-4 py-8 text-brand-black md:px-8 md:py-12 lg:px-10 xl:px-[56px]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
-      <div className="w-full max-w-[1920px] mx-auto grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12 lg:gap-16 items-start">
+      <div className="mx-auto grid w-full max-w-[1300px] grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(220px,0.4fr)] lg:gap-8">
         {/* Left — heading + accordion */}
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-7">
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="flex flex-col gap-6 max-w-[820px]"
+            className="flex flex-col gap-4 max-w-[820px]"
           >
             <span className="dm-p18-semi opacity-70">(FAQ)</span>
             <h2 className="zalando-h2-lh69">Frequently Asked Questions</h2>
@@ -69,11 +69,11 @@ export default function FaqSection() {
                     type="button"
                     onClick={() => setOpen(isOpen ? null : i)}
                     aria-expanded={isOpen}
-                    className="w-full text-left py-8 flex flex-row justify-between items-center gap-8 cursor-pointer"
+                    className="flex w-full cursor-pointer flex-row items-center justify-between gap-5 py-3.5 text-left md:gap-8 md:py-4"
                   >
                     <span className="zalando-h3-44">{f.q}</span>
                     <span
-                      className={`zalando-h3-44 transition-transform duration-300 ${
+                      className={`zalando-h3-44 shrink-0 transition-transform duration-300 ${
                         isOpen ? 'rotate-45' : ''
                       }`}
                     >
@@ -90,7 +90,7 @@ export default function FaqSection() {
                         transition={{ duration: 0.3, ease: 'easeOut' }}
                         className="overflow-hidden"
                       >
-                        <p className="dm-p18-semi text-brand-light-black pb-8 pr-16">{f.a}</p>
+                        <p className="dm-p18-semi pb-4 pr-0 text-brand-light-black md:pr-16">{f.a}</p>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -103,7 +103,7 @@ export default function FaqSection() {
         {/* Right — two floating FAQ videos stacked vertically, both fully visible. Sticky on desktop. */}
         <div className="relative w-full flex items-start justify-center">
           <div
-            className="w-full max-w-[520px] flex flex-col items-center gap-8"
+            className="flex w-full max-w-[250px] flex-col items-center gap-3"
             style={{ perspective: '1400px' }}
           >
             <motion.video

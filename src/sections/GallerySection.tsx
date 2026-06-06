@@ -68,7 +68,7 @@ const mediaItems = [
 export default function GallerySection() {
   return (
     <section className="w-full bg-brand-white py-[100px]">
-      <div className="w-full max-w-[1920px] mx-auto px-[72px]">
+      <div className="w-full max-w-[1480px] mx-auto px-[72px]">
         <div className="flex flex-col gap-4 mb-4 max-w-[820px]">
           <span className="dm-p18-semi opacity-70">(Gallery)</span>
           <h2 className="zalando-h2-lh69">Studio Showcase</h2>

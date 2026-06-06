@@ -21,7 +21,7 @@ export default function App() {
           <Route
             path="*"
             element={
-              <div className="px-[72px] py-32 text-center">
+              <div className="px-[72px] py-20 text-center">
                 <span className="zalando-h2-lh69">404 - Page coming soon</span>
               </div>
             }

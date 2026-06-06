@@ -7,15 +7,25 @@
 
 @layer base {
   html {
-    /* Designed at 80% — bake that scale in so 100% browser zoom matches the spec. */
-    zoom: 0.8;
+    scroll-behavior: smooth;
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
   }
   html, body {
     @apply bg-brand-white text-brand-black antialiased;
     font-family: 'DM Sans', system-ui, sans-serif;
+    width: 100%;
+    min-height: 100%;
+    overflow-x: clip;
   }
   body {
     margin: 0;
+  }
+  img,
+  video,
+  canvas,
+  svg {
+    max-width: 100%;
   }
   * {
     box-sizing: border-box;
@@ -111,17 +121,17 @@
   .clash-h1-190 {
     font-family: 'Clash Display', sans-serif;
     font-weight: 600;
-    font-size: 190px;
-    line-height: 150px;
-    letter-spacing: -5.7px;
+    font-size: clamp(2.4rem, 5vw, 5.6rem);
+    line-height: 0.86;
+    letter-spacing: 0;
     text-transform: none;
   }
   .clash-h1-88 {
     font-family: 'Clash Display', sans-serif;
     font-weight: 700;
-    font-size: 88px;
-    line-height: 82px;
-    letter-spacing: -0.3px;
+    font-size: clamp(1.75rem, 3.4vw, 2.9rem);
+    line-height: 0.95;
+    letter-spacing: 0;
     text-transform: uppercase;
   }
   .clash-h4-20 {
@@ -129,42 +139,44 @@
     font-weight: 700;
     font-size: 20px;
     line-height: 24px;
-    letter-spacing: -1px;
+    letter-spacing: 0;
   }
   .zalando-h1-88 {
     font-family: 'Zalando Sans Expanded', sans-serif;
     font-weight: 700;
-    font-size: 88px;
-    line-height: 82px;
-    letter-spacing: -4.4px;
+    font-size: clamp(1.75rem, 3.4vw, 2.9rem);
+    line-height: 0.98;
+    letter-spacing: 0;
   }
   .zalando-h2-lh69 {
     font-family: 'Zalando Sans Expanded', sans-serif;
     font-weight: 600;
-    font-size: 72px;
-    line-height: 69px;
-    letter-spacing: -3.6px;
+    font-size: clamp(1.5rem, 2.7vw, 2.35rem);
+    line-height: 1.03;
+    letter-spacing: 0;
+    overflow-wrap: anywhere;
   }
   .zalando-h2-100 {
     font-family: 'Zalando Sans Expanded', sans-serif;
     font-weight: 500;
-    font-size: 100px;
-    line-height: 69px;
-    letter-spacing: -5px;
+    font-size: clamp(1.9rem, 3.8vw, 3.1rem);
+    line-height: 0.95;
+    letter-spacing: 0;
   }
   .zalando-h3-44 {
     font-family: 'Zalando Sans Expanded', sans-serif;
     font-weight: 600;
-    font-size: 44px;
-    line-height: 46px;
-    letter-spacing: -2.2px;
+    font-size: clamp(1.05rem, 1.5vw, 1.5rem);
+    line-height: 1.1;
+    letter-spacing: 0;
+    overflow-wrap: anywhere;
   }
   .zalando-h4-20 {
     font-family: 'Zalando Sans Expanded', sans-serif;
     font-weight: 600;
     font-size: 20px;
     line-height: 24px;
-    letter-spacing: -1px;
+    letter-spacing: 0;
   }
   .zalando-h5-18 {
     font-family: 'Zalando Sans Expanded', sans-serif;
@@ -178,63 +190,63 @@
     font-weight: 800;
     font-size: 14px;
     line-height: 18px;
-    letter-spacing: -0.7px;
+    letter-spacing: 0;
   }
   .zalando-p14-semi {
     font-family: 'Zalando Sans Expanded', sans-serif;
     font-weight: 600;
     font-size: 14px;
     line-height: 18px;
-    letter-spacing: -0.7px;
+    letter-spacing: 0;
   }
   .dm-p14-medium {
     font-family: 'DM Sans', sans-serif;
     font-weight: 500;
     font-size: 14px;
     line-height: 20px;
-    letter-spacing: -0.28px;
+    letter-spacing: 0;
   }
   .dm-p14-semi {
     font-family: 'DM Sans', sans-serif;
     font-weight: 600;
     font-size: 14px;
-    line-height: 12px;
-    letter-spacing: -0.42px;
+    line-height: 1.35;
+    letter-spacing: 0;
   }
   .dm-p16-medium {
     font-family: 'DM Sans', sans-serif;
     font-weight: 500;
     font-size: 16px;
     line-height: 20px;
-    letter-spacing: -0.48px;
+    letter-spacing: 0;
   }
   .dm-p18-semi {
     font-family: 'DM Sans', sans-serif;
     font-weight: 600;
-    font-size: 18px;
-    line-height: 24px;
-    letter-spacing: -0.36px;
+    font-size: clamp(0.95rem, 1.05vw, 1.0625rem);
+    line-height: 1.45;
+    letter-spacing: 0;
   }
   .dm-p20-medium {
     font-family: 'DM Sans', sans-serif;
     font-weight: 500;
-    font-size: 20px;
-    line-height: 24px;
-    letter-spacing: -1px;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: 0;
   }
   .dm-h2-72 {
     font-family: 'DM Sans', sans-serif;
     font-weight: 600;
-    font-size: 72px;
-    line-height: 69px;
-    letter-spacing: -2.16px;
+    font-size: clamp(1.55rem, 2.9vw, 2.5rem);
+    line-height: 1.04;
+    letter-spacing: 0;
   }
   .dm-h3-32 {
     font-family: 'DM Sans', sans-serif;
     font-weight: 600;
-    font-size: 32px;
-    line-height: 32px;
-    letter-spacing: -1.6px;
+    font-size: clamp(1.3rem, 1.7vw, 1.75rem);
+    line-height: 1.1;
+    letter-spacing: 0;
   }
 }
 

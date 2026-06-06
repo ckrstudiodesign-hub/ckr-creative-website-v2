@@ -19,12 +19,12 @@ type PageHeroProps = {
  */
 export function PageHero({ eyebrow, heading, description, bgImage, actions }: PageHeroProps) {
   return (
-    <section className="w-full bg-brand-white px-5 pt-6 pb-10 md:px-10 md:py-10 xl:px-[72px]">
+    <section className="w-full bg-brand-white px-4 pb-7 pt-4 md:px-8 md:py-7 lg:px-10 xl:px-[72px]">
       <motion.div
-        initial={{ opacity: 0, y: 28, scale: 0.99 }}
+        initial={{ opacity: 0, y: 18, scale: 0.99 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className="relative w-full max-w-[1920px] mx-auto overflow-hidden rounded-[28px] md:rounded-40 bg-brand-black px-5 py-14 text-brand-white md:px-11 md:py-20 xl:px-14 xl:py-24 min-h-[60vh] flex flex-col justify-end"
+        className="relative mx-auto flex min-h-[40vh] w-full max-w-[1480px] flex-col justify-end overflow-hidden rounded-[28px] bg-brand-black px-5 py-10 text-brand-white md:min-h-[44vh] md:rounded-40 md:px-10 md:py-14 xl:px-14 xl:py-16"
       >
         {/* Background image */}
         <div
@@ -54,18 +54,18 @@ export function PageHero({ eyebrow, heading, description, bgImage, actions }: Pa
         />
 
         {/* Content */}
-        <div className="relative z-10 flex flex-col gap-6 max-w-[920px]">
+        <div className="relative z-10 flex flex-col gap-5 max-w-[920px]">
           <div className="flex items-center gap-4">
             <span className="h-px w-12 bg-brand-orange" />
             <span className="dm-p14-semi uppercase tracking-[0.25em] text-brand-orange">
               {eyebrow}
             </span>
           </div>
-          <h1 className="font-zalando font-semibold text-balance text-[clamp(2.5rem,6vw,5rem)] leading-[0.96] tracking-tight">
+          <h1 className="font-zalando font-semibold text-balance text-[clamp(2rem,4.8vw,4rem)] leading-[0.98] tracking-tight">
             {heading}
           </h1>
           <p className="dm-p18-semi text-brand-white/75 max-w-[640px]">{description}</p>
-          {actions && <div className="flex flex-wrap gap-4 mt-4">{actions}</div>}
+          {actions && <div className="flex flex-wrap gap-3 mt-3">{actions}</div>}
         </div>
       </motion.div>
     </section>
