@@ -17,9 +17,28 @@ type CaseStudy = {
   excerpt: string
   cover: string
   tags: Exclude<FilterTag, 'All'>[]
+  href?: string
 }
 
 const cases: CaseStudy[] = [
+  {
+    slug: 'golden-legacy',
+    title: 'Dubai Corporate Services Platform',
+    client: 'Golden Legacy Corporate Services',
+    year: '2026',
+    category: 'Web · Forms · Social Media',
+    scope: [
+      'Full website build',
+      'Lead-capture forms (fully integrated & working)',
+      'Mainland / Free Zone / Banking flows',
+      'Instagram, Facebook, TikTok, YouTube & LinkedIn management',
+    ],
+    excerpt:
+      'A fully integrated corporate services experience for Dubai — strategic business formation, banking and visa journeys, live working enquiry forms, plus full-scale social media production across Instagram, Facebook, TikTok, YouTube and LinkedIn. Visit live: goldenlegacy.ae',
+    cover: '/project%20image/Golden%20Legacy.png',
+    tags: ['Web', 'Branding', 'Motion'],
+    href: 'https://www.goldenlegacy.ae/',
+  },
   {
     slug: 'novagrid-systems',
     title: 'AI Infrastructure Platform',
@@ -341,6 +360,52 @@ export default function Work() {
                 transition={{ duration: 0.55, delay: (i % 2) * 0.08, ease: [0.22, 1, 0.36, 1] }}
                 className="group"
               >
+                {c.href ? (
+                <a href={c.href} target="_blank" rel="noopener noreferrer" className="block">
+                  <div
+                    className="relative aspect-[4/3] rounded-[24px] bg-brand-white overflow-hidden transition-transform duration-700 ease-out group-hover:scale-[1.015]"
+                  >
+                    <div
+                      className="absolute inset-4 bg-contain bg-no-repeat bg-center mix-blend-multiply"
+                      style={{ backgroundImage: `url("${encodeURI(c.cover)}")` }}
+                    />
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0"
+                      style={{
+                        background:
+                          'linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,0.55) 100%)',
+                      }}
+                    />
+                    <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-4">
+                      <span className="dm-p14-semi text-brand-white uppercase tracking-[0.18em]">
+                        {c.category}
+                      </span>
+                      <span className="dm-p14-semi text-brand-white/80">{c.year}</span>
+                    </div>
+                    <span className="absolute top-4 right-4 rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-black backdrop-blur-md">
+                      Live ↗
+                    </span>
+                  </div>
+                  <header className="mt-4 flex items-baseline justify-between gap-4">
+                    <h2 className="zalando-h3-44 leading-tight">{c.title}</h2>
+                    <span className="dm-p14-semi text-brand-light-black shrink-0">{c.client}</span>
+                  </header>
+                  <p className="mt-2.5 dm-p18-semi text-brand-light-black max-w-[60ch]">
+                    {c.excerpt}
+                  </p>
+                  <ul className="mt-3 flex flex-wrap gap-2">
+                    {c.scope.map((s) => (
+                      <li
+                        key={s}
+                        className="rounded-full border border-brand-off-gray px-3 py-1 dm-p14-medium text-brand-light-black"
+                      >
+                        {s}
+                      </li>
+                    ))}
+                  </ul>
+                </a>
+                ) : (
                 <Link to={`/work/${c.slug}`} className="block">
                   <div
                     className="relative aspect-[4/3] rounded-[24px] bg-brand-white overflow-hidden transition-transform duration-700 ease-out group-hover:scale-[1.015]"
@@ -382,6 +447,7 @@ export default function Work() {
                     ))}
                   </ul>
                 </Link>
+                )}
               </motion.article>
             ))}
           </div>

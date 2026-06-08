@@ -16,9 +16,19 @@ type Project = {
   categories: string[]
   year: string
   img: string
+  href?: string
 }
 
 const work: Project[] = [
+  {
+    slug: 'golden-legacy',
+    title: 'Golden Legacy Corporate Services',
+    summary: 'Fully integrated corporate services platform for Dubai — business formation, banking and visa flows with live, working lead-capture forms, plus full-scale social media on Instagram, Facebook, TikTok, YouTube & LinkedIn.',
+    categories: ['Web Design', 'Forms Integration', 'Social Media'],
+    year: '2026',
+    img: '/project%20image/Golden%20Legacy.png',
+    href: 'https://www.goldenlegacy.ae/',
+  },
   {
     slug: 'novagrid-systems',
     title: 'NovaGrid Systems',
@@ -161,6 +171,25 @@ export default function WorkSection() {
                         transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                         className="overflow-hidden lg:hidden"
                       >
+                        {p.href ? (
+                        <a href={p.href} target="_blank" rel="noopener noreferrer" className="group/preview relative mb-4 block aspect-[16/11] overflow-hidden rounded-[18px] bg-brand-black">
+                          <div
+                            className="absolute inset-0 bg-cover bg-center"
+                            style={{ backgroundImage: `url("${p.img}")` }}
+                          />
+                          <div
+                            aria-hidden
+                            className="absolute inset-0"
+                            style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.6) 100%)' }}
+                          />
+                          <span className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-brand-white">
+                            <span className="dm-p14-semi">{p.summary.length > 60 ? `${p.summary.slice(0, 57)}…` : p.summary}</span>
+                          </span>
+                          <span className="absolute right-4 top-4 rounded-full bg-white/85 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-black backdrop-blur-md">
+                            Visit live ↗
+                          </span>
+                        </a>
+                        ) : (
                         <Link to={`/work/${p.slug}`} className="group/preview relative mb-4 block aspect-[16/11] overflow-hidden rounded-[18px] bg-brand-black">
                           <div
                             className="absolute inset-0 bg-cover bg-center"
@@ -178,6 +207,7 @@ export default function WorkSection() {
                             Visit →
                           </span>
                         </Link>
+                        )}
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -196,6 +226,41 @@ export default function WorkSection() {
                 exit={{ opacity: 0, scale: 0.99 }}
                 transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               >
+                {work[active].href ? (
+                <a
+                  href={work[active].href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group/preview relative block aspect-[4/3] overflow-hidden rounded-[24px] bg-brand-black"
+                >
+                  <motion.div
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{ backgroundImage: `url("${work[active].img}")` }}
+                    initial={{ scale: 1.04 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                  />
+                  <div
+                    aria-hidden
+                    className="absolute inset-0"
+                    style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,0.72) 100%)' }}
+                  />
+                  <div className="absolute inset-x-6 bottom-6 flex flex-col gap-2 text-brand-white">
+                    <span className="text-[11px] uppercase tracking-[0.22em] text-brand-white/70">
+                      {String(active + 1).padStart(2, '0')} / {String(total).padStart(2, '0')} · {work[active].year}
+                    </span>
+                    <h3 className="font-zalando text-[28px] xl:text-[34px] font-semibold leading-[1.04]">
+                      {work[active].title}
+                    </h3>
+                    <p className="dm-p14-semi text-brand-white/80 max-w-[460px]">
+                      {work[active].summary}
+                    </p>
+                    <span className="mt-1 inline-flex w-fit items-center gap-2 rounded-full bg-white/90 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-black transition-transform duration-300 group-hover/preview:translate-x-1">
+                      Visit live site ↗
+                    </span>
+                  </div>
+                </a>
+                ) : (
                 <Link
                   to={`/work/${work[active].slug}`}
                   className="group/preview relative block aspect-[4/3] overflow-hidden rounded-[24px] bg-brand-black"
@@ -227,6 +292,7 @@ export default function WorkSection() {
                     </span>
                   </div>
                 </Link>
+                )}
               </motion.div>
             </AnimatePresence>
           </div>
