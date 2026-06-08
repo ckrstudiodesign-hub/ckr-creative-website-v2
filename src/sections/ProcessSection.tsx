@@ -1,7 +1,9 @@
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useState } from 'react'
 
 /* -------------------------------------------------------------------- */
-/*  Process — simple clean grid. No scroll-pin, no carousel.            */
+/*  Process — simple clean grid (desktop) / collapsible accordion       */
+/*  (mobile). Same data, two layouts via Tailwind responsive helpers.   */
 /* -------------------------------------------------------------------- */
 
 const steps = [
@@ -38,6 +40,9 @@ const steps = [
 ]
 
 export default function ProcessSection() {
+  // Mobile: only one phase open at a time (defaults to step 1).
+  const [openIdx, setOpenIdx] = useState(0)
+
   return (
     <section className="w-full bg-brand-light-white px-4 py-8 text-brand-black md:px-8 md:py-12 lg:px-10 xl:px-[56px]">
       <div className="w-full max-w-[1300px] mx-auto">
@@ -54,7 +59,7 @@ export default function ProcessSection() {
               <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand-orange" />
               Process
             </span>
-            <h2 className="font-zalando text-[30px] leading-[1.04] md:text-[38px] lg:text-[46px] font-semibold text-brand-black max-w-[820px]">
+            <h2 className="font-zalando text-[28px] leading-[1.04] md:text-[38px] lg:text-[46px] font-semibold text-brand-black max-w-[820px]">
               Our Creative & Growth Process
             </h2>
           </div>
@@ -64,8 +69,68 @@ export default function ProcessSection() {
           </p>
         </motion.div>
 
-        {/* Steps grid */}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        {/* MOBILE — accordion */}
+        <div className="sm:hidden flex flex-col gap-2.5">
+          {steps.map((s, i) => {
+            const isOpen = openIdx === i
+            return (
+              <div
+                key={s.n}
+                className={`rounded-2xl border bg-white overflow-hidden transition-colors ${
+                  isOpen ? 'border-brand-orange/70 shadow-[0_6px_20px_-12px_rgba(255,122,26,0.45)]' : 'border-brand-off-gray/70'
+                }`}
+              >
+                <button
+                  type="button"
+                  onClick={() => setOpenIdx(isOpen ? -1 : i)}
+                  aria-expanded={isOpen}
+                  className="w-full flex items-center gap-3 px-4 py-3.5 text-left"
+                >
+                  <span className="font-zalando text-[22px] leading-none font-semibold text-brand-orange w-9 shrink-0">
+                    {s.n}
+                  </span>
+                  <span className="flex flex-1 flex-col">
+                    <span className="font-zalando text-[15px] leading-tight font-semibold text-brand-black">
+                      {s.title}
+                    </span>
+                    <span className="text-[10px] uppercase tracking-[0.18em] text-brand-black/50 mt-0.5">
+                      {s.tag} · Phase {s.n}
+                    </span>
+                  </span>
+                  <motion.svg
+                    animate={{ rotate: isOpen ? 180 : 0 }}
+                    transition={{ duration: 0.25 }}
+                    width="18"
+                    height="18"
+                    viewBox="0 0 18 18"
+                    fill="none"
+                    className="text-brand-black/50"
+                  >
+                    <path d="M4 7l5 5 5-5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                  </motion.svg>
+                </button>
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <p className="px-4 pb-4 text-[13px] text-brand-black/70 leading-relaxed">
+                        {s.body}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            )
+          })}
+        </div>
+
+        {/* DESKTOP / TABLET — original grid */}
+        <div className="hidden sm:grid grid-cols-2 gap-4 lg:grid-cols-5">
           {steps.map((s, i) => (
             <motion.article
               key={s.n}

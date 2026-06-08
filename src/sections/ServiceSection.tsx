@@ -197,43 +197,43 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.6, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -4 }}
-      className="group relative flex h-full flex-col gap-4 rounded-[24px] border border-brand-off-gray/70 bg-white p-4 shadow-[0_2px_8px_rgba(36,16,6,0.04)] transition-shadow hover:shadow-[0_16px_50px_-20px_rgba(36,16,6,0.18)] md:p-5"
+      className="group relative flex h-full flex-col gap-2.5 sm:gap-4 rounded-[18px] sm:rounded-[24px] border border-brand-off-gray/70 bg-white p-3 sm:p-4 shadow-[0_2px_8px_rgba(36,16,6,0.04)] transition-shadow hover:shadow-[0_16px_50px_-20px_rgba(36,16,6,0.18)] md:p-5"
     >
       {/* Header: per-service icon */}
       <div className="flex items-center justify-between">
-        <div className="grid h-10 w-10 place-items-center rounded-xl bg-brand-black text-white">
+        <div className="grid h-8 w-8 sm:h-10 sm:w-10 place-items-center rounded-xl bg-brand-black text-white">
           <ServiceIcon name={service.icon} />
         </div>
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="text-brand-black/30 group-hover:text-brand-orange transition-colors duration-300">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" className="text-brand-black/30 group-hover:text-brand-orange transition-colors duration-300">
           <path d="M5 15L15 5M15 5H7M15 5V13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
 
       {/* Title + description */}
-      <div className="flex min-h-[78px] flex-col gap-1.5">
-        <h3 className="font-zalando text-[19px] md:text-[21px] font-semibold text-brand-black leading-tight">
+      <div className="flex sm:min-h-[78px] flex-col gap-1 sm:gap-1.5">
+        <h3 className="font-zalando text-[15px] sm:text-[19px] md:text-[21px] font-semibold text-brand-black leading-tight">
           {service.title}
         </h3>
-        <p className="dm-p14-semi text-brand-black/60 leading-relaxed max-w-[420px]">
+        <p className="text-[11px] sm:text-[13px] dm-p14-semi text-brand-black/60 leading-snug sm:leading-relaxed max-w-[420px] line-clamp-3 sm:line-clamp-none">
           {service.description}
         </p>
       </div>
 
-      {/* Tag chips */}
-      <ul className="flex flex-wrap gap-2">
-        {service.tags.map((t, i) => (
+      {/* Tag chips — only first 2 on mobile to keep card height tight */}
+      <ul className="flex flex-wrap gap-1.5 sm:gap-2">
+        {service.tags.slice(0, 99).map((t, i) => (
           <li
             key={i}
-            className="inline-flex items-center gap-1.5 rounded-full border border-brand-off-gray/80 bg-brand-light-white px-3 py-1 text-[11px] font-medium text-brand-black/75"
+            className={`${i >= 2 ? 'hidden sm:inline-flex' : 'inline-flex'} items-center gap-1 sm:gap-1.5 rounded-full border border-brand-off-gray/80 bg-brand-light-white px-2 sm:px-3 py-[3px] sm:py-1 text-[9px] sm:text-[11px] font-medium text-brand-black/75`}
           >
-            <span className="inline-block h-1.5 w-1.5 rounded-full" style={{ backgroundColor: t.color }} />
+            <span className="inline-block h-1 w-1 sm:h-1.5 sm:w-1.5 rounded-full" style={{ backgroundColor: t.color }} />
             {t.label}
           </li>
         ))}
       </ul>
 
-      {/* Image slider — full-bleed to card edges */}
-      <div className="relative mt-1 -mx-4 md:-mx-5 aspect-[16/10] overflow-hidden bg-brand-black cursor-grab active:cursor-grabbing select-none">
+      {/* Image slider — full-bleed to card edges; hidden on phone to keep the 2x grid compact */}
+      <div className="relative mt-1 -mx-3 sm:-mx-4 md:-mx-5 aspect-[16/10] overflow-hidden bg-brand-black cursor-grab active:cursor-grabbing select-none hidden sm:block">
         <motion.div
           className="flex h-full w-full"
           animate={{ x: `-${slide * 100}%` }}
@@ -284,8 +284,8 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         </button>
       </div>
 
-      {/* Dot indicators */}
-      <div className="flex items-center justify-center gap-1.5">
+      {/* Dot indicators — hidden on phone (slider above is hidden) */}
+      <div className="hidden sm:flex items-center justify-center gap-1.5">
         {service.images.map((_, i) => (
           <button
             key={i}
@@ -330,8 +330,8 @@ export default function ServiceSection() {
           </p>
         </motion.div>
 
-        {/* Cards grid */}
-        <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2 md:gap-4 xl:grid-cols-3">
+        {/* Cards grid — 2x3 on phone, 2-col tablet, 3-col desktop */}
+        <div className="grid grid-cols-2 gap-2.5 md:grid-cols-2 md:gap-4 xl:grid-cols-3">
           {services.map((s, i) => (
             <ServiceCard key={s.title} service={s} index={i} />
           ))}
