@@ -5,9 +5,9 @@ import { SEO } from '../components/SEO'
 import { SITE_ORIGIN, buildBreadcrumbs } from '../components/seo-utils'
 import { PageHero } from '../components/PageHero'
 
-type FilterTag = 'All' | 'Branding' | 'Web' | 'AI' | 'Motion' | 'Commerce'
+export type FilterTag = 'All' | 'Branding' | 'Web' | 'AI' | 'Motion' | 'Commerce'
 
-type CaseStudy = {
+export type CaseStudy = {
   slug: string
   title: string
   client: string
@@ -20,7 +20,7 @@ type CaseStudy = {
   href?: string
 }
 
-const cases: CaseStudy[] = [
+export const cases: CaseStudy[] = [
   {
     slug: 'golden-legacy',
     title: 'Dubai Corporate Services Platform',

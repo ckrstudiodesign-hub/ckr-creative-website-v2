@@ -153,7 +153,7 @@ export default function Footer() {
               <Link to="/terms-of-use" className="dm-p14-medium text-brand-white/55 transition-colors hover:text-brand-white">
                 Terms of Use
               </Link>
-              <Link to="/privacy-policy" className="dm-p14-medium text-brand-white/55 transition-colors hover:text-brand-white">
+              <Link to="/privacy" className="dm-p14-medium text-brand-white/55 transition-colors hover:text-brand-white">
                 Privacy Policy
               </Link>
               <button
