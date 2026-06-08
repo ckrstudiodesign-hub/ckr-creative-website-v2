@@ -164,14 +164,18 @@ export default function WorkDetail() {
           <div>
             <span className="dm-p14-semi uppercase tracking-[0.25em] text-brand-orange">The Brief</span>
             <h2 className="zalando-h2-lh69 mt-3 text-brand-black">
-              A focused engagement for {project.client}.
+              About the project.
             </h2>
-            <p className="dm-p18-semi mt-5 text-brand-light-black">{project.excerpt}</p>
-            <p className="dm-p18-semi mt-4 text-brand-light-black">
-              We approach every project with a clear narrative, a defined system, and engineering
-              that holds up under real traffic. That means tight collaboration with the client team,
-              measurable outcomes, and assets that keep working long after launch.
+            <p className="dm-p18-semi mt-5 text-brand-light-black">
+              {project.story?.overview ?? project.excerpt}
             </p>
+            {!project.story && (
+              <p className="dm-p18-semi mt-4 text-brand-light-black">
+                We approach every project with a clear narrative, a defined system, and engineering
+                that holds up under real traffic. That means tight collaboration with the client team,
+                measurable outcomes, and assets that keep working long after launch.
+              </p>
+            )}
           </div>
           <aside className="rounded-2xl border border-brand-off-gray/70 bg-brand-light-white p-6">
             <span className="dm-p14-semi uppercase tracking-[0.22em] text-brand-light-black">Scope</span>
@@ -186,6 +190,55 @@ export default function WorkDetail() {
           </aside>
         </div>
       </section>
+
+      {/* Rich story (challenges / solutions / results) when present */}
+      {project.story && (
+        <section className="w-full bg-brand-white px-5 py-4 md:px-10 md:py-8 xl:px-[72px]">
+          <div className="mx-auto w-full max-w-[1180px] grid grid-cols-1 md:grid-cols-3 gap-6">
+            <StoryCard
+              eyebrow="Challenges"
+              title="What they were facing"
+              items={project.story.challenges}
+              accent="rgba(255,122,26,0.10)"
+            />
+            <StoryCard
+              eyebrow="How we helped"
+              title="What CKR Creatives delivered"
+              items={project.story.solutions}
+              accent="rgba(36,16,6,0.06)"
+            />
+            <StoryCard
+              eyebrow="Results"
+              title="What shipped"
+              items={project.story.results}
+              accent="rgba(20,160,90,0.10)"
+            />
+          </div>
+
+          {project.story.quote && (
+            <div className="mx-auto w-full max-w-[1180px] mt-10">
+              <figure className="relative rounded-2xl bg-brand-light-white border border-brand-off-gray/70 p-8 md:p-10">
+                <svg
+                  aria-hidden
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="#ff7a1a"
+                  className="absolute -top-4 left-6"
+                >
+                  <path d="M7.17 6A5.17 5.17 0 0 0 2 11.17V18h6.17V11.17H5.34A1.83 1.83 0 0 1 7.17 9.34V6zm9 0a5.17 5.17 0 0 0-5.17 5.17V18h6.17V11.17h-2.83a1.83 1.83 0 0 1 1.83-1.83V6z" />
+                </svg>
+                <blockquote className="zalando-h4-28 leading-snug text-brand-black">
+                  “{project.story.quote.text}”
+                </blockquote>
+                <figcaption className="mt-5 dm-p14-semi uppercase tracking-[0.22em] text-brand-light-black">
+                  — {project.story.quote.attribution}
+                </figcaption>
+              </figure>
+            </div>
+          )}
+        </section>
+      )}
 
       {/* Process */}
       <section className="w-full bg-brand-light-white px-5 py-12 md:px-10 md:py-16 xl:px-[72px]">
@@ -295,6 +348,36 @@ export default function WorkDetail() {
         </div>
       </section>
     </>
+  )
+}
+
+function StoryCard({
+  eyebrow,
+  title,
+  items,
+  accent,
+}: {
+  eyebrow: string
+  title: string
+  items: string[]
+  accent: string
+}) {
+  return (
+    <div
+      className="rounded-2xl border border-brand-off-gray/70 p-6"
+      style={{ background: `linear-gradient(180deg, ${accent} 0%, #fff 60%)` }}
+    >
+      <span className="dm-p14-semi uppercase tracking-[0.22em] text-brand-orange">{eyebrow}</span>
+      <h3 className="zalando-h4-28 mt-2 text-brand-black">{title}</h3>
+      <ul className="mt-4 flex flex-col gap-3">
+        {items.map((i) => (
+          <li key={i} className="dm-p14-semi text-brand-light-black flex items-start gap-2">
+            <span className="mt-1.5 inline-block w-1.5 h-1.5 rounded-full bg-brand-orange shrink-0" />
+            <span>{i}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
   )
 }
 
