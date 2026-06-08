@@ -127,8 +127,9 @@ export default function PhoneFrame({
             {/* Status bar (clock + signal/wifi/battery) */}
             {!hideChrome && <StatusBar tint={statusBar} />}
 
-            {/* Dynamic Island */}
-            {!hideChrome && <div
+            {/* Dynamic Island — part of the device itself, always shown so the
+                phone still reads as an iPhone even in bleed/hideChrome mode. */}
+            <div
               aria-hidden
               className="absolute left-1/2 top-[10px] z-30 -translate-x-1/2 rounded-full"
               style={{
@@ -154,7 +155,7 @@ export default function PhoneFrame({
                 className="absolute left-[12px] top-1/2 h-[6px] w-[6px] -translate-y-1/2 rounded-full"
                 style={{ background: 'radial-gradient(circle, #111 0%, #000 70%)' }}
               />
-            </div>}
+            </div>
 
             {/* Scrollable screen content */}
             <div
