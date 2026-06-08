@@ -74,148 +74,146 @@ function InstagramReels() {
   }
 
   return (
-    <div className="relative w-full h-full bg-black overflow-hidden flex flex-col" style={igFont}>
-      {/* Fixed top "Reels" header */}
-      <div className="absolute top-0 inset-x-0 z-40 flex items-center justify-between px-4 py-3 bg-gradient-to-b from-black/70 to-transparent text-white">
-        <span className="text-[18px] font-semibold tracking-tight">Reels</span>
+    <div className="relative w-full h-full bg-black overflow-hidden" style={igFont}>
+      {/* Fullscreen reel — video fills the entire phone screen */}
+      <AnimatePresence initial={false} mode="wait">
+        <motion.div
+          key={idx}
+          className="absolute inset-0"
+          initial={{ y: '6%', opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: '-6%', opacity: 0 }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <video
+            ref={(el) => { videoRefs.current[idx] = el }}
+            src={reels[idx].src}
+            className="absolute inset-0 w-full h-full object-cover bg-black"
+            autoPlay
+            muted={muted}
+            playsInline
+            preload="auto"
+            onEnded={advance}
+            onClick={() => {
+              const v = videoRefs.current[idx]
+              if (!v) return
+              if (v.paused) v.play().catch(() => {})
+              else v.pause()
+            }}
+          />
+          {/* Top gradient for readability */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 h-20 z-10"
+            style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 100%)' }}
+          />
+          {/* Bottom gradient so caption stays legible */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-44 z-10"
+            style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%)' }}
+          />
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Top "Reels" header — overlays the video */}
+      <div className="absolute top-0 inset-x-0 z-30 flex items-center justify-between px-4 py-3 text-white pointer-events-none">
+        <span className="text-[15px] font-semibold tracking-tight pointer-events-auto">Reels</span>
         <button
           type="button"
           onClick={() => setMuted((m) => !m)}
           aria-label={muted ? 'Unmute' : 'Mute'}
-          className="bg-black/40 backdrop-blur-md rounded-full p-1.5"
+          className="bg-black/35 backdrop-blur-md rounded-full p-1 pointer-events-auto"
         >
           {muted ? (
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
               <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.17v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
             </svg>
           ) : (
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
               <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
             </svg>
           )}
         </button>
       </div>
 
-      {/* Vertical reel stack — only the active one is rendered visibly */}
-      <div className="relative flex-1 overflow-hidden">
-        <AnimatePresence initial={false} mode="wait">
-          <motion.div
-            key={idx}
-            className="absolute inset-0"
-            initial={{ y: '8%', opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: '-8%', opacity: 0 }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <video
-              ref={(el) => { videoRefs.current[idx] = el }}
-              src={reels[idx].src}
-              className="absolute inset-0 w-full h-full object-cover bg-black"
-              autoPlay
-              muted={muted}
-              playsInline
-              preload="auto"
-              onEnded={advance}
-              onClick={() => {
-                const v = videoRefs.current[idx]
-                if (!v) return
-                if (v.paused) v.play().catch(() => {})
-                else v.pause()
-              }}
-            />
-
-            {/* Right-side action rail (like / comment / share / save / more) */}
-            <div className="absolute right-2.5 bottom-24 z-20 flex flex-col items-center gap-4 text-white">
-              <button type="button" onClick={() => toggleLike(idx)} className="flex flex-col items-center gap-0.5">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill={liked.has(idx) ? '#FF3040' : 'none'} stroke={liked.has(idx) ? '#FF3040' : 'currentColor'} strokeWidth="1.8">
-                  <path d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-1.816-1.521-4.303-3.752C5.152 14.08 2.5 12.194 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 0 1 3.679-1.938z" strokeLinejoin="round" />
-                </svg>
-                <span className="text-[10px] font-semibold drop-shadow">{liked.has(idx) ? '12.4k' : '12.3k'}</span>
-              </button>
-              <a
-                href={reels[idx].permalink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex flex-col items-center gap-0.5"
-                aria-label="Open comments on Instagram"
-              >
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                  <path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22z" strokeLinejoin="round" />
-                </svg>
-                <span className="text-[10px] font-semibold drop-shadow">284</span>
-              </a>
-              <a
-                href={reels[idx].permalink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex flex-col items-center gap-0.5"
-                aria-label="Open reel on Instagram"
-              >
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                  <line x1="22" y1="3" x2="9.218" y2="10.083" />
-                  <polygon points="22 3 15 22 11 13 2 9" strokeLinejoin="round" />
-                </svg>
-                <span className="text-[10px] font-semibold drop-shadow">Share</span>
-              </a>
-              <button type="button" className="flex flex-col items-center gap-0.5">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                  <polygon points="20 21 12 13.44 4 21 4 3 20 3" strokeLinejoin="round" />
-                </svg>
-              </button>
-              <a
-                href={INSTAGRAM_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-7 h-7 rounded-md overflow-hidden ring-1 ring-white/60"
-                aria-label="Open CKR Creatives on Instagram"
-              >
-                <img src="/images/logo.png" alt="" className="w-full h-full object-cover" />
-              </a>
-            </div>
-
-            {/* Bottom caption + profile chip */}
-            <div className="absolute left-3 right-14 bottom-20 z-20 text-white">
-              <a
-                href={INSTAGRAM_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 mb-2"
-              >
-                <div className="w-8 h-8 rounded-full ring-2 ring-white overflow-hidden bg-white">
-                  <img src="/images/logo.png" alt="" className="w-full h-full object-cover" />
-                </div>
-                <span className="text-[13px] font-semibold drop-shadow">ckrcreatives</span>
-                <span className="text-[11px] border border-white/80 rounded-md px-1.5 py-[1px] font-semibold ml-1">
-                  Follow
-                </span>
-              </a>
-              <p className="text-[12px] leading-tight drop-shadow line-clamp-2">
-                {reels[idx].caption}
-              </p>
-              <p className="mt-1 text-[11px] text-white/80 drop-shadow flex items-center gap-1.5">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
-                </svg>
-                Original audio · ckrcreatives
-              </p>
-            </div>
-
-            {/* Progress bar for the active reel */}
-            <ReelProgress active key={`p-${idx}`} reelIdx={idx} videoEl={videoRefs.current[idx]} />
-          </motion.div>
-        </AnimatePresence>
+      {/* Right-side action rail — tighter spacing, smaller icons */}
+      <div className="absolute right-2 bottom-14 z-30 flex flex-col items-center gap-3 text-white">
+        <button type="button" onClick={() => toggleLike(idx)} className="flex flex-col items-center gap-0.5">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill={liked.has(idx) ? '#FF3040' : 'none'} stroke={liked.has(idx) ? '#FF3040' : 'currentColor'} strokeWidth="1.8">
+            <path d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-1.816-1.521-4.303-3.752C5.152 14.08 2.5 12.194 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 0 1 3.679-1.938z" strokeLinejoin="round" />
+          </svg>
+          <span className="text-[8px] font-semibold drop-shadow leading-none">{liked.has(idx) ? '12.4k' : '12.3k'}</span>
+        </button>
+        <a
+          href={reels[idx].permalink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex flex-col items-center gap-0.5"
+          aria-label="Open comments on Instagram"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22z" strokeLinejoin="round" />
+          </svg>
+          <span className="text-[8px] font-semibold drop-shadow leading-none">284</span>
+        </a>
+        <a
+          href={reels[idx].permalink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex flex-col items-center gap-0.5"
+          aria-label="Open reel on Instagram"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <line x1="22" y1="3" x2="9.218" y2="10.083" />
+            <polygon points="22 3 15 22 11 13 2 9" strokeLinejoin="round" />
+          </svg>
+        </a>
+        <button type="button" className="flex flex-col items-center gap-0.5">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <polygon points="20 21 12 13.44 4 21 4 3 20 3" strokeLinejoin="round" />
+          </svg>
+        </button>
+        <a
+          href={INSTAGRAM_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-5 h-5 rounded-md overflow-hidden ring-1 ring-white/60"
+          aria-label="Open CKR Creatives on Instagram"
+        >
+          <img src="/images/logo.png" alt="" className="w-full h-full object-cover" />
+        </a>
       </div>
 
-      {/* IG bottom tab bar */}
-      <div className="relative z-30 bg-black border-t border-white/10 flex items-center justify-around py-2.5 text-white">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M22 23h-6.001a1 1 0 0 1-1-1v-5.455a2.997 2.997 0 1 0-5.993 0V22a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V11.543a1.002 1.002 0 0 1 .31-.724l10-9.543a1.001 1.001 0 0 1 1.38 0l10 9.543a1.002 1.002 0 0 1 .31.724V22a1 1 0 0 1-1 1z" /></svg>
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" strokeLinecap="round" /></svg>
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="2" width="20" height="20" rx="5" /><polygon points="10 9 16 12 10 15" fill="black" /></svg>
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="6" width="20" height="14" rx="2" /><path d="M8 6V4a4 4 0 0 1 8 0v2" /></svg>
-        <div className="w-[26px] h-[26px] rounded-full p-[1.5px] ring-2 ring-white">
-          <img src="/images/logo.png" alt="" className="w-full h-full rounded-full object-cover" />
-        </div>
+      {/* Bottom caption + profile chip — sits at the bottom of the screen */}
+      <div className="absolute left-2.5 right-12 bottom-4 z-30 text-white">
+        <a
+          href={INSTAGRAM_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1.5 mb-1.5"
+        >
+          <div className="w-6 h-6 rounded-full ring-[1.5px] ring-white overflow-hidden bg-white">
+            <img src="/images/logo.png" alt="" className="w-full h-full object-cover" />
+          </div>
+          <span className="text-[11px] font-semibold drop-shadow leading-none">ckrcreatives</span>
+          <span className="text-[9px] border border-white/80 rounded px-1 py-[1px] font-semibold leading-none">
+            Follow
+          </span>
+        </a>
+        <p className="text-[10.5px] leading-snug drop-shadow line-clamp-2">
+          {reels[idx].caption}
+        </p>
+        <p className="mt-1 text-[9px] text-white/85 drop-shadow flex items-center gap-1 leading-none">
+          <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+          </svg>
+          Original audio · ckrcreatives
+        </p>
       </div>
+
+      {/* Progress bar pinned at the very bottom */}
+      <ReelProgress active key={`p-${idx}`} reelIdx={idx} videoEl={videoRefs.current[idx]} />
     </div>
   )
 }
