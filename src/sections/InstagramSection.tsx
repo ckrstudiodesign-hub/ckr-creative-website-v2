@@ -1,11 +1,22 @@
 import { motion, AnimatePresence, type PanInfo } from 'framer-motion'
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import LinkedInPost, { LINKEDIN_URL } from './LinkedInPost'
 import TwitterPost, { TWITTER_URL } from './TwitterPost'
 import PhoneFrame from '../components/PhoneFrame'
 
 const INSTAGRAM_URL = 'https://www.instagram.com/ckrcreatives/'
 
+/* Reels played in the IG mock — muted, autoplaying, advancing one-by-one in a loop.
+   These come from the project's existing /public/videos folder so the IG mock
+   showcases real CKR Creatives footage instead of static stills. */
+const reelVideos = [
+  '/videos/camera.mp4',
+  '/videos/catme.mp4',
+  '/videos/tape.mp4',
+  '/videos/faq2.mp4',
+]
+
+/* Fallback poster stills (used only while a reel is loading). */
 const postImages = [
   '/images/instagram-post-1.png',
   '/images/instagram-post-2.png',
@@ -214,6 +225,25 @@ function InstagramPost() {
   const [likedComments, setLikedComments] = useState<Set<number>>(new Set())
   const lastTapRef = useRef(0)
   const commentInputRef = useRef<HTMLInputElement>(null)
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([])
+
+  // Keep only the active reel playing; pause and rewind the rest.
+  useEffect(() => {
+    videoRefs.current.forEach((v, i) => {
+      if (!v) return
+      if (i === currentSlide) {
+        v.currentTime = 0
+        v.play().catch(() => {})
+      } else {
+        v.pause()
+      }
+    })
+  }, [currentSlide])
+
+  // When the active reel ends, advance to the next — looping back to 0 at the end.
+  const handleReelEnded = useCallback(() => {
+    setCurrentSlide((c) => (c + 1) % reelVideos.length)
+  }, [])
 
   const handleLike = useCallback(() => {
     if (!isLiked) {
@@ -242,10 +272,10 @@ function InstagramPost() {
 
   const handleDragEnd = (_: never, info: PanInfo) => {
     const threshold = 50
-    if (info.offset.x < -threshold && currentSlide < postImages.length - 1) {
-      setCurrentSlide((c) => c + 1)
-    } else if (info.offset.x > threshold && currentSlide > 0) {
-      setCurrentSlide((c) => c - 1)
+    if (info.offset.x < -threshold) {
+      setCurrentSlide((c) => (c + 1) % reelVideos.length)
+    } else if (info.offset.x > threshold) {
+      setCurrentSlide((c) => (c - 1 + reelVideos.length) % reelVideos.length)
     }
   }
 
@@ -332,12 +362,19 @@ function InstagramPost() {
           className="relative w-full aspect-square overflow-hidden bg-gray-100 cursor-grab active:cursor-grabbing select-none"
           onClick={handleDoubleTap}
         >
-          {/* Slide counter badge */}
+          {/* "REELS" pill + slide counter */}
+          <div className="absolute top-3 left-3 z-20 flex items-center gap-1 bg-black/55 backdrop-blur-sm text-white text-[10px] font-semibold tracking-[0.18em] uppercase px-2 py-1 rounded-full">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <rect x="2" y="2" width="20" height="20" rx="5" />
+              <polygon points="10 9 16 12 10 15" fill="currentColor" />
+            </svg>
+            Reels
+          </div>
           <div className="absolute top-3 right-3 z-20 bg-black/60 backdrop-blur-sm text-white text-[11px] font-medium px-2.5 py-1 rounded-full">
-            {currentSlide + 1}/{postImages.length}
+            {currentSlide + 1}/{reelVideos.length}
           </div>
 
-          {/* Draggable image container */}
+          {/* Draggable reel container (videos auto-advance on ended) */}
           <motion.div
             className="flex w-full h-full touch-pan-y"
             animate={{ x: `-${currentSlide * 100}%` }}
@@ -347,16 +384,28 @@ function InstagramPost() {
             dragElastic={0.15}
             onDragEnd={handleDragEnd}
           >
-            {postImages.map((src, i) => (
-              <img
-                key={i}
+            {reelVideos.map((src, i) => (
+              <video
+                key={src}
+                ref={(el) => { videoRefs.current[i] = el }}
                 src={src}
-                alt={`CKR Creatives post ${i + 1}`}
-                className="w-full h-full object-cover shrink-0 pointer-events-none"
-                draggable={false}
+                poster={postImages[i % postImages.length]}
+                className="w-full h-full object-cover shrink-0 pointer-events-none bg-black"
+                muted
+                playsInline
+                preload="metadata"
+                autoPlay={i === 0}
+                onEnded={i === currentSlide ? handleReelEnded : undefined}
               />
             ))}
           </motion.div>
+
+          {/* Muted indicator */}
+          <div className="absolute bottom-3 right-3 z-20 bg-black/55 backdrop-blur-sm text-white p-1.5 rounded-full pointer-events-none">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.17v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
+            </svg>
+          </div>
 
           {/* Double-tap heart animation */}
           <AnimatePresence>
@@ -406,7 +455,7 @@ function InstagramPost() {
 
             {/* Dot indicators */}
             <div className="flex items-center gap-1">
-              {postImages.map((_, i) => (
+              {reelVideos.map((_, i) => (
                 <motion.div
                   key={i}
                   className="rounded-full cursor-pointer"

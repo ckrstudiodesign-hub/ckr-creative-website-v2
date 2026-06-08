@@ -35,7 +35,7 @@ const cases: CaseStudy[] = [
     ],
     excerpt:
       'A fully integrated corporate services experience for Dubai — strategic business formation, banking and visa journeys, live working enquiry forms, plus full-scale social media production across Instagram, Facebook, TikTok, YouTube and LinkedIn. Visit live: goldenlegacy.ae',
-    cover: '/project%20image/Golden%20Legacy.png',
+    cover: '/project%20image/golden-legacy-4.jpg',
     tags: ['Web', 'Branding', 'Motion'],
     href: 'https://www.goldenlegacy.ae/',
   },
