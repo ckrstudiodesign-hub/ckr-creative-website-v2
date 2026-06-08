@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 /* -------------------------------------------------------------------- */
 /*  Work — Thomas Monavon style.                                         */
@@ -17,6 +17,8 @@ type Project = {
   year: string
   img: string
   href?: string
+  /** Optional rotating gallery (preview will cross-fade through these). */
+  images?: string[]
 }
 
 const work: Project[] = [
@@ -26,8 +28,13 @@ const work: Project[] = [
     summary: 'Fully integrated corporate services platform for Dubai — business formation, banking and visa flows with live, working lead-capture forms, plus full-scale social media on Instagram, Facebook, TikTok, YouTube & LinkedIn.',
     categories: ['Web Design', 'Forms Integration', 'Social Media'],
     year: '2026',
-    img: '/project%20image/Golden%20Legacy.png',
+    img: '/project%20image/golden-legacy-4.jpg',
     href: 'https://www.goldenlegacy.ae/',
+    images: [
+      '/project%20image/golden-legacy-4.jpg',
+      '/project%20image/golden-legacy-3.jpg',
+      '/project%20image/golden-legacy-1.jpg',
+    ],
   },
   {
     slug: 'novagrid-systems',
@@ -81,7 +88,25 @@ const work: Project[] = [
 
 export default function WorkSection() {
   const [active, setActive] = useState(0)
+  const [galleryIdx, setGalleryIdx] = useState(0)
   const total = work.length
+
+  // Reset gallery index when switching active project.
+  useEffect(() => {
+    setGalleryIdx(0)
+  }, [active])
+
+  // Auto-rotate gallery images for projects that ship one (e.g. Golden Legacy).
+  useEffect(() => {
+    const gallery = work[active]?.images
+    if (!gallery || gallery.length < 2) return
+    const id = window.setInterval(() => {
+      setGalleryIdx((i) => (i + 1) % gallery.length)
+    }, 2600)
+    return () => window.clearInterval(id)
+  }, [active])
+
+  const activeImg = work[active].images?.[galleryIdx] ?? work[active].img
 
   return (
     <section className="w-full bg-brand-light-white text-brand-black">
@@ -233,18 +258,34 @@ export default function WorkSection() {
                   rel="noopener noreferrer"
                   className="group/preview relative block aspect-[4/3] overflow-hidden rounded-[24px] bg-brand-black"
                 >
-                  <motion.div
-                    className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: `url("${work[active].img}")` }}
-                    initial={{ scale: 1.04 }}
-                    animate={{ scale: 1 }}
-                    transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                  />
+                  <AnimatePresence mode="sync">
+                    <motion.div
+                      key={activeImg}
+                      className="absolute inset-0 bg-cover bg-center"
+                      style={{ backgroundImage: `url("${activeImg}")` }}
+                      initial={{ opacity: 0, scale: 1.04 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                    />
+                  </AnimatePresence>
                   <div
                     aria-hidden
                     className="absolute inset-0"
                     style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,0.72) 100%)' }}
                   />
+                  {work[active].images && work[active].images!.length > 1 && (
+                    <div className="absolute right-5 top-5 flex items-center gap-1.5 rounded-full bg-black/45 px-3 py-1 backdrop-blur-md">
+                      {work[active].images!.map((_, i) => (
+                        <span
+                          key={i}
+                          className={`block h-1.5 rounded-full transition-all duration-300 ${
+                            i === galleryIdx ? 'w-5 bg-brand-orange' : 'w-1.5 bg-white/50'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  )}
                   <div className="absolute inset-x-6 bottom-6 flex flex-col gap-2 text-brand-white">
                     <span className="text-[11px] uppercase tracking-[0.22em] text-brand-white/70">
                       {String(active + 1).padStart(2, '0')} / {String(total).padStart(2, '0')} · {work[active].year}
