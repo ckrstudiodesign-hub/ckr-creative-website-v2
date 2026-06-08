@@ -14,6 +14,13 @@ type PhoneFrameProps = {
   bezel?: 'graphite' | 'silver' | 'gold' | 'desert'
   /** Optional class for sizing override (defaults to ~340px wide). */
   className?: string
+  /** When true, content fills the entire screen edge-to-edge — status bar
+   *  and home indicator sit on top of it. Use for reels, video, or any
+   *  content that should look truly fullscreen. Default: false (padded). */
+  bleed?: boolean
+  /** When true, hides the status bar and home indicator entirely so the
+   *  content can use every pixel. Implies bleed. Default: false. */
+  hideChrome?: boolean
 }
 
 const bezelGradients: Record<NonNullable<PhoneFrameProps['bezel']>, string> = {
@@ -70,7 +77,10 @@ export default function PhoneFrame({
   statusBar = 'dark',
   bezel = 'graphite',
   className = '',
+  bleed = false,
+  hideChrome = false,
 }: PhoneFrameProps) {
+  const isBleed = bleed || hideChrome
   const bezelStyle: CSSProperties = {
     background: bezelGradients[bezel],
     boxShadow:
@@ -115,10 +125,10 @@ export default function PhoneFrame({
             style={{ aspectRatio: '9 / 19.5' }}
           >
             {/* Status bar (clock + signal/wifi/battery) */}
-            <StatusBar tint={statusBar} />
+            {!hideChrome && <StatusBar tint={statusBar} />}
 
             {/* Dynamic Island */}
-            <div
+            {!hideChrome && <div
               aria-hidden
               className="absolute left-1/2 top-[10px] z-30 -translate-x-1/2 rounded-full"
               style={{
@@ -144,14 +154,14 @@ export default function PhoneFrame({
                 className="absolute left-[12px] top-1/2 h-[6px] w-[6px] -translate-y-1/2 rounded-full"
                 style={{ background: 'radial-gradient(circle, #111 0%, #000 70%)' }}
               />
-            </div>
+            </div>}
 
             {/* Scrollable screen content */}
             <div
               className="absolute inset-0 overflow-y-auto overflow-x-hidden"
               style={{
-                paddingTop: 54, // clear status bar + island top
-                paddingBottom: 22, // clear home indicator
+                paddingTop: isBleed ? 0 : 54, // clear status bar + island top
+                paddingBottom: isBleed ? 0 : 22, // clear home indicator
                 scrollbarWidth: 'thin',
               }}
             >
@@ -159,13 +169,13 @@ export default function PhoneFrame({
             </div>
 
             {/* Home indicator */}
-            <div
+            {!hideChrome && <div
               aria-hidden
               className="absolute bottom-[8px] left-1/2 z-20 h-[5px] w-[120px] -translate-x-1/2 rounded-full pointer-events-none"
               style={{
                 backgroundColor: statusBar === 'light' ? 'rgba(255,255,255,0.85)' : 'rgba(0,0,0,0.85)',
               }}
-            />
+            />}
           </div>
         </div>
       </div>

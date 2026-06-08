@@ -7,6 +7,19 @@ import { PageHero } from '../components/PageHero'
 
 export type FilterTag = 'All' | 'Branding' | 'Web' | 'AI' | 'Motion' | 'Commerce'
 
+export type CaseStudyStory = {
+  /** Short paragraph shown at the top of the case study after the hero. */
+  overview: string
+  /** Bullet list of challenges the client was facing. */
+  challenges: string[]
+  /** Bullet list of solutions CKR Creatives delivered. */
+  solutions: string[]
+  /** Measurable outcomes, KPIs, or notable launches. */
+  results: string[]
+  /** Optional client quote with attribution. */
+  quote?: { text: string; attribution: string }
+}
+
 export type CaseStudy = {
   slug: string
   title: string
@@ -18,6 +31,9 @@ export type CaseStudy = {
   cover: string
   tags: Exclude<FilterTag, 'All'>[]
   href?: string
+  /** Optional rich content shown on the case study detail page. When
+   *  absent the detail page falls back to the generic template. */
+  story?: CaseStudyStory
 }
 
 export const cases: CaseStudy[] = [
@@ -38,6 +54,36 @@ export const cases: CaseStudy[] = [
     cover: '/project%20image/golden-legacy-4.jpg',
     tags: ['Web', 'Branding', 'Motion'],
     href: 'https://www.goldenlegacy.ae/',
+    story: {
+      overview:
+        'Golden Legacy Corporate Services came to CKR Creatives needing a serious digital home for a serious business — Dubai mainland setup, free zone formation, banking, visas, and value-added services for visionary entrepreneurs. We built them an end-to-end platform that converts visitors into qualified leads, and a social media engine that keeps the brand visible across Instagram, Facebook, TikTok, YouTube, and LinkedIn every single week.',
+      challenges: [
+        'No central digital presence — enquiries were scattered across WhatsApp, calls, and personal email with no tracking.',
+        'A complex services menu (Mainland, Free Zone, Banking, Value Added, Compliance) that confused first-time business owners.',
+        'No lead-capture funnel — the previous site sent visitors to a generic contact form with very low conversion.',
+        'No content cadence on social media, despite a strong story to tell about Dubai business formation.',
+        'Need for premium positioning to attract HNW and mid-market entrepreneurs over budget competitors.',
+      ],
+      solutions: [
+        'A cinematic website with a dark-luxe identity, video hero of Dubai, and the Burj Khalifa skyline reinforcing the "Building Legacies" brand line.',
+        'A guided service architecture — Mainland / Free Zone / Banking / Value Added / Contact — that mirrors how clients actually shop for setup services.',
+        '"Calculate Setup Cost" CTA and fully integrated, working lead-capture forms that route directly to the Golden Legacy team with WhatsApp + email notifications.',
+        'Floating WhatsApp, call, Instagram, LinkedIn, Facebook, and email rail so visitors can convert from any screen, on any device.',
+        'A full social media management retainer covering Instagram, Facebook, TikTok, YouTube, and LinkedIn — content calendar, reels, posts, stories, and replies.',
+        'SEO-ready architecture, Google Reviews badge, and review widgets to compound trust over time.',
+      ],
+      results: [
+        'A premium-feeling brand experience that punches above setup-consultancy norms in the UAE market.',
+        'Working enquiry funnel — every form submission lands in the team\'s inbox with full context, ready for follow-up.',
+        'A consistent multi-platform social presence under one creative direction.',
+        'Live and running at goldenlegacy.ae with all flows integrated end-to-end.',
+      ],
+      quote: {
+        text:
+          'CKR Creatives didn\'t just build us a website — they built the foundation of our brand. Fast mainland setup, clear guidance, and a digital presence that finally matches the quality of our service.',
+        attribution: 'Golden Legacy Corporate Services',
+      },
+    },
   },
   {
     slug: 'novagrid-systems',
@@ -360,52 +406,6 @@ export default function Work() {
                 transition={{ duration: 0.55, delay: (i % 2) * 0.08, ease: [0.22, 1, 0.36, 1] }}
                 className="group"
               >
-                {c.href ? (
-                <a href={c.href} target="_blank" rel="noopener noreferrer" className="block">
-                  <div
-                    className="relative aspect-[4/3] rounded-[24px] bg-brand-white overflow-hidden transition-transform duration-700 ease-out group-hover:scale-[1.015]"
-                  >
-                    <div
-                      className="absolute inset-4 bg-contain bg-no-repeat bg-center mix-blend-multiply"
-                      style={{ backgroundImage: `url("${encodeURI(c.cover)}")` }}
-                    />
-                    <div
-                      aria-hidden
-                      className="pointer-events-none absolute inset-0"
-                      style={{
-                        background:
-                          'linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,0.55) 100%)',
-                      }}
-                    />
-                    <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-4">
-                      <span className="dm-p14-semi text-brand-white uppercase tracking-[0.18em]">
-                        {c.category}
-                      </span>
-                      <span className="dm-p14-semi text-brand-white/80">{c.year}</span>
-                    </div>
-                    <span className="absolute top-4 right-4 rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-black backdrop-blur-md">
-                      Live ↗
-                    </span>
-                  </div>
-                  <header className="mt-4 flex items-baseline justify-between gap-4">
-                    <h2 className="zalando-h3-44 leading-tight">{c.title}</h2>
-                    <span className="dm-p14-semi text-brand-light-black shrink-0">{c.client}</span>
-                  </header>
-                  <p className="mt-2.5 dm-p18-semi text-brand-light-black max-w-[60ch]">
-                    {c.excerpt}
-                  </p>
-                  <ul className="mt-3 flex flex-wrap gap-2">
-                    {c.scope.map((s) => (
-                      <li
-                        key={s}
-                        className="rounded-full border border-brand-off-gray px-3 py-1 dm-p14-medium text-brand-light-black"
-                      >
-                        {s}
-                      </li>
-                    ))}
-                  </ul>
-                </a>
-                ) : (
                 <Link to={`/work/${c.slug}`} className="block">
                   <div
                     className="relative aspect-[4/3] rounded-[24px] bg-brand-white overflow-hidden transition-transform duration-700 ease-out group-hover:scale-[1.015]"
@@ -428,6 +428,11 @@ export default function Work() {
                       </span>
                       <span className="dm-p14-semi text-brand-white/80">{c.year}</span>
                     </div>
+                    {c.href && (
+                      <span className="absolute top-4 right-4 rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-black backdrop-blur-md">
+                        Live ↗
+                      </span>
+                    )}
                   </div>
                   <header className="mt-4 flex items-baseline justify-between gap-4">
                     <h2 className="zalando-h3-44 leading-tight">{c.title}</h2>
@@ -447,7 +452,6 @@ export default function Work() {
                     ))}
                   </ul>
                 </Link>
-                )}
               </motion.article>
             ))}
           </div>

@@ -279,7 +279,7 @@ export default function InstagramSection() {
               }}
             />
             <div className="flex flex-col items-center gap-4">
-              <PhoneFrame bezel="silver">
+              <PhoneFrame bezel="silver" hideChrome>
                 <LinkedInPost />
               </PhoneFrame>
               <a
@@ -313,7 +313,7 @@ export default function InstagramSection() {
               }}
             />
             <div className="flex flex-col items-center gap-4">
-              <PhoneFrame bezel="desert">
+              <PhoneFrame bezel="desert" hideChrome>
                 <InstagramReels />
               </PhoneFrame>
               <a
@@ -345,7 +345,7 @@ export default function InstagramSection() {
               }}
             />
             <div className="flex flex-col items-center gap-4">
-              <PhoneFrame bezel="graphite">
+              <PhoneFrame bezel="graphite" hideChrome>
                 <TwitterPost />
               </PhoneFrame>
               <a
