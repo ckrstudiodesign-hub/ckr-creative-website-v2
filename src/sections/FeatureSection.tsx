@@ -340,15 +340,29 @@ export default function FeatureSection() {
             )}
           </motion.div>
 
-          {/* Glassy pillar grid */}
+          {/* Mobile: horizontal snap-scroll carousel; sm+: glassy pillar grid */}
           <div
-            className="relative z-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
+            className="relative z-10 sm:hidden -mx-4 px-4 overflow-x-auto snap-x snap-mandatory flex gap-3 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            style={{ perspective: 1400 }}
+          >
+            {pillars.map((p, i) => (
+              <div key={p.title} className="snap-center shrink-0 w-[78vw] max-w-[320px]">
+                <PillarCard pillar={p} index={i} />
+              </div>
+            ))}
+          </div>
+          <div
+            className="relative z-10 hidden sm:grid grid-cols-2 gap-4 lg:grid-cols-4"
             style={{ perspective: 1400 }}
           >
             {pillars.map((p, i) => (
               <PillarCard key={p.title} pillar={p} index={i} />
             ))}
           </div>
+          {/* Mobile scroll hint */}
+          <p className="sm:hidden mt-1 text-[11px] uppercase tracking-[0.22em] text-brand-black/50">
+            ← Swipe to explore →
+          </p>
 
           {/* Closing line — same warm-brown body voice as About */}
           <motion.p

@@ -88,6 +88,9 @@ const work: Project[] = [
 
 export default function WorkSection() {
   const [active, setActive] = useState(0)
+  // Mobile-only: which row is expanded (-1 = all collapsed). Independent of
+  // `active` so the desktop hover-driven preview keeps working untouched.
+  const [openIdx, setOpenIdx] = useState<number>(-1)
   const [galleryIdx, setGalleryIdx] = useState(0)
   const total = work.length
 
@@ -151,8 +154,13 @@ export default function WorkSection() {
                     type="button"
                     onMouseEnter={() => setActive(i)}
                     onFocus={() => setActive(i)}
-                    onClick={() => setActive(i)}
-                    aria-expanded={isActive}
+                    onClick={() => {
+                      setActive(i)
+                      // Mobile-only toggle — desktop uses hover, so this just
+                      // controls the inline-preview accordion on small screens.
+                      setOpenIdx((cur) => (cur === i ? -1 : i))
+                    }}
+                    aria-expanded={openIdx === i}
                     className="group flex w-full items-center gap-4 py-4 text-left md:py-5"
                   >
                     <span className="font-zalando text-[13px] font-semibold tabular-nums text-brand-black/35 w-7 shrink-0">
@@ -160,21 +168,32 @@ export default function WorkSection() {
                     </span>
                     <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                       <span
-                        className={`font-zalando text-[22px] md:text-[26px] lg:text-[30px] leading-[1.05] font-semibold transition-colors duration-300 ${
+                        className={`font-zalando text-[20px] md:text-[26px] lg:text-[30px] leading-[1.05] font-semibold transition-colors duration-300 ${
                           isActive ? 'text-brand-orange' : 'text-brand-black group-hover:text-brand-orange'
                         }`}
                       >
                         {p.title}
                       </span>
-                      <span className="dm-p14-medium text-brand-black/55 truncate">
+                      <span className="text-[11px] sm:dm-p14-medium text-brand-black/55 truncate">
                         {p.categories.join(' · ')}
                       </span>
                     </span>
                     <span className="hidden shrink-0 text-[11px] uppercase tracking-[0.22em] text-brand-black/45 sm:block">
                       {p.year}
                     </span>
+                    {/* Mobile chevron (toggles dropdown), desktop arrow (visit) */}
+                    <motion.span
+                      animate={{ rotate: openIdx === i ? 180 : 0 }}
+                      transition={{ duration: 0.25 }}
+                      className={`shrink-0 lg:hidden ${openIdx === i ? 'text-brand-orange' : 'text-brand-black/45'}`}
+                      aria-hidden
+                    >
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                        <path d="M4 7l5 5 5-5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </motion.span>
                     <span
-                      className={`shrink-0 text-brand-black/30 transition-all duration-300 ${
+                      className={`hidden lg:inline-block shrink-0 text-brand-black/30 transition-all duration-300 ${
                         isActive ? 'text-brand-orange translate-x-0' : 'group-hover:text-brand-orange'
                       }`}
                       aria-hidden
@@ -187,7 +206,7 @@ export default function WorkSection() {
 
                   {/* Mobile inline preview — tap a project to reveal */}
                   <AnimatePresence initial={false}>
-                    {isActive && (
+                    {openIdx === i && (
                       <motion.div
                         key="m-preview"
                         initial={{ height: 0, opacity: 0 }}

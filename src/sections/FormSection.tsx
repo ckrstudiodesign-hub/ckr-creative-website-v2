@@ -61,9 +61,18 @@ export default function FormSection() {
       heading="Tell us about your project"
       description="Brief us in a sentence or a paragraph — whichever feels right. We'll reply within one business day."
     >
+      {/* Mobile-only blinking "Start The Conversation" call-out above the form */}
+      <div className="md:hidden mt-4 mb-4 flex items-center justify-center gap-2 text-center">
+        <span className="inline-block h-2 w-2 rounded-full parking-text" style={{ background: 'currentColor' }} />
+        <span className="font-zalando text-[18px] font-semibold parking-text">
+          Start The Conversation
+        </span>
+        <span className="inline-block h-2 w-2 rounded-full parking-text" style={{ background: 'currentColor' }} />
+      </div>
+
       <form
         onSubmit={handleSubmit}
-        className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[900px] mt-4"
+        className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[900px] mt-4 rounded-3xl p-4 md:p-0 parking-light md:!shadow-none md:!animation-none md:[animation:none]"
       >
         {/* Honeypot — Web3Forms ignores submissions where this is non-empty */}
         <input type="checkbox" name="botcheck" tabIndex={-1} className="hidden" defaultChecked={false} />
