@@ -165,7 +165,6 @@ export const TextStaggerHover = React.forwardRef<
           >
             <video
               src={videoUrl}
-              poster={imageUrl}
               autoPlay
               loop
               muted

@@ -185,7 +185,6 @@ export default function ServiceSection() {
               {SLIDES[theaterSlideIndex]?.videoUrl ? (
                 <video
                   src={SLIDES[theaterSlideIndex].videoUrl}
-                  poster={SLIDES[theaterSlideIndex].imageUrl}
                   autoPlay
                   loop
                   muted
