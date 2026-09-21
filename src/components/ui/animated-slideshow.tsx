@@ -201,7 +201,7 @@ interface HoverSliderVideoProps {
 
 export const HoverSliderVideo = React.forwardRef<
   HTMLVideoElement,
-  HTMLMotionProps<"video"> & HoverSliderVideoProps
+  HTMLMotionProps<"div"> & HoverSliderVideoProps
 >(({ index, videoUrl, children, className, ...props }, forwardedRef) => {
   const { activeSlide } = useHoverSliderContext()
   const isActive = activeSlide === index
@@ -241,20 +241,23 @@ export const HoverSliderVideo = React.forwardRef<
   }, [isActive])
 
   return (
-    <motion.video
+    <motion.div
       className={cn("inline-block align-middle", className)}
       transition={{ ease: [0.33, 1, 0.68, 1], duration: 0.8 }}
       variants={clipPathVariants}
       animate={isActive ? "visible" : "hidden"}
-      ref={setRefs as any}
-      loop
-      muted
-      playsInline
-      autoPlay
       {...props}
     >
-      <source src={videoUrl} type="video/mp4" />
-    </motion.video>
+      <video
+        ref={setRefs as any}
+        loop
+        muted
+        playsInline
+        autoPlay
+        src={videoUrl}
+        className="size-full object-cover"
+      />
+    </motion.div>
   )
 })
 HoverSliderVideo.displayName = "HoverSliderVideo"
