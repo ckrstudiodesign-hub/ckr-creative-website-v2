@@ -220,10 +220,21 @@ export const HoverSliderVideo = React.forwardRef<
   )
 
   React.useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.defaultMuted = true
+      videoRef.current.muted = true
+      videoRef.current.playsInline = true
+    }
+  }, [])
+
+  React.useEffect(() => {
     if (!videoRef.current) return
     if (isActive) {
       videoRef.current.currentTime = 0
-      videoRef.current.play().catch(() => {})
+      const playPromise = videoRef.current.play()
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {})
+      }
     } else {
       videoRef.current.pause()
     }
@@ -239,7 +250,7 @@ export const HoverSliderVideo = React.forwardRef<
       loop
       muted
       playsInline
-      autoPlay={isActive}
+      autoPlay
       {...props}
     >
       <source src={videoUrl} type="video/mp4" />
