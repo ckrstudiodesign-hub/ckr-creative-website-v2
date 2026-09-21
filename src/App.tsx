@@ -1,6 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
-import SiteLoader from './components/SiteLoader'
 import { ScrollToTop } from './components/ScrollToTop'
 import Home from './pages/Home'
 import Studio from './pages/Studio'
@@ -13,7 +12,6 @@ import Terms from './pages/Terms'
 export default function App() {
   return (
     <>
-      <SiteLoader />
       <ScrollToTop />
       <Routes>
         <Route element={<Layout />}>
