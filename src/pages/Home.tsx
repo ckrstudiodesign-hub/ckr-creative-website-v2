@@ -1,14 +1,13 @@
 import Hero from '../sections/Hero'
+import TrustedBySection from '../sections/TrustedBySection'
 import AboutSection from '../sections/AboutSection'
 import ServiceSection from '../sections/ServiceSection'
-import FeatureSection from '../sections/FeatureSection'
 import ProcessSection from '../sections/ProcessSection'
 import WorkSection from '../sections/WorkSection'
 import WhyChooseUsSection from '../sections/WhyChooseUsSection'
 import TestimonialSection from '../sections/TestimonialSection'
 import FaqSection from '../sections/FaqSection'
 import FinalCtaSection from '../sections/FinalCtaSection'
-import InstagramSection from '../sections/InstagramSection'
 import { SEO } from '../components/SEO'
 import { SITE_ORIGIN, buildBreadcrumbs } from '../components/seo-utils'
 
@@ -227,13 +226,12 @@ export default function Home() {
         jsonLd={[websiteSchema, localBusinessSchema, serviceCatalog, faqSchema, breadcrumbs]}
       />
       <Hero />
+      <TrustedBySection />
       <div id="about"><AboutSection /></div>
       <div id="services"><ServiceSection /></div>
-      <FeatureSection />
       <WhyChooseUsSection />
       <ProcessSection />
       <WorkSection />
-      <InstagramSection />
       <TestimonialSection />
       <FaqSection />
       <FinalCtaSection />

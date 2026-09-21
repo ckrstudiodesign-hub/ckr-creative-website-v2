@@ -1,17 +1,8 @@
-import { useRef, type ReactNode } from 'react'
-import {
-  motion,
-  useMotionValue,
-  useSpring,
-  useTransform,
-  type MotionValue,
-} from 'framer-motion'
-import SectionShell from '../components/SectionShell'
+import { type ReactNode } from 'react'
+import { motion } from 'framer-motion'
 
 /* ------------------------------------------------------------------ */
-/*  "What Sets Us Apart" — clean, Apple-style glassmorphism on cream.  */
-/*  Matches the About section's light palette: cream surface, deep     */
-/*  brown type, orange accent. Adds subtle 3D tilt + frosted cards.    */
+/*  "What Sets Us Apart" — Ultra-minimal animated list                */
 /*  Ships JSON-LD + semantic markup for SEO / AEO / GEO / LLM.        */
 /* ------------------------------------------------------------------ */
 
@@ -131,152 +122,7 @@ const pillars: Pillar[] = [
   },
 ]
 
-/* -------- Soft ambient backdrop: cream + floating glass orbs -------- */
 
-function AmbientBackdrop() {
-  return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
-      {/* Hairline grid — barely visible, just for texture */}
-      <div
-        className="absolute inset-0 opacity-[0.5]"
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(255,122,26,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,122,26,0.06) 1px, transparent 1px)',
-          backgroundSize: '64px 64px',
-          maskImage: 'radial-gradient(ellipse at center, black 40%, transparent 85%)',
-          WebkitMaskImage: 'radial-gradient(ellipse at center, black 40%, transparent 85%)',
-        }}
-      />
-      {/* Soft warm glow blobs (the glassy halo) */}
-      <motion.div
-        className="absolute -top-32 -right-24 h-[480px] w-[480px] rounded-full"
-        style={{
-          background:
-            'radial-gradient(circle, rgba(255,122,26,0.22) 0%, rgba(255,122,26,0) 70%)',
-          filter: 'blur(20px)',
-        }}
-        animate={{ y: [0, 24, 0], x: [0, -16, 0] }}
-        transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
-      />
-      <motion.div
-        className="absolute -bottom-40 -left-24 h-[520px] w-[520px] rounded-full"
-        style={{
-          background:
-            'radial-gradient(circle, rgba(255,180,120,0.28) 0%, rgba(255,180,120,0) 70%)',
-          filter: 'blur(24px)',
-        }}
-        animate={{ y: [0, -20, 0], x: [0, 18, 0] }}
-        transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut' }}
-      />
-    </div>
-  )
-}
-
-/* -------- Single pillar card: glassy, subtle 3D tilt ---------------- */
-
-function PillarCard({ pillar, index }: { pillar: Pillar; index: number }) {
-  const ref = useRef<HTMLElement | null>(null)
-  const mx = useMotionValue(0)
-  const my = useMotionValue(0)
-  const rotateX = useSpring(useTransform(my, [-0.5, 0.5], [6, -6]), { stiffness: 200, damping: 20 })
-  const rotateY = useSpring(useTransform(mx, [-0.5, 0.5], [-8, 8]), { stiffness: 200, damping: 20 })
-  const glowX = useTransform(mx, [-0.5, 0.5], [0, 100])
-  const glowY = useTransform(my, [-0.5, 0.5], [0, 100])
-  const glowBg = useTransform(
-    [glowX, glowY] as unknown as MotionValue<number>[],
-    (latest: number[]) =>
-      `radial-gradient(360px circle at ${latest[0]}% ${latest[1]}%, rgba(255,122,26,0.14), transparent 60%)`,
-  )
-
-  const handleMove = (e: React.MouseEvent<HTMLElement>) => {
-    const el = ref.current
-    if (!el) return
-    const rect = el.getBoundingClientRect()
-    mx.set((e.clientX - rect.left) / rect.width - 0.5)
-    my.set((e.clientY - rect.top) / rect.height - 0.5)
-  }
-  const handleLeave = () => {
-    mx.set(0)
-    my.set(0)
-  }
-
-  return (
-    <motion.article
-      ref={ref}
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
-      initial={{ opacity: 0, y: 18 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.6, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
-      style={{ rotateX, rotateY, transformStyle: 'preserve-3d', transformPerspective: 1200 }}
-      className="group relative flex flex-col gap-4 rounded-[22px] border border-brand-off-gray/70 bg-white/60 p-5 backdrop-blur-xl will-change-transform"
-      itemScope
-      itemType="https://schema.org/Service"
-    >
-      {/* Inner top highlight — the Apple-glass sheen */}
-      <span
-        aria-hidden
-        className="pointer-events-none absolute inset-x-4 top-0 h-px"
-        style={{
-          background:
-            'linear-gradient(90deg, transparent, rgba(255,255,255,0.95), transparent)',
-        }}
-      />
-      {/* Cursor-follow soft glow */}
-      <motion.div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 rounded-[22px] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        style={{ background: glowBg }}
-      />
-
-      {/* Header: index + glass glyph chip */}
-      <div className="relative z-10 flex items-start justify-between" style={{ transform: 'translateZ(30px)' }}>
-        <span className="dm-p14-semi text-brand-black/55">
-          {String(index + 1).padStart(2, '0')} / 09
-        </span>
-        <div
-          className="grid h-12 w-12 place-items-center rounded-2xl border border-brand-off-gray/80 bg-white/80 shadow-[0_8px_24px_-12px_rgba(255,122,26,0.45)]"
-        >
-          <svg
-            width="28"
-            height="28"
-            viewBox="0 0 52 52"
-            fill="none"
-            stroke="#ff7a1a"
-            strokeWidth="1.7"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            {pillar.glyph}
-          </svg>
-        </div>
-      </div>
-
-      {/* Title + tagline */}
-      <div className="relative z-10 flex flex-col gap-2" style={{ transform: 'translateZ(20px)' }}>
-        <h3 className="zalando-h4-20 text-brand-black" itemProp="name">
-          {pillar.title}
-        </h3>
-        <p className="dm-p14-semi text-brand-black/60" itemProp="description">
-          {pillar.tagline}
-        </p>
-      </div>
-
-      {/* Signal chips — Apple-style pills */}
-      <ul className="relative z-10 mt-auto flex flex-wrap gap-2" style={{ transform: 'translateZ(15px)' }}>
-        {pillar.signals.map((s) => (
-          <li
-            key={s}
-            className="rounded-full border border-brand-off-gray/80 bg-white/70 px-3 py-1 text-[11px] uppercase tracking-[0.14em] text-brand-black/70"
-          >
-            {s}
-          </li>
-        ))}
-      </ul>
-    </motion.article>
-  )
-}
 
 /* -------- Section ---------------------------------------------------- */
 
@@ -297,90 +143,123 @@ export default function FeatureSection() {
   }
 
   return (
-    <div className="relative">
+    <section className="bg-brand-light-white text-brand-black overflow-hidden relative">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
+      <div className="py-24 md:py-32 relative z-10">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="max-w-3xl">
+            <motion.span
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="dm-p14-semi uppercase tracking-[0.2em] text-brand-orange mb-4 block"
+            >
+              What Sets Us Apart
+            </motion.span>
+            <motion.h2
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-balance font-zalando text-4xl font-semibold md:text-5xl lg:text-6xl text-brand-black leading-tight"
+            >
+              Optimized For Search, Performance & Digital Growth
+            </motion.h2>
+          </div>
 
-      <SectionShell
-        eyebrow="What Sets Us Apart"
-        heading="Optimized For Search, Performance & Digital Growth"
-        background="bg-brand-light-white"
-        textColor="text-brand-black"
-        frameless
-      >
-        <div className="relative">
-          <AmbientBackdrop />
-
-          {/* "Tuned for" engine pills — matches the About section's chip row */}
           <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.6 }}
-            className="relative z-10 mb-6 flex flex-wrap items-center gap-2.5"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+            className="mt-8 flex flex-wrap items-center gap-2.5"
           >
             <span className="dm-p14-semi uppercase tracking-[0.2em] text-brand-black/55">
               Tuned for
             </span>
             {['Google', 'Bing', 'ChatGPT', 'Perplexity', 'Gemini', 'Claude', 'Copilot'].map(
-              (engine, i) => (
-                <motion.span
+              (engine) => (
+                <span
                   key={engine}
-                  initial={{ opacity: 0, y: 6 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.04 * i, duration: 0.4 }}
-                  className="rounded-full border border-brand-off-gray/80 bg-white/70 px-4 py-1.5 text-xs uppercase tracking-[0.14em] text-brand-black/75 backdrop-blur-md"
+                  className="rounded-full border border-brand-off-gray/80 bg-white/70 px-4 py-1.5 text-xs uppercase tracking-[0.14em] text-brand-black/75"
                 >
                   {engine}
-                </motion.span>
+                </span>
               ),
             )}
           </motion.div>
 
-          {/* Mobile: horizontal snap-scroll carousel; sm+: glassy pillar grid */}
-          <div
-            className="relative z-10 sm:hidden -mx-4 px-4 overflow-x-auto snap-x snap-mandatory flex gap-3 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-            style={{ perspective: 1400 }}
-          >
-            {pillars.map((p, i) => (
-              <div key={p.title} className="snap-center shrink-0 w-[78vw] max-w-[320px]">
-                <PillarCard pillar={p} index={i} />
-              </div>
-            ))}
-          </div>
-          <div
-            className="relative z-10 hidden sm:grid grid-cols-2 gap-4 lg:grid-cols-4"
-            style={{ perspective: 1400 }}
-          >
-            {pillars.map((p, i) => (
-              <PillarCard key={p.title} pillar={p} index={i} />
-            ))}
-          </div>
-          {/* Mobile scroll hint */}
-          <p className="sm:hidden mt-1 text-[11px] uppercase tracking-[0.22em] text-brand-black/50">
-            ← Swipe to explore →
-          </p>
+          <div className="mt-20 max-w-5xl flex flex-col">
+            {pillars.map((pillar, i) => (
+              <motion.div
+                key={pillar.title}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.6, delay: i * 0.08, ease: [0.25, 1, 0.5, 1] }}
+                className="group flex items-center gap-6 border-b border-brand-off-gray/40 py-6 md:py-8 cursor-default"
+              >
+                <span className="dm-p14-semi text-brand-black/30 min-w-[50px] transition-colors group-hover:text-brand-orange">
+                  {String(i + 1).padStart(2, '0')} / 08
+                </span>
+                
+                <div className="flex flex-col gap-2">
+                  <h3 className="text-xl md:text-3xl font-zalando text-brand-black/80 transition-colors duration-300 group-hover:text-brand-black">
+                    {pillar.title}
+                  </h3>
+                  {/* Keep only the tagline for the first item based on the user's snippet, hide for the rest to minimize words */}
+                  {i === 0 && (
+                    <div className="flex flex-col gap-3 mt-1">
+                      <p className="dm-p14-semi text-brand-black/60">{pillar.tagline}</p>
+                      <div className="flex flex-wrap gap-2">
+                        {pillar.signals.map(s => (
+                          <span key={s} className="rounded-full bg-white border border-brand-off-gray/60 px-3 py-1 text-[10px] uppercase tracking-wider text-brand-black/60">
+                            {s}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
 
-          {/* Closing line — same warm-brown body voice as About */}
+                <div className="ml-auto text-brand-black/10 transition-colors duration-500 group-hover:text-brand-orange shrink-0">
+                  <svg
+                    width="48"
+                    height="48"
+                    viewBox="0 0 52 52"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="size-8 md:size-12"
+                  >
+                    {pillar.glyph}
+                  </svg>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
           <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative z-10 mt-6 max-w-[820px] dm-p14-semi text-brand-black/65"
+            transition={{ delay: 0.4 }}
+            className="mt-16 max-w-3xl dm-p14-semi text-brand-black/65"
           >
             Every CKR Creatives build ships with semantic HTML, Schema.org markup,
-            <code className="mx-1 rounded bg-white/70 border border-brand-off-gray/70 px-1.5 py-0.5 text-[12px] text-brand-black/80">
+            <code className="mx-1 rounded bg-white border border-brand-off-gray/70 px-1.5 py-0.5 text-[12px] text-brand-black/80">
               llms.txt
             </code>
             guidance, edge-cached performance, and motion systems that read as well to
             humans as they do to search and generative-AI engines.
           </motion.p>
         </div>
-      </SectionShell>
-    </div>
+      </div>
+    </section>
   )
 }

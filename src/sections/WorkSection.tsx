@@ -1,12 +1,9 @@
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
 
 /* -------------------------------------------------------------------- */
-/*  Work — Thomas Monavon style.                                         */
-/*  Each project occupies a tall section with a numbered index, big hero */
-/*  image, minimal typography (S — summary, C — categories), and a       */
-/*  "Visit project" CTA. Clean, editorial, lots of whitespace.           */
+/*  Work — Compact CoverFlow Layout                                      */
 /* -------------------------------------------------------------------- */
 
 type Project = {
@@ -16,309 +13,208 @@ type Project = {
   categories: string[]
   year: string
   img: string
-  href?: string
-  /** Optional rotating gallery (preview will cross-fade through these). */
-  images?: string[]
+  href: string
 }
 
-const work: Project[] = [
+// We duplicate the 4 projects so the carousel has 8 items, 
+// creating a perfectly smooth infinite loop without empty spaces.
+const baseWork: Project[] = [
   {
     slug: 'golden-legacy',
     title: 'Golden Legacy Corporate Services',
-    summary: 'Fully integrated corporate services platform for Dubai — business formation, banking and visa flows with live, working lead-capture forms, plus full-scale social media on Instagram, Facebook, TikTok, YouTube & LinkedIn.',
-    categories: ['Web Design', 'Forms Integration', 'Social Media'],
+    summary: 'Building a premium digital gateway for UAE entrepreneurs.',
+    categories: ['Web Design', 'Branding', 'UI/UX'],
     year: '2026',
-    img: '/project%20image/golden-legacy-4.jpg',
+    img: '/project%20image/golden%20legacy%20corporrate%20services.png',
     href: 'https://www.goldenlegacy.ae/',
-    images: [
-      '/project%20image/golden-legacy-4.jpg',
-      '/project%20image/golden-legacy-3.jpg',
-      '/project%20image/golden-legacy-1.jpg',
-    ],
   },
   {
-    slug: 'novagrid-systems',
-    title: 'NovaGrid Systems',
-    summary: 'A modular AI infrastructure brand built for engineering teams shipping models at planet scale.',
-    categories: ['Brand Identity', 'Web Design', 'AI Systems'],
+    slug: 'golden-legacy-real-estate',
+    title: 'Golden Legacy Real Estate',
+    summary: 'A high-end digital experience designed for Dubai property and investment.',
+    categories: ['Real Estate', 'Lead Gen', 'UI/UX'],
+    year: '2026',
+    img: '/project%20image/golden%20legacy%20real%20estate.png',
+    href: 'https://www.goldenlegacyrealestate.ae/',
+  },
+  {
+    slug: 'upyard-rooftop-lounge',
+    title: 'Upyard Rooftop Lounge',
+    summary: 'A cinematic digital experience built around Dubai nightlife, dining and unforgettable experiences.',
+    categories: ['Hospitality', 'Web Design'],
     year: '2025',
-    img: '/project%20image/NovaGrid%20System.png',
+    img: '/project%20image/upyard.png',
+    href: 'https://www.upyardvibes.ae/',
   },
   {
-    slug: 'velore-dynamics',
-    title: 'Veloré Dynamics',
-    summary: 'Cinematic identity and digital experience for an electric luxury mobility studio.',
-    categories: ['Branding', 'Web Design', 'Motion'],
+    slug: 'best-madeena-gifts',
+    title: 'Best Madeena Gifts',
+    summary: 'A polished digital storefront designed to turn gifting into a memorable online experience.',
+    categories: ['E-Commerce', 'UI/UX'],
     year: '2025',
-    img: '/project%20image/Velor%C3%A9%20Dynamics.png',
-  },
-  {
-    slug: 'aetherx-aerospace',
-    title: 'AetherX Aerospace',
-    summary: 'A precision-engineered identity system for a private aerospace company.',
-    categories: ['Brand System', 'Design Direction'],
-    year: '2025',
-    img: '/project%20image/AetherX.png',
-  },
-  {
-    slug: 'blackstone-quantum',
-    title: 'Blackstone Quantum',
-    summary: 'Quiet-luxury fintech platform — measured typography, restrained color, real signal.',
-    categories: ['Fintech', 'Web Design', 'SEO'],
-    year: '2024',
-    img: '/project%20image/Blackstone.png',
-  },
-  {
-    slug: 'neurovia-health',
-    title: 'Neurovia Health',
-    summary: 'AI healthcare brand crafted around clarity, trust, and editorial calm.',
-    categories: ['Health', 'Brand', 'Web'],
-    year: '2024',
-    img: '/project%20image/Neurovia.png',
-  },
-  {
-    slug: 'sentinelcore-labs',
-    title: 'SentinelCore Labs',
-    summary: 'Dark, technical visual system for a security research lab — built to feel inevitable.',
-    categories: ['Cybersecurity', 'Brand', 'Web'],
-    year: '2024',
-    img: '/project%20image/SentinelCore.png',
+    img: '/project%20image/bestmadeena.png',
+    href: 'https://www.bestmadeenagifts.com/',
   },
 ]
 
+const work = [...baseWork, ...baseWork].map((p, i) => ({ ...p, uniqueId: `${p.slug}-${i}` }))
+
+const CAROUSEL_VARIANTS = {
+  center: { x: '0%', scale: 1, zIndex: 10, opacity: 1 },
+  left: { x: '-60%', scale: 0.82, zIndex: 5, opacity: 0.7 },
+  right: { x: '60%', scale: 0.82, zIndex: 5, opacity: 0.7 },
+  hiddenLeft: { x: '-100%', scale: 0.65, zIndex: 1, opacity: 0 },
+  hiddenRight: { x: '100%', scale: 0.65, zIndex: 1, opacity: 0 },
+}
+
+const getVariant = (i: number, active: number, total: number) => {
+  let diff = i - active
+  // Normalize for infinite loop wrapping
+  if (diff > Math.floor(total / 2)) diff -= total
+  if (diff < -Math.floor(total / 2)) diff += total
+
+  if (diff === 0) return 'center'
+  if (diff === 1) return 'right'
+  if (diff === -1) return 'left'
+  if (diff > 1) return 'hiddenRight'
+  return 'hiddenLeft'
+}
+
 export default function WorkSection() {
   const [active, setActive] = useState(0)
-  // Mobile-only: which row is expanded (-1 = all collapsed). Independent of
-  // `active` so the desktop hover-driven preview keeps working untouched.
-  const [openIdx, setOpenIdx] = useState<number>(-1)
-  const [galleryIdx, setGalleryIdx] = useState(0)
-  const total = work.length
 
-  // Reset gallery index when switching active project.
+  // Auto-advance carousel
   useEffect(() => {
-    setGalleryIdx(0)
-  }, [active])
-
-  // Auto-rotate gallery images for projects that ship one (e.g. Golden Legacy).
-  useEffect(() => {
-    const gallery = work[active]?.images
-    if (!gallery || gallery.length < 2) return
-    const id = window.setInterval(() => {
-      setGalleryIdx((i) => (i + 1) % gallery.length)
-    }, 2600)
-    return () => window.clearInterval(id)
-  }, [active])
-
-  const activeImg = work[active].images?.[galleryIdx] ?? work[active].img
+    const timer = setInterval(() => {
+      setActive((cur) => (cur + 1) % work.length)
+    }, 6000)
+    return () => clearInterval(timer)
+  }, [])
 
   return (
-    <section className="w-full bg-brand-light-white text-brand-black">
-      {/* Section header */}
-      <div className="px-4 pb-6 pt-8 md:px-8 md:pb-8 md:pt-12 lg:px-10 xl:px-[56px]">
-        <div className="w-full max-w-[1300px] mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col items-start gap-5 lg:flex-row lg:items-end lg:justify-between"
+    <section className="w-full bg-brand-light-white px-4 py-10 md:px-8 lg:px-10 xl:px-[56px]">
+      <div className="w-full max-w-[1300px] mx-auto bg-[#FFF3E8] rounded-[28px] md:rounded-[40px] py-10 md:py-14 overflow-hidden relative shadow-[0_4px_30px_rgba(255,122,26,0.04)]">
+        
+        {/* Header */}
+        <div className="relative mb-8 md:mb-10 text-brand-black z-20 px-4 md:px-10 flex flex-col items-center">
+          <div className="text-center">
+            <motion.h2 
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="font-zalando text-[34px] md:text-[40px] lg:text-[44px] font-semibold mb-2"
+            >
+              Our Work
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-xs md:text-sm font-medium opacity-70 tracking-wide"
+            >
+              A Selection of Signature Projects
+            </motion.p>
+          </div>
+
+          {/* Top Right "View all projects" */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="hidden md:flex absolute top-1 right-6 lg:right-10 flex-col items-end gap-2.5"
           >
-            <div className="flex flex-col gap-4">
-              <span className="inline-flex w-fit items-center gap-2 rounded-full border border-brand-off-gray/80 bg-white px-3 py-1.5 text-[11px] uppercase tracking-[0.18em] text-brand-black/75">
-                <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand-orange" />
-                Selected Work
-              </span>
-              <h2 className="font-zalando text-[32px] leading-[1.02] md:text-[42px] lg:text-[54px] font-semibold text-brand-black max-w-[1100px]">
-                Selected Projects.
-              </h2>
-            </div>
-            <p className="max-w-[360px] dm-p14-semi text-brand-black/65 leading-relaxed">
-              A small slice of recent work — branding, websites, and digital
-              experiences built for modern brands.
-            </p>
+            <span className="text-[9px] uppercase tracking-[0.2em] text-brand-black/40 font-bold">
+              More work in the archive
+            </span>
+            <Link
+              to="/work"
+              className="group inline-flex items-center gap-2 rounded-full bg-white border border-brand-off-gray/40 px-5 py-2 text-brand-black text-[11px] font-bold uppercase tracking-wider shadow-[0_2px_10px_rgba(36,16,6,0.04)] transition-all hover:-translate-y-0.5 hover:shadow-[0_4px_15px_rgba(255,122,26,0.15)] hover:border-brand-orange/30"
+            >
+              View all projects
+              <span className="transition-transform duration-300 group-hover:translate-x-1 text-brand-orange" aria-hidden>→</span>
+            </Link>
           </motion.div>
         </div>
-      </div>
 
-      {/* Interactive list (left) + live preview (right on desktop, inline on mobile) */}
-      <div className="px-4 md:px-8 lg:px-10 xl:px-[56px]">
-        <div className="w-full max-w-[1300px] mx-auto grid grid-cols-1 items-start gap-4 lg:grid-cols-[1fr_1.05fr] lg:gap-12">
-          {/* Left — project index list */}
-          <ul className="flex flex-col border-t border-brand-off-gray/70">
-            {work.map((p, i) => {
-              const n = String(i + 1).padStart(2, '0')
-              const isActive = active === i
-              return (
-                <li key={p.slug} className="border-b border-brand-off-gray/70">
-                  <button
-                    type="button"
-                    onMouseEnter={() => setActive(i)}
-                    onFocus={() => setActive(i)}
-                    onClick={() => {
-                      setActive(i)
-                      // Mobile-only toggle — desktop uses hover, so this just
-                      // controls the inline-preview accordion on small screens.
-                      setOpenIdx((cur) => (cur === i ? -1 : i))
-                    }}
-                    aria-expanded={openIdx === i}
-                    className="group flex w-full items-center gap-4 py-4 text-left md:py-5"
-                  >
-                    <span className="font-zalando text-[13px] font-semibold tabular-nums text-brand-black/35 w-7 shrink-0">
-                      {n}
+        {/* Carousel */}
+        <div className="relative h-[360px] sm:h-[400px] md:h-[420px] flex items-center justify-center w-full max-w-[1000px] mx-auto perspective-1000">
+          {work.map((p, i) => (
+            <motion.div
+              key={p.uniqueId}
+              className="absolute w-[280px] sm:w-[340px] md:w-[460px] h-[340px] sm:h-[380px] md:h-[400px] cursor-pointer"
+              animate={getVariant(i, active, work.length)}
+              variants={CAROUSEL_VARIANTS}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              onClick={() => setActive(i)}
+            >
+              <div className="w-full h-full bg-white rounded-[24px] md:rounded-[28px] overflow-hidden flex flex-col shadow-[0_10px_30px_-10px_rgba(36,16,6,0.12)] transition-shadow hover:shadow-[0_15px_40px_-10px_rgba(255,122,26,0.2)]">
+                <div className="flex-1 relative overflow-hidden bg-brand-light-white transition-all duration-500">
+                  <img src={p.img} alt={p.title} className="absolute inset-0 w-full h-full object-cover" />
+                </div>
+                
+                <div className="bg-white flex flex-col px-5 md:px-7 py-4 md:py-5 shrink-0 transition-all duration-500">
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="font-zalando text-base md:text-xl font-bold text-brand-black truncate">
+                      {p.title}
                     </span>
-                    <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                      <span
-                        className={`font-zalando text-[20px] md:text-[26px] lg:text-[30px] leading-[1.05] font-semibold transition-colors duration-300 ${
-                          isActive ? 'text-brand-orange' : 'text-brand-black group-hover:text-brand-orange'
-                        }`}
-                      >
-                        {p.title}
-                      </span>
-                      <span className="text-[11px] sm:dm-p14-medium text-brand-black/55 truncate">
-                        {p.categories.join(' · ')}
-                      </span>
-                    </span>
-                    <span className="hidden shrink-0 text-[11px] uppercase tracking-[0.22em] text-brand-black/45 sm:block">
-                      {p.year}
-                    </span>
-                    {/* Mobile chevron (toggles dropdown), desktop arrow (visit) */}
-                    <motion.span
-                      animate={{ rotate: openIdx === i ? 180 : 0 }}
-                      transition={{ duration: 0.25 }}
-                      className={`shrink-0 lg:hidden ${openIdx === i ? 'text-brand-orange' : 'text-brand-black/45'}`}
-                      aria-hidden
-                    >
-                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                        <path d="M4 7l5 5 5-5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                    <div className={`hidden md:flex shrink-0 items-center justify-center w-8 h-8 rounded-full transition-colors duration-300 ${active === i ? 'bg-[#FFF3E8] text-brand-orange' : 'bg-brand-black/5 text-brand-black/30'}`}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
-                    </motion.span>
-                    <span
-                      className={`hidden lg:inline-block shrink-0 text-brand-black/30 transition-all duration-300 ${
-                        isActive ? 'text-brand-orange translate-x-0' : 'group-hover:text-brand-orange'
-                      }`}
-                      aria-hidden
-                    >
-                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                        <path d="M4 14L14 4M14 4H6M14 4V12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </span>
-                  </button>
-
-                  {/* Mobile inline preview — tap a project to reveal */}
+                    </div>
+                  </div>
+                  
+                  {/* Expanded Content for Active Card */}
                   <AnimatePresence initial={false}>
-                    {openIdx === i && (
+                    {active === i && (
                       <motion.div
-                        key="m-preview"
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                        className="overflow-hidden lg:hidden"
+                        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                        className="overflow-hidden"
                       >
-                        <Link to={`/work/${p.slug}`} className="group/preview relative mb-4 block aspect-[16/11] overflow-hidden rounded-[18px] bg-brand-black">
-                          <div
-                            className="absolute inset-0 bg-cover bg-center"
-                            style={{ backgroundImage: `url("${p.img}")` }}
-                          />
-                          <div
-                            aria-hidden
-                            className="absolute inset-0"
-                            style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.6) 100%)' }}
-                          />
-                          <span className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-brand-white">
-                            <span className="dm-p14-semi">{p.summary.length > 60 ? `${p.summary.slice(0, 57)}…` : p.summary}</span>
+                        <div className="flex flex-col items-start gap-2.5 pt-3 pb-1">
+                          <span className="text-[9px] uppercase tracking-[0.2em] text-brand-black/40 font-bold">
+                            {String((i % baseWork.length) + 1).padStart(2, '0')} / {String(baseWork.length).padStart(2, '0')} · {p.year}
                           </span>
-                          <span className="absolute right-4 top-4 rounded-full bg-white/85 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-black backdrop-blur-md">
-                            {p.href ? 'Case study →' : 'Visit →'}
-                          </span>
-                        </Link>
+                          <p className="text-[12px] md:text-[13px] font-medium text-brand-black/70 leading-relaxed line-clamp-2">
+                            {p.summary}
+                          </p>
+                          <Link
+                            to={p.href}
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="mt-1 inline-flex items-center gap-1.5 rounded-full bg-brand-orange text-white px-4 py-2 text-[10px] font-bold uppercase tracking-wider hover:bg-brand-orange/90 transition-colors shadow-sm"
+                          >
+                            Visit live website
+                            <span aria-hidden>↗</span>
+                          </Link>
+                        </div>
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </li>
-              )
-            })}
-          </ul>
-
-          {/* Right — sticky live preview (desktop / laptop) */}
-          <div className="hidden lg:block lg:sticky lg:top-24">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={work[active].slug}
-                initial={{ opacity: 0, scale: 0.985 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.99 }}
-                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <Link
-                  to={`/work/${work[active].slug}`}
-                  className="group/preview relative block aspect-[4/3] overflow-hidden rounded-[24px] bg-brand-black"
-                >
-                  <AnimatePresence mode="sync">
-                    <motion.div
-                      key={activeImg}
-                      className="absolute inset-0 bg-cover bg-center"
-                      style={{ backgroundImage: `url("${activeImg}")` }}
-                      initial={{ opacity: 0, scale: 1.04 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-                    />
-                  </AnimatePresence>
-                  <div
-                    aria-hidden
-                    className="absolute inset-0"
-                    style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,0.72) 100%)' }}
-                  />
-                  {work[active].images && work[active].images!.length > 1 && (
-                    <div className="absolute right-5 top-5 flex items-center gap-1.5 rounded-full bg-black/45 px-3 py-1 backdrop-blur-md">
-                      {work[active].images!.map((_, i) => (
-                        <span
-                          key={i}
-                          className={`block h-1.5 rounded-full transition-all duration-300 ${
-                            i === galleryIdx ? 'w-5 bg-brand-orange' : 'w-1.5 bg-white/50'
-                          }`}
-                        />
-                      ))}
-                    </div>
-                  )}
-                  <div className="absolute inset-x-6 bottom-6 flex flex-col gap-2 text-brand-white">
-                    <span className="text-[11px] uppercase tracking-[0.22em] text-brand-white/70">
-                      {String(active + 1).padStart(2, '0')} / {String(total).padStart(2, '0')} · {work[active].year}
-                    </span>
-                    <h3 className="font-zalando text-[28px] xl:text-[34px] font-semibold leading-[1.04]">
-                      {work[active].title}
-                    </h3>
-                    <p className="dm-p14-semi text-brand-white/80 max-w-[460px]">
-                      {work[active].summary}
-                    </p>
-                    <span className="mt-1 inline-flex w-fit items-center gap-2 rounded-full bg-white/90 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-black transition-transform duration-300 group-hover/preview:translate-x-1">
-                      {work[active].href ? 'Read case study →' : 'Visit project →'}
-                    </span>
-                  </div>
-                </Link>
-              </motion.div>
-            </AnimatePresence>
-          </div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
-      </div>
 
-      {/* Footer "see all" line */}
-      <div className="px-4 pb-10 pt-6 md:px-8 md:pb-12 md:pt-8 lg:px-10 xl:px-[56px]">
-        <div className="w-full max-w-[1300px] mx-auto flex flex-col items-center gap-5 border-t border-brand-off-gray/70 pt-6">
-          <span className="text-[11px] uppercase tracking-[0.22em] text-brand-black/55">
-            More work in the archive
-          </span>
-          <Link
-            to="/work"
-            className="group inline-flex items-center gap-3 rounded-full bg-brand-black px-7 py-3.5 text-white text-[13px] font-semibold tracking-wide shadow-[0_10px_30px_-10px_rgba(36,16,6,0.5)] transition-shadow hover:shadow-[0_14px_40px_-10px_rgba(36,16,6,0.7)]"
-          >
-            View all projects
-            <span className="transition-transform duration-300 group-hover:translate-x-1" aria-hidden>→</span>
-          </Link>
+        {/* Pagination Indicators */}
+        <div className="mt-8 flex items-center justify-center gap-2 md:gap-2.5 relative z-20">
+          {baseWork.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setActive(i)}
+              aria-label={`Go to slide ${i + 1}`}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                (active % baseWork.length) === i ? 'w-6 bg-brand-orange' : 'w-1.5 bg-brand-black/15 hover:bg-brand-black/30'
+              }`}
+            />
+          ))}
         </div>
       </div>
     </section>
   )
 }
-
