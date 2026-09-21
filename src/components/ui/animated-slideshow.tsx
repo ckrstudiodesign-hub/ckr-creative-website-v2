@@ -239,6 +239,7 @@ export const HoverSliderVideo = React.forwardRef<
       loop
       muted
       playsInline
+      autoPlay={isActive}
       {...props}
     >
       <source src={videoUrl} type="video/mp4" />
