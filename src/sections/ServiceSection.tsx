@@ -70,18 +70,18 @@ export default function ServiceSection() {
           </p>
         </div>
 
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
-          <div className="flex flex-col space-y-3 md:space-y-4 w-full lg:w-3/5">
+        <div className="relative flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16 lg:py-8">
+          <div className="relative z-10 flex flex-col space-y-3 md:space-y-4 w-full lg:w-3/5 py-10 px-4 lg:p-0">
             {SLIDES.map((slide, index) => (
               <TextStaggerHover
                 key={slide.id}
                 index={index}
-                className="cursor-pointer text-2xl md:text-3xl lg:text-4xl font-bold uppercase tracking-tighter"
+                className="cursor-pointer text-2xl md:text-3xl lg:text-4xl font-bold uppercase tracking-tighter text-brand-black"
                 text={slide.title}
               />
             ))}
           </div>
-          <HoverSliderImageWrap className="w-full lg:w-2/5 xl:w-[340px] aspect-[9/16] rounded-[24px] overflow-hidden shadow-2xl mx-auto lg:mx-0">
+          <HoverSliderImageWrap className="absolute inset-0 z-0 lg:relative lg:inset-auto w-full h-full lg:h-auto lg:w-2/5 xl:w-[340px] aspect-auto lg:aspect-[9/16] rounded-[24px] overflow-hidden shadow-none lg:shadow-2xl mx-auto lg:mx-0 opacity-30 lg:opacity-100 pointer-events-none lg:pointer-events-auto">
             {SLIDES.map((slide, index) => (
               <div key={slide.id} className="size-full">
                 {slide.videoUrl ? (

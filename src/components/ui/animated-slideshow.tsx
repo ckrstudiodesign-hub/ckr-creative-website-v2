@@ -78,7 +78,7 @@ export const TextStaggerHover = React.forwardRef<
   React.HTMLAttributes<HTMLElement> & TextStaggerHoverProps
 >(({ text, index, children, className, ...props }, ref) => {
   const { activeSlide, changeSlide } = useHoverSliderContext()
-  const { characters } = splitText(text)
+  const { words, characters } = splitText(text)
   const isActive = activeSlide === index
   const handleMouse = () => changeSlide(index)
   return (
@@ -88,38 +88,48 @@ export const TextStaggerHover = React.forwardRef<
       ref={ref as any}
       onMouseEnter={handleMouse}
     >
-      <span className="relative inline-block origin-bottom overflow-hidden shrink-0">
-        {characters.map((char, index) => (
-          <span
-            key={`${char}-${index}`}
-            className="relative inline-block overflow-hidden"
-          >
-            <MotionConfig
-              transition={{
-                delay: index * 0.025,
-                duration: 0.3,
-                ease: [0.25, 0.46, 0.45, 0.94],
-              }}
-            >
-              <motion.span
-                className="inline-block opacity-20"
-                initial={{ y: "0%" }}
-                animate={isActive ? { y: "-110%" } : { y: "0%" }}
-              >
-                {char}
-                {char === " " && index < characters.length - 1 && <>&nbsp;</>}
-              </motion.span>
+      <span className="relative flex flex-wrap origin-bottom overflow-hidden">
+        {words.map((word, wordIndex) => {
+          const startIndex = words.slice(0, wordIndex).reduce((acc, w) => acc + w.length, 0);
+          return (
+            <span key={wordIndex} className="inline-block whitespace-pre">
+              {word.split("").map((char, charIndex) => {
+                const index = startIndex + charIndex;
+                return (
+                  <span
+                    key={`${char}-${index}`}
+                    className="relative inline-block overflow-hidden"
+                  >
+                    <MotionConfig
+                      transition={{
+                        delay: index * 0.025,
+                        duration: 0.3,
+                        ease: [0.25, 0.46, 0.45, 0.94],
+                      }}
+                    >
+                      <motion.span
+                        className="inline-block opacity-20"
+                        initial={{ y: "0%" }}
+                        animate={isActive ? { y: "-110%" } : { y: "0%" }}
+                      >
+                        {char}
+                        {char === " " && index < characters.length - 1 && <>&nbsp;</>}
+                      </motion.span>
 
-              <motion.span
-                className="absolute left-0 top-0 inline-block opacity-100"
-                initial={{ y: "110%" }}
-                animate={isActive ? { y: "0%" } : { y: "110%" }}
-              >
-                {char}
-              </motion.span>
-            </MotionConfig>
-          </span>
-        ))}
+                      <motion.span
+                        className="absolute left-0 top-0 inline-block opacity-100"
+                        initial={{ y: "110%" }}
+                        animate={isActive ? { y: "0%" } : { y: "110%" }}
+                      >
+                        {char}
+                      </motion.span>
+                    </MotionConfig>
+                  </span>
+                )
+              })}
+            </span>
+          )
+        })}
       </span>
 
       {/* Bullet shooting arrow effect */}
