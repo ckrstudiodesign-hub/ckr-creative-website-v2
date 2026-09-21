@@ -178,9 +178,25 @@ export default function ServiceSection() {
               <X size={24} />
             </button>
             <motion.div 
+              key={theaterSlideIndex}
               layoutId={theaterSlideIndex !== null ? `theater-video-${SLIDES[theaterSlideIndex].id}` : undefined}
               className="w-full max-w-[400px] aspect-[9/16] rounded-2xl overflow-hidden shadow-2xl bg-black relative group"
               onClick={(e) => e.stopPropagation()}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.7}
+              onDragEnd={(_, { offset }) => {
+                const swipe = offset.x;
+                const swipeConfidenceThreshold = 75;
+
+                if (swipe < -swipeConfidenceThreshold) {
+                  // Swipe left (next)
+                  setTheaterSlideIndex((prev) => prev !== null ? (prev + 1) % SLIDES.length : null);
+                } else if (swipe > swipeConfidenceThreshold) {
+                  // Swipe right (prev)
+                  setTheaterSlideIndex((prev) => prev !== null ? (prev - 1 + SLIDES.length) % SLIDES.length : null);
+                }
+              }}
             >
               {SLIDES[theaterSlideIndex]?.videoUrl ? (
                 <video
