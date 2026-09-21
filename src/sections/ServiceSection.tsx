@@ -141,7 +141,7 @@ export default function ServiceSection() {
             </button>
             <motion.div 
               layoutId={theaterSlideIndex !== null ? `theater-video-${SLIDES[theaterSlideIndex].id}` : undefined}
-              className="w-full max-w-[400px] aspect-[9/16] rounded-2xl overflow-hidden shadow-2xl bg-black relative"
+              className="w-full max-w-[400px] aspect-[9/16] rounded-2xl overflow-hidden shadow-2xl bg-black relative group"
               onClick={(e) => e.stopPropagation()}
             >
               {SLIDES[theaterSlideIndex]?.videoUrl ? (
@@ -161,6 +161,33 @@ export default function ServiceSection() {
                   className="size-full object-cover"
                 />
               )}
+
+              {/* Top Drag Indicator Pill */}
+              <div className="absolute top-3 left-1/2 -translate-x-1/2 w-12 h-1.5 bg-white/30 backdrop-blur-md rounded-full shadow-sm" />
+
+              {/* Bottom Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex flex-col justify-end p-6 pb-8">
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.4 }}
+                  className="flex flex-col gap-3"
+                >
+                  <span className="inline-flex w-fit items-center gap-2 rounded-full border border-white/20 bg-black/40 backdrop-blur-md px-3 py-1 text-[10px] uppercase tracking-[0.15em] text-white/90">
+                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand-orange animate-pulse" />
+                    Creative Service
+                  </span>
+                  <h3 className="text-2xl md:text-3xl font-bold uppercase tracking-tighter text-white leading-tight">
+                    {SLIDES[theaterSlideIndex]?.title}
+                  </h3>
+                  <button className="mt-2 w-full flex items-center justify-center gap-2 rounded-xl bg-brand-orange/90 backdrop-blur-md px-5 py-3.5 text-sm font-bold uppercase tracking-wider text-white shadow-[0_0_20px_rgba(255,107,0,0.3)] transition-all hover:bg-brand-orange active:scale-[0.98]">
+                    <span>Let's Build It</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </button>
+                </motion.div>
+              </div>
             </motion.div>
           </motion.div>
         )}
