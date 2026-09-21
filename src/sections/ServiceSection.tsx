@@ -84,6 +84,9 @@ export default function ServiceSection() {
                   index={index}
                   className="cursor-pointer text-2xl md:text-3xl lg:text-4xl font-bold uppercase tracking-tighter text-brand-black justify-center lg:justify-between text-center lg:text-left"
                   text={slide.title}
+                  videoUrl={slide.videoUrl}
+                  imageUrl={slide.imageUrl}
+                  layoutId={`theater-video-${slide.id}`}
                   onClick={() => {
                     if (window.innerWidth < 1024) {
                       setTheaterSlideIndex(index)
@@ -137,10 +140,8 @@ export default function ServiceSection() {
               <X size={24} />
             </button>
             <motion.div 
-              initial={{ scale: 0.9, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 20 }}
-              className="w-full max-w-[400px] aspect-[9/16] rounded-2xl overflow-hidden shadow-2xl bg-black"
+              layoutId={theaterSlideIndex !== null ? `theater-video-${SLIDES[theaterSlideIndex].id}` : undefined}
+              className="w-full max-w-[400px] aspect-[9/16] rounded-2xl overflow-hidden shadow-2xl bg-black relative"
               onClick={(e) => e.stopPropagation()}
             >
               {SLIDES[theaterSlideIndex]?.videoUrl ? (

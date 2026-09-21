@@ -1,12 +1,15 @@
 "use client" 
 
 import * as React from "react"
-import { MotionConfig, motion, type HTMLMotionProps } from "motion/react"
+import { MotionConfig, motion, AnimatePresence, type HTMLMotionProps } from "motion/react"
 import { cn } from "../../lib/utils"
 
 interface TextStaggerHoverProps {
   text: string
   index: number
+  videoUrl?: string
+  imageUrl?: string
+  layoutId?: string
 }
 interface HoverSliderImageProps {
   index: number
@@ -76,14 +79,14 @@ WordStaggerHover.displayName = "WordStaggerHover"
 export const TextStaggerHover = React.forwardRef<
   HTMLElement,
   React.HTMLAttributes<HTMLElement> & TextStaggerHoverProps
->(({ text, index, children, className, ...props }, ref) => {
+>(({ text, index, videoUrl, imageUrl, layoutId, children, className, ...props }, ref) => {
   const { activeSlide, changeSlide } = useHoverSliderContext()
   const { words, characters } = splitText(text)
   const isActive = activeSlide === index
   const handleMouse = () => changeSlide(index)
   return (
     <div
-      className={cn("flex w-full items-center justify-between cursor-pointer group", className)}
+      className={cn("flex flex-col lg:flex-row w-full items-center justify-between cursor-pointer group", className)}
       {...props}
       ref={ref as any}
       onMouseEnter={handleMouse}
@@ -131,6 +134,43 @@ export const TextStaggerHover = React.forwardRef<
           )
         })}
       </span>
+
+      {/* Mobile Inline Video Thumbnail */}
+      <AnimatePresence>
+        {isActive && videoUrl && layoutId && (
+          <motion.div
+            layoutId={layoutId}
+            initial={{ opacity: 0, height: 0, marginTop: 0 }}
+            animate={{ opacity: 1, height: "auto", marginTop: 24 }}
+            exit={{ opacity: 0, height: 0, marginTop: 0 }}
+            className="flex lg:hidden w-full max-w-[280px] aspect-[9/16] rounded-2xl overflow-hidden relative shadow-2xl"
+          >
+            <video
+              src={videoUrl}
+              poster={imageUrl}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="size-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black/20 flex items-center justify-center backdrop-blur-[1px]">
+              <div className="bg-brand-orange/90 p-4 rounded-full flex flex-col items-center justify-center text-white shadow-2xl animate-pulse scale-90">
+                <svg
+                  className="w-6 h-6 mb-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
+                </svg>
+                <span className="text-[10px] font-bold uppercase tracking-wider">Tap Here</span>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Bullet shooting arrow effect */}
       <div className="hidden lg:flex ml-6 flex-1 items-center overflow-hidden h-10 pr-2">
