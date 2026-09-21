@@ -102,7 +102,7 @@ export default function Hero() {
           <h1 className="sr-only">Future-Ready Digital, Branding, Web Design, AI Automation, SEO Experiences</h1>
           <div className="relative z-10 flex flex-row items-end justify-center gap-3 sm:gap-4 py-4" style={{ perspective: '1000px' }}>
             <motion.video
-              src="/videos/camera.mp4"
+              src="/videos/camera.mp4?v=3"
               autoPlay
               loop
               muted
@@ -114,7 +114,7 @@ export default function Hero() {
               transition={{ y: { duration: 5, repeat: Infinity, ease: 'easeInOut' }, opacity: { duration: 1, delay: 0.2 } }}
             />
             <motion.video
-              src="/videos/catme.mp4"
+              src="/videos/catme.mp4?v=3"
               autoPlay
               loop
               muted
@@ -126,7 +126,7 @@ export default function Hero() {
               transition={{ y: { duration: 6, repeat: Infinity, ease: 'easeInOut' }, opacity: { duration: 1, delay: 0.4 } }}
             />
             <motion.video
-              src="/videos/tape.mp4"
+              src="/videos/tape.mp4?v=3"
               autoPlay
               loop
               muted
@@ -210,7 +210,7 @@ export default function Hero() {
               className="pointer-events-none absolute inset-0 w-full h-full object-cover"
               style={{ zIndex: 0 }}
             >
-              <source src="/videos/hero-video.mp4" type="video/mp4" />
+              <source src="/videos/hero-video.mp4?v=3" type="video/mp4" />
             </video>
             {/* Overlay for perfect text visibility — z=1 */}
             <div
@@ -231,7 +231,7 @@ export default function Hero() {
           {/* Floating Video Cards on the Right */}
           <div className="absolute right-6 top-1/2 z-10 hidden -translate-y-1/2 gap-4 pointer-events-none lg:flex xl:right-8 xl:gap-6" style={{ perspective: "1000px" }}>
             <motion.video
-              src="/videos/camera.mp4"
+              src="/videos/camera.mp4?v=3"
               autoPlay
               loop
               muted
@@ -243,7 +243,7 @@ export default function Hero() {
               transition={{ y: { duration: 5, repeat: Infinity, ease: 'easeInOut' }, opacity: { duration: 1, delay: 0.2 } }}
             />
             <motion.video
-              src="/videos/catme.mp4"
+              src="/videos/catme.mp4?v=3"
               autoPlay
               loop
               muted
@@ -255,7 +255,7 @@ export default function Hero() {
               transition={{ y: { duration: 6, repeat: Infinity, ease: 'easeInOut' }, opacity: { duration: 1, delay: 0.4 } }}
             />
             <motion.video
-              src="/videos/tape.mp4"
+              src="/videos/tape.mp4?v=3"
               autoPlay
               loop
               muted

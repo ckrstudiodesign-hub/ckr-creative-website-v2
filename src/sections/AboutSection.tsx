@@ -88,7 +88,7 @@ export default function AboutSection() {
           <motion.video
             aria-hidden
             className="absolute inset-0 h-full w-full object-cover"
-            src="/videos/about.mp4"
+            src="/videos/about.mp4?v=3"
             autoPlay
             muted
             loop

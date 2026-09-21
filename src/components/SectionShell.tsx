@@ -23,7 +23,7 @@ const sectionBackgrounds: Record<string, string> = {
 // Sections that should render a looping video instead of a static image.
 // The image entry above still acts as a poster/fallback if the video can't play.
 const sectionBackgroundVideos: Record<string, string> = {
-  TESTIMONIALS: '/videos/testimonials-background.mp4',
+  TESTIMONIALS: '/videos/testimonials-background.mp4?v=3',
 }
 
 /**

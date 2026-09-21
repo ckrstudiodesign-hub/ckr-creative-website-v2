@@ -18,17 +18,17 @@ type Reel = {
 
 const reels: Reel[] = [
   {
-    src: '/videos/reel-1.mp4',
+    src: '/videos/reel-1.mp4?v=3',
     permalink: 'https://www.instagram.com/reel/DZSTrPcgiIw/',
     caption: 'Premium animated websites built for modern brands. ✨',
   },
   {
-    src: '/videos/reel-2.mp4',
+    src: '/videos/reel-2.mp4?v=3',
     permalink: 'https://www.instagram.com/reel/DZSmWFZsRIC/',
     caption: 'Branding that earns attention. Dubai-based, global mindset.',
   },
   {
-    src: '/videos/reel-3.mp4',
+    src: '/videos/reel-3.mp4?v=3',
     permalink: 'https://www.instagram.com/reel/DZUUPlqMaY-/',
     caption: 'Behind the scenes — crafting the future of creative tech.',
   },

@@ -107,7 +107,7 @@ export default function FaqSection() {
             style={{ perspective: '1400px' }}
           >
             <motion.video
-              src="/videos/faq.mp4"
+              src="/videos/faq.mp4?v=3"
               autoPlay
               loop
               muted
@@ -123,7 +123,7 @@ export default function FaqSection() {
               }}
             />
             <motion.video
-              src="/videos/faq1.mp4"
+              src="/videos/faq1.mp4?v=3"
               autoPlay
               loop
               muted
@@ -139,7 +139,7 @@ export default function FaqSection() {
               }}
             />
             <motion.video
-              src="/videos/faq2.mp4"
+              src="/videos/faq2.mp4?v=3"
               autoPlay
               loop
               muted
