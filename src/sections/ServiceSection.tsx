@@ -61,7 +61,11 @@ export default function ServiceSection() {
 
   return (
     <>
-      <HoverSlider className="w-full bg-brand-light-white px-4 py-8 text-brand-black md:px-8 md:py-12 lg:px-10 xl:px-[56px] overflow-hidden">
+      <HoverSlider 
+        autoPlayInterval={5000}
+        totalSlides={SLIDES.length}
+        className="w-full bg-brand-light-white px-4 py-8 text-brand-black md:px-8 md:py-12 lg:px-10 xl:px-[56px] overflow-hidden"
+      >
         <div className="w-full max-w-[1300px] mx-auto">
           <div className="mb-4 flex flex-col items-start gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div className="flex flex-col gap-4">

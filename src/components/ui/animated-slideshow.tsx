@@ -15,7 +15,10 @@ interface HoverSliderImageProps {
   index: number
   imageUrl: string
 }
-interface HoverSliderProps {}
+interface HoverSliderProps {
+  autoPlayInterval?: number
+  totalSlides?: number
+}
 interface HoverSliderContextValue {
   activeSlide: number
   changeSlide: (index: number) => void
@@ -46,12 +49,27 @@ function useHoverSliderContext() {
 export const HoverSlider = React.forwardRef<
   HTMLElement,
   React.HTMLAttributes<HTMLElement> & HoverSliderProps
->(({ children, className, ...props }, ref) => {
+>(({ children, className, autoPlayInterval, totalSlides, ...props }, ref) => {
   const [activeSlide, setActiveSlide] = React.useState<number>(0)
   const changeSlide = React.useCallback(
     (index: number) => setActiveSlide(index),
     [setActiveSlide]
   )
+
+  React.useEffect(() => {
+    if (!autoPlayInterval || !totalSlides) return;
+
+    // Only auto-play on mobile (lg breakpoint is 1024px)
+    const handleAutoPlay = () => {
+      if (window.innerWidth < 1024) {
+        setActiveSlide((prev) => (prev + 1) % totalSlides);
+      }
+    };
+
+    const intervalId = setInterval(handleAutoPlay, autoPlayInterval);
+    return () => clearInterval(intervalId);
+  }, [autoPlayInterval, totalSlides]);
+
   return (
     <HoverSliderContext.Provider value={{ activeSlide, changeSlide }}>
       <div className={className} ref={ref as any} {...props}>{children}</div>
