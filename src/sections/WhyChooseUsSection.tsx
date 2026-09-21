@@ -49,7 +49,7 @@ export default function WhyChooseUsSection() {
             transition={{ duration: 0.8, delay: 0.1, ease: 'easeOut' }}
           >
             <video
-              src="/videos/why-choose-us.mp4"
+              src="/videos/why-choose-us.mp4?v=3"
               autoPlay
               loop
               muted
@@ -66,7 +66,7 @@ export default function WhyChooseUsSection() {
             transition={{ duration: 0.8, delay: 0.25, ease: 'easeOut' }}
           >
             <video
-              src="/videos/why-choose-us-1.mp4"
+              src="/videos/why-choose-us-1.mp4?v=3"
               autoPlay
               loop
               muted
