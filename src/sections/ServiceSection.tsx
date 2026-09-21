@@ -1,3 +1,6 @@
+import { useState } from "react"
+import { AnimatePresence, motion } from "framer-motion"
+import { X } from "lucide-react"
 import {
   HoverSlider,
   HoverSliderImage,
@@ -52,61 +55,115 @@ const SLIDES = [
 ]
 
 export default function ServiceSection() {
-  return (
-    <HoverSlider className="w-full bg-brand-light-white px-4 py-8 text-brand-black md:px-8 md:py-12 lg:px-10 xl:px-[56px] overflow-hidden">
-      <div className="w-full max-w-[1300px] mx-auto">
-        <div className="mb-4 flex flex-col items-start gap-5 lg:flex-row lg:items-end lg:justify-between">
-          <div className="flex flex-col gap-4">
-            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-brand-off-gray/80 bg-white px-3 py-1.5 text-[11px] uppercase tracking-[0.18em] text-brand-black/75">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand-orange" />
-              Services
-            </span>
-            <h2 className="font-zalando text-[32px] leading-[1.02] md:text-[42px] lg:text-[52px] font-semibold text-brand-black max-w-[820px]">
-              What We Do.
-            </h2>
-          </div>
-          <p className="max-w-[320px] dm-p14-semi text-brand-black/65 leading-relaxed">
-            We combine strategy, speed, and skill to deliver exceptional design - every time.
-          </p>
-        </div>
+  const [theaterSlideIndex, setTheaterSlideIndex] = useState<number | null>(null)
 
-        <div className="relative flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16 lg:py-8">
-          <div className="relative z-10 flex flex-col space-y-3 md:space-y-4 w-full lg:w-3/5 py-10 px-4 lg:p-0">
-            {SLIDES.map((slide, index) => (
-              <TextStaggerHover
-                key={slide.id}
-                index={index}
-                className="cursor-pointer text-2xl md:text-3xl lg:text-4xl font-bold uppercase tracking-tighter text-brand-black"
-                text={slide.title}
-              />
-            ))}
+  return (
+    <>
+      <HoverSlider className="w-full bg-brand-light-white px-4 py-8 text-brand-black md:px-8 md:py-12 lg:px-10 xl:px-[56px] overflow-hidden">
+        <div className="w-full max-w-[1300px] mx-auto">
+          <div className="mb-4 flex flex-col items-start gap-5 lg:flex-row lg:items-end lg:justify-between">
+            <div className="flex flex-col gap-4">
+              <span className="inline-flex w-fit items-center gap-2 rounded-full border border-brand-off-gray/80 bg-white px-3 py-1.5 text-[11px] uppercase tracking-[0.18em] text-brand-black/75">
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand-orange" />
+                Services
+              </span>
+              <h2 className="font-zalando text-[32px] leading-[1.02] md:text-[42px] lg:text-[52px] font-semibold text-brand-black max-w-[820px]">
+                What We Do.
+              </h2>
+            </div>
+            <p className="max-w-[320px] dm-p14-semi text-brand-black/65 leading-relaxed">
+              We combine strategy, speed, and skill to deliver exceptional design - every time.
+            </p>
           </div>
-          <HoverSliderImageWrap className="absolute inset-0 z-0 lg:relative lg:inset-auto w-full h-full lg:h-auto lg:w-2/5 xl:w-[340px] aspect-auto lg:aspect-[9/16] rounded-[24px] overflow-hidden shadow-none lg:shadow-2xl mx-auto lg:mx-0 opacity-30 lg:opacity-100 pointer-events-none lg:pointer-events-auto">
-            {SLIDES.map((slide, index) => (
-              <div key={slide.id} className="size-full">
-                {slide.videoUrl ? (
-                  <HoverSliderVideo
-                    index={index}
-                    videoUrl={slide.videoUrl}
-                    posterUrl={slide.imageUrl}
-                    className="size-full object-cover"
-                  />
-                ) : (
-                  <HoverSliderImage
-                    index={index}
-                    imageUrl={slide.imageUrl}
-                    src={slide.imageUrl}
-                    alt={slide.title}
-                    className="size-full object-cover"
-                    loading="eager"
-                    decoding="async"
-                  />
-                )}
-              </div>
-            ))}
-          </HoverSliderImageWrap>
+
+          <div className="relative flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16 lg:py-8">
+            <div className="relative z-10 flex flex-col space-y-3 md:space-y-4 w-full lg:w-3/5 py-10 px-4 lg:p-0">
+              {SLIDES.map((slide, index) => (
+                <TextStaggerHover
+                  key={slide.id}
+                  index={index}
+                  className="cursor-pointer text-2xl md:text-3xl lg:text-4xl font-bold uppercase tracking-tighter text-brand-black justify-center lg:justify-between text-center lg:text-left"
+                  text={slide.title}
+                  onClick={() => {
+                    if (window.innerWidth < 1024) {
+                      setTheaterSlideIndex(index)
+                    }
+                  }}
+                />
+              ))}
+            </div>
+            <HoverSliderImageWrap className="hidden lg:block w-full lg:w-2/5 xl:w-[340px] aspect-[9/16] rounded-[24px] overflow-hidden shadow-2xl mx-auto lg:mx-0">
+              {SLIDES.map((slide, index) => (
+                <div key={slide.id} className="size-full">
+                  {slide.videoUrl ? (
+                    <HoverSliderVideo
+                      index={index}
+                      videoUrl={slide.videoUrl}
+                      posterUrl={slide.imageUrl}
+                      className="size-full object-cover"
+                    />
+                  ) : (
+                    <HoverSliderImage
+                      index={index}
+                      imageUrl={slide.imageUrl}
+                      src={slide.imageUrl}
+                      alt={slide.title}
+                      className="size-full object-cover"
+                      loading="eager"
+                      decoding="async"
+                    />
+                  )}
+                </div>
+              ))}
+            </HoverSliderImageWrap>
+          </div>
         </div>
-      </div>
-    </HoverSlider>
+      </HoverSlider>
+
+      <AnimatePresence>
+        {theaterSlideIndex !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 lg:hidden backdrop-blur-sm"
+            onClick={() => setTheaterSlideIndex(null)}
+          >
+            <button 
+              className="absolute top-6 right-6 text-white p-2 rounded-full bg-black/50 hover:bg-black/80 transition-colors"
+              onClick={() => setTheaterSlideIndex(null)}
+              aria-label="Close theater mode"
+            >
+              <X size={24} />
+            </button>
+            <motion.div 
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              className="w-full max-w-[400px] aspect-[9/16] rounded-2xl overflow-hidden shadow-2xl bg-black"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {SLIDES[theaterSlideIndex]?.videoUrl ? (
+                <video
+                  src={SLIDES[theaterSlideIndex].videoUrl}
+                  poster={SLIDES[theaterSlideIndex].imageUrl}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="size-full object-cover"
+                />
+              ) : (
+                <img
+                  src={SLIDES[theaterSlideIndex]?.imageUrl}
+                  alt={SLIDES[theaterSlideIndex]?.title}
+                  className="size-full object-cover"
+                />
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   )
 }

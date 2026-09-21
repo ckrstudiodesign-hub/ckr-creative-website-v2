@@ -133,7 +133,7 @@ export const TextStaggerHover = React.forwardRef<
       </span>
 
       {/* Bullet shooting arrow effect */}
-      <div className="ml-6 flex-1 flex items-center overflow-hidden h-10 pr-2">
+      <div className="hidden lg:flex ml-6 flex-1 items-center overflow-hidden h-10 pr-2">
         <motion.div
           className="flex items-center w-full"
           initial={{ x: "-100%" }}
