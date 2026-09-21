@@ -197,12 +197,13 @@ HoverSliderImage.displayName = "HoverSliderImage"
 interface HoverSliderVideoProps {
   index: number
   videoUrl: string
+  posterUrl?: string
 }
 
 export const HoverSliderVideo = React.forwardRef<
   HTMLVideoElement,
   HTMLMotionProps<"div"> & HoverSliderVideoProps
->(({ index, videoUrl, children, className, ...props }, forwardedRef) => {
+>(({ index, videoUrl, posterUrl, children, className, ...props }, forwardedRef) => {
   const { activeSlide } = useHoverSliderContext()
   const isActive = activeSlide === index
   const videoRef = React.useRef<HTMLVideoElement>(null)
@@ -255,6 +256,7 @@ export const HoverSliderVideo = React.forwardRef<
         playsInline
         autoPlay
         src={videoUrl}
+        poster={posterUrl}
         className="size-full object-cover"
       />
     </motion.div>

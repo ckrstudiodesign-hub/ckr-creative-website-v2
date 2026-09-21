@@ -88,6 +88,7 @@ export default function ServiceSection() {
                   <HoverSliderVideo
                     index={index}
                     videoUrl={slide.videoUrl}
+                    posterUrl={slide.imageUrl}
                     className="size-full object-cover"
                   />
                 ) : (
