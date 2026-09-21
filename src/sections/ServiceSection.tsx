@@ -37,12 +37,14 @@ const SLIDES = [
   {
     id: "slide-5",
     title: "Social Media & Lead Generation",
+    mobileTitle: "Social Media & Lead Gen",
     imageUrl: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=1974&auto=format&fit=crop",
     videoUrl: "/videos/social%20media.mp4?v=3",
   },
   {
     id: "slide-6",
     title: "Content & Visual Storytelling",
+    mobileTitle: "Content & Visuals",
     imageUrl: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=2070&auto=format&fit=crop",
     videoUrl: "/videos/content.mp4?v=3",
   },
@@ -95,20 +97,36 @@ export default function ServiceSection() {
           <div className="relative flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16 lg:py-8">
             <div className="relative z-10 flex flex-col space-y-3 md:space-y-4 w-full lg:w-3/5 py-6 lg:py-10 px-4 lg:p-0">
               {SLIDES.map((slide, index) => (
-                <TextStaggerHover
-                  key={slide.id}
-                  index={index}
-                  className="cursor-pointer text-2xl md:text-3xl lg:text-4xl font-bold uppercase tracking-tighter text-brand-black justify-center lg:justify-between text-center lg:text-left"
-                  text={slide.title}
-                  videoUrl={slide.videoUrl}
-                  imageUrl={slide.imageUrl}
-                  layoutId={`theater-video-${slide.id}`}
-                  onClick={() => {
-                    if (window.innerWidth < 1024) {
-                      setTheaterSlideIndex(index)
-                    }
-                  }}
-                />
+                <div key={slide.id} className="w-full">
+                  {/* Desktop Title */}
+                  <TextStaggerHover
+                    index={index}
+                    className="hidden lg:flex cursor-pointer text-2xl md:text-3xl lg:text-4xl font-bold uppercase tracking-tighter text-brand-black justify-between text-left"
+                    text={slide.title}
+                    videoUrl={slide.videoUrl}
+                    imageUrl={slide.imageUrl}
+                    layoutId={`theater-video-${slide.id}-desktop`}
+                    onClick={() => {
+                      if (window.innerWidth < 1024) {
+                        setTheaterSlideIndex(index)
+                      }
+                    }}
+                  />
+                  {/* Mobile Title */}
+                  <TextStaggerHover
+                    index={index}
+                    className="flex lg:hidden cursor-pointer text-2xl md:text-3xl font-bold uppercase tracking-tighter text-brand-black justify-center text-center"
+                    text={slide.mobileTitle || slide.title}
+                    videoUrl={slide.videoUrl}
+                    imageUrl={slide.imageUrl}
+                    layoutId={`theater-video-${slide.id}`}
+                    onClick={() => {
+                      if (window.innerWidth < 1024) {
+                        setTheaterSlideIndex(index)
+                      }
+                    }}
+                  />
+                </div>
               ))}
             </div>
             <HoverSliderImageWrap className="hidden lg:block w-full lg:w-2/5 xl:w-[340px] aspect-[9/16] rounded-[24px] overflow-hidden shadow-2xl mx-auto lg:mx-0">
