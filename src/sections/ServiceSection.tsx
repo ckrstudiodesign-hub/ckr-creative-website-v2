@@ -76,8 +76,24 @@ export default function ServiceSection() {
             </p>
           </div>
 
+          {/* Mobile "Our Services" Highlight */}
+          <div className="flex lg:hidden items-center justify-center w-full mt-6 mb-2">
+            <div className="relative inline-block">
+              <span className="relative z-10 font-bold uppercase tracking-[0.2em] text-brand-black text-sm">
+                Our Services
+              </span>
+              <motion.span 
+                initial={{ width: 0 }}
+                whileInView={{ width: "100%" }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                className="absolute bottom-1 left-0 h-2.5 bg-brand-orange/40 -z-10 -rotate-1 rounded-sm"
+              />
+            </div>
+          </div>
+
           <div className="relative flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16 lg:py-8">
-            <div className="relative z-10 flex flex-col space-y-3 md:space-y-4 w-full lg:w-3/5 py-10 px-4 lg:p-0">
+            <div className="relative z-10 flex flex-col space-y-3 md:space-y-4 w-full lg:w-3/5 py-6 lg:py-10 px-4 lg:p-0">
               {SLIDES.map((slide, index) => (
                 <TextStaggerHover
                   key={slide.id}
